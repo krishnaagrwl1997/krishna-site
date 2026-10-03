@@ -1,3 +1,9 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="Krishna Agarwal: a creative, running six lives. Retro desktop, hanging conversation cards, letters and a receipt of your visit.">
 <title>Krishna's Secret Files</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -549,6 +555,9 @@ footer.foot a:hover{transform:rotate(-3deg)}
 @media (max-width:640px){footer.foot{grid-template-columns:1fr}footer.foot .fl{justify-content:flex-start}}
 
 </style>
+</head>
+<body>
+
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <filter id="wobble"><feTurbulence type="fractalNoise" baseFrequency="0.012" numOctaves="2" seed="8"/><feDisplacementMap in="SourceGraphic" scale="46" xChannelSelector="R" yChannelSelector="G"/></filter>
@@ -1250,3 +1259,6 @@ function titles(){ if(RM) return; const W=SIX.map(R=>[R.n,R.fc,R.k]).concat([['A
   const show=()=>{if(i>=W.length){b.remove();return}const [w,c,k]=W[i++];b.style.background=c;b.innerHTML=`<span style="font-size:${w.length>8?'16vw':'24vw'}">${w}</span><img src="img/cut_${k}.webp" alt="">`;setTimeout(show,360)};show();say('THAT’S MY NAME!')}
 })();
 </script>
+
+</body>
+</html>
