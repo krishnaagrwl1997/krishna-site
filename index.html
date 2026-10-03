@@ -479,7 +479,7 @@ body{background-color:#177a45;color:#fff;
   background-image:linear-gradient(#ffffff38 1.5px,transparent 1.5px),linear-gradient(90deg,#ffffff38 1.5px,transparent 1.5px),linear-gradient(#ffffff14 1px,transparent 1px),linear-gradient(90deg,#ffffff14 1px,transparent 1px);
   background-size:100px 100px,100px 100px,20px 20px,20px 20px;background-position:-1px -1px}
 body::before{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(33deg,transparent 49.9%,#ffffff1c 50%,transparent 50.15%),linear-gradient(-58deg,transparent 49.9%,#ffffff14 50%,transparent 50.1%);z-index:0}
-.wrap{z-index:1}
+.wrap{z-index:1;grid-template-columns:minmax(0,1fr)}
 .ruler{position:relative;height:24px;margin-inline:-16px;background:#d9c38a repeating-linear-gradient(90deg,#6b5a2a 0 1px,transparent 1px 10px);box-shadow:0 3px 0 #0002;z-index:2}
 .brand,.nav a{color:#fff}.brand i{background:#ffd21f}
 .nav a:hover{background:#fff;color:#0f5a32}
@@ -687,6 +687,17 @@ footer.foot a:hover{transform:rotate(-3deg)}
 .mini-env i{position:absolute;left:0;right:0;top:0;height:60%;background:#cdb88c;clip-path:polygon(0 0,100% 0,50% 100%)}
 .mini-env b{position:absolute;left:50%;top:60%;width:28px;height:28px;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle at 35% 30%,#ff6a5a,#c8322b 60%,#8f1a14);display:grid;place-items:center;color:#7a120d;font:400 15px/1 "DM Serif Display",serif}
 
+
+/* row 3: real people */
+.pp.vip{width:calc(var(--w) * 1.55);margin-inline:calc(var(--w) * -.12);align-self:flex-end;z-index:9;filter:grayscale(1) contrast(1.2) brightness(.95) drop-shadow(0 10px 14px #0008)}
+.pp.vip:hover,.pp.vip.on{filter:drop-shadow(0 14px 22px #000a);transform:scale(1.16) translateY(-8%)}
+.pp.vip img{display:block;width:100%;height:100%;object-fit:contain;object-position:50% 100%;pointer-events:none;user-select:none}
+.pp.vip .g3d{position:absolute;transform:translate(-50%,-50%) rotate(-2deg);transition:transform .45s cubic-bezier(.3,1.6,.5,1)}
+.pp.vip .g3d svg{display:block;width:100%;height:auto;filter:drop-shadow(0 2px 2px #0006)}
+.pp.vip:hover .g3d,.pp.vip.on .g3d{transform:translate(-50%,-175%) rotate(-12deg)}
+.pp.vip .tag{top:2%}
+.theatre{min-width:0;max-width:100%}.aud{grid-template-columns:minmax(0,1fr)}.aud .srow{width:100%}
+@media (max-width:700px){.pp.vip{width:calc(var(--w) * 1.3);margin-inline:calc(var(--w) * -.18)}}
 </style>
 </head>
 <body>
@@ -1063,13 +1074,13 @@ If it isn't, the next one will be.
 (()=>{const sec=$('#hang'), linesEl=$('#lines'), pull=$('#pull'), sign=$('#hsign'); if(!sec) return;
   const IG='https://www.instagram.com/hang.withk/';
   const CARDS=[
-   {q:'Things I thought I’d have <mark>figured out</mark> by now?',a:'A morning routine. A five-year plan. How to say no. All still loading.'},
+   {q:'Things I thought I’d have <mark>figured out</mark> by now?',a:'What I want to be in life. Honestly? Still figuring it out.'},
    {q:'Are comfort zones a little <mark>overrated?</mark>',a:'I think so. Most of the best things I’ve done started with “this is a terrible idea.”'},
-   {q:'What do you do when you feel <mark>stuck?</mark>',a:'Change the room. A walk, a mountain, a new café. My brain needs new walls.'},
+   {q:'What do you do when you feel <mark>stuck?</mark>',a:'Change the environment. A walk, a mountain, a new café. My brain needs new walls.'},
    {q:'Who do you call at <mark>3am?</mark>',a:'Row 3. You’ll meet them a little further down.'},
    {q:'What does <mark>hanging out</mark> mean to you?',a:'Chai, phones face down, and someone saying “okay, but tell me the real version.”'},
-   {q:'What did <mark>little you</mark> want to be?',a:'An engineer. She’d be confused by all this. Then proud. Then confused again.'},
-   {q:'What are you <mark>learning</mark> right now?',a:'That rest isn’t a reward. It’s part of the work.'},
+   {q:'What did <mark>little you</mark> want to be?',a:'A kind person. Someone who spreads happiness everywhere and always has kindness to give.'},
+   {q:'What are you <mark>learning</mark> right now?',a:'Go for the experiences. I know it’s scary sometimes, but trust me, go for it.'},
    {q:'A very <mark>personal</mark> question?',a:'Ask me one. That’s literally what the page is for.'}
   ];
   const PIN=`<svg class="pin" viewBox="0 0 16 38" aria-hidden="true"><rect x="2" y="0" width="12" height="34" rx="3" fill="#c79a5b" stroke="#6b4a22" stroke-width="1.5"/><rect x="2" y="14" width="12" height="4" fill="#9a9a9a"/><path d="M8 0v34" stroke="#6b4a22" stroke-width="1"/></svg>`;
@@ -1131,7 +1142,21 @@ function confetti(r,c){if(RM)return;const cols=[c,'#fff','#f5b301','#ff4fa3','#2
 /* ------------ row 3: people ------------ */
 (()=>{const aud=$('#aud'), th=$('#people'); let hoverAny=false;
   const SKIN=['#f1c7a3','#d9a47a','#b97a52','#8d5a3b','#e8b896','#6f4630'], SUIT=['#23304f','#5a3b2a','#3f4a2e','#6b1f2a','#444','#1f5a5a','#7a5a2a','#2a2a2a'], HAIR=['#1a1410','#3b2616','#6b4a2a','#111','#8a6a4a','#c9c1b6'];
-  const LAB=['the 3am call','hype woman','honest critic','dance partner','travel buddy','chai o’clock','spare keys','meme dealer','says “sleep!”','first to reply','plot twist','co-conspirator'];
+  // real people, seated next to K. f = face box in % of image (x,y,w)
+  const VIP=[
+   {img:'p1',name:'the 3am call',line:'picks up on the first ring. every time.',f:[20.3,9.3,39.4],ar:360/441},
+   {img:'p2',name:'chai o’clock',line:'the calmest person in any room.',f:[36.7,9.6,39.2],ar:360/437},
+   {img:'p3',name:'hype woman',line:'thinks every idea of mine is genius. bless her.',f:[31.1,11.6,38.6],ar:360/441},
+   {img:'p4',name:'plot twist',line:'looks serious. absolutely is not.',f:[25.6,7.1,36.4],ar:360/395}
+  ];
+  const GL=`<svg viewBox="0 0 100 34" aria-hidden="true"><path d="M2 6h96v6c0 12-8 20-20 20H66c-8 0-11-9-16-9s-8 9-16 9H22C10 32 2 24 2 12Z" fill="#f7f7f5" stroke="#111" stroke-width="2.4"/><rect x="10" y="9" width="32" height="17" rx="5" fill="#e3242b" opacity=".85"/><rect x="58" y="9" width="32" height="17" rx="5" fill="#16b8d8" opacity=".85"/></svg>`;
+  function vip(V){const p=document.createElement('div');p.className='pp vip';p.dataset.name=V.name;p.dataset.line=V.line;p.style.aspectRatio=V.ar;
+    const [fx,fy,fw]=V.f;p.innerHTML=`<img src="img/${V.img}.webp" alt="" draggable="false"><span class="g3d" style="left:${fx+fw/2}%;top:${fy*V.ar+fw*V.ar*.42}%;width:${fw*1.08}%">${GL}</span>`;
+    const t=document.createElement('span');t.className='tag';t.textContent=V.name;const F=FONTS[VIP.indexOf(V)%FONTS.length];t.style.cssText=`font-family:${F[0]};background:${F[1]};color:${F[2]};--tr:${VIP.indexOf(V)%2?5:-6}deg`;p.appendChild(t);
+    p.addEventListener('pointerenter',()=>{hoverAny=true;STATS.met.add(p);say('my people!')});p.addEventListener('pointerleave',()=>hoverAny=false);
+    p.addEventListener('click',()=>{const on=p.classList.contains('on');aud.querySelectorAll('.pp.on').forEach(x=>x.classList.remove('on'));if(!on)p.classList.add('on');ticket(p)});
+    return p}
+  const LAB=['honest critic','dance partner','travel buddy','spare keys','meme dealer','says “sleep!”','first to reply','co-conspirator'];
   const FONTS=[['"Permanent Marker",cursive','#f5b301','#111'],['Bungee,sans-serif','#ff2b1f','#fff'],['Pacifico,cursive','#fff','#2438d8'],['"Rock Salt",cursive','#b996e6','#111'],['VT323,monospace','#111','#9df29a'],['"Abril Fatface",serif','#f6a9cb','#111'],['Caveat,cursive','#addb72','#111']];
   const rnd=seed=>()=>((seed=seed*16807%2147483647)/2147483647);
   function person(n){const r=rnd(n*97+13);const sk=SKIN[Math.floor(r()*SKIN.length)],su=SUIT[Math.floor(r()*SUIT.length)],ha=HAIR[Math.floor(r()*HAIR.length)];const hair=Math.floor(r()*6),tie=r()>.4,fem=hair===1||hair===2||hair===4;
@@ -1152,8 +1177,9 @@ function confetti(r,c){if(RM)return;const cols=[c,'#fff','#f5b301','#ff4fa3','#2
       <path d="M44 61 Q50 ${63+r()*3} 56 61" stroke="#5a2a20" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg>`}
   function build(){aud.innerHTML='';const W=th.clientWidth;const rows=W<700?[40,46,54,62,72]:[64,74,86,100,116];let n=0,tagI=0;
     rows.forEach((w,ri)=>{const row=document.createElement('div');row.className='srow';row.style.setProperty('--w',w+'px');row.style.zIndex=ri+1;
-      const cnt=Math.floor(W/(w*.92))+1;
-      for(let c=0;c<cnt;c++){ if(ri===3&&c===Math.floor(cnt/2)){const me=document.createElement('div');me.className='me';me.setAttribute('aria-label','Krishna');me.innerHTML='<span class="sil"></span><img src="img/toon_me.webp" alt="Krishna, cartoon">';
+      let cnt=Math.floor(W/(w*.92))+1; if(ri===3&&cnt%2===0)cnt++;
+      for(let c=0;c<cnt;c++){ if(ri===3&&(c===Math.floor(cnt/2)-2||c===Math.floor(cnt/2)-1||c===Math.floor(cnt/2)+1||c===Math.floor(cnt/2)+2)){const k=c-Math.floor(cnt/2);row.appendChild(vip(VIP[k<0?k+2:k+1]));continue}
+        if(ri===3&&c===Math.floor(cnt/2)){const me=document.createElement('div');me.className='me';me.setAttribute('aria-label','Krishna');me.innerHTML='<span class="sil"></span><img src="img/toon_me.webp" alt="Krishna, cartoon">';
           me.addEventListener('pointerenter',()=>{th.classList.add('me-on');say('that’s US!')});me.addEventListener('pointerleave',()=>th.classList.remove('me-on'));me.addEventListener('click',()=>{me.classList.toggle('on');th.classList.toggle('me-on',me.classList.contains('on'))});row.appendChild(me);continue}
         const p=document.createElement('div');p.className='pp';p.innerHTML=person(++n);
         if((c+ri)%2===0){const F=FONTS[tagI%FONTS.length];const t=document.createElement('span');t.className='tag';t.textContent=LAB[tagI%LAB.length];t.style.cssText=`font-family:${F[0]};background:${F[1]};color:${F[2]};--tr:${(tagI%2?5:-6)}deg`;p.appendChild(t);tagI++}
@@ -1432,8 +1458,8 @@ function glove(dx,dy){const g=$('#glove');if(!g||RM)return;g.classList.remove('g
 // Row 3 ticket profiles
 const KNOWN={'the 3am call':'picks up on the first ring. every time.','hype woman':'thinks every idea is “literally genius”.','honest critic':'says “hmm” in a way that saves projects.','dance partner':'knows every step of the kitchen routine.','travel buddy':'has the window seat. gives it up anyway.','chai o’clock':'shows up at 5pm with two cups.','spare keys':'has a key. has had it for years.','meme dealer':'sends 14 reels a day. 3 are good.','says “sleep!”':'texts “go to bed” at 1:59am.','first to reply':'replies before you hit send.','plot twist':'turned up out of nowhere. stayed.','co-conspirator':'in on every terrible idea.'};
 function ticket(p){const th=$('#people');let tk=$('#ticket');if(!tk){tk=document.createElement('div');tk.id='ticket';tk.className='ticket';tk.setAttribute('role','dialog');th.appendChild(tk)}
-  const tag=p.querySelector('.tag');const name=tag?tag.textContent:'an extra';const seat=[...th.querySelectorAll('.pp')].indexOf(p)+1;
-  tk.innerHTML=`<span class="tk1">ADMIT ONE · ROW 3 · SEAT ${seat}</span><b>${name}</b><span class="tk2">${tag?KNOWN[name]||'one of the good ones.':'probably eating popcorn.'}</span><button type="button" aria-label="Close ticket">×</button>`;
+  const tag=p.querySelector('.tag');const name=p.dataset.name||(tag?tag.textContent:'an extra');const seat=[...th.querySelectorAll('.pp')].indexOf(p)+1;
+  tk.innerHTML=`<span class="tk1">ADMIT ONE · ROW 3 · SEAT ${seat}</span><b>${name}</b><span class="tk2">${p.dataset.line||(tag?KNOWN[name]||'one of the good ones.':'probably eating popcorn.')}</span><button type="button" aria-label="Close ticket">×</button>`;
   const r=p.getBoundingClientRect(),R=th.getBoundingClientRect();const w=Math.min(250,R.width-20);let x=r.left-R.left+r.width/2-w/2;x=Math.max(10,Math.min(R.width-w-10,x));let y=r.top-R.top-150;if(y<10)y=r.bottom-R.top+8;
   tk.style.cssText=`left:${x}px;top:${y}px;width:${w}px`;tk.classList.remove('in');void tk.offsetWidth;tk.classList.add('in');tk.hidden=false;
   tk.querySelector('button').onclick=e=>{e.stopPropagation();tk.hidden=true};sfx('pop')}
