@@ -607,6 +607,48 @@ footer.foot a:hover{transform:rotate(-3deg)}
 .plane svg{width:100%;display:block}
 .plane span{position:absolute;left:84px;top:-6px;white-space:nowrap;font:600 18px/1 var(--f-hand);color:#fff;text-shadow:0 2px 0 #0005}
 
+
+/* ---------- letter: fold + seal ---------- */
+.compose .lbl{color:#6b665c!important}
+.fold{position:relative;height:var(--h);display:grid;place-items:center;perspective:1400px}
+.fold .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.env{position:relative;width:min(440px,92%);height:calc(var(--h) * .86);transform-style:flat;perspective:1200px;transition:transform .9s cubic-bezier(.5,0,.6,1),opacity .9s}
+.paper{position:absolute;left:4%;right:4%;top:0;height:100%;transform-style:preserve-3d;transition:transform .6s cubic-bezier(.4,0,.2,1);z-index:3}
+.pp3{position:absolute;left:0;right:0;height:33.34%;transform-style:preserve-3d;transition:transform .6s cubic-bezier(.5,0,.3,1)}
+.pp3 .fc,.pp3 .bk{position:absolute;inset:0;backface-visibility:hidden;background:#f4f0e6;background-image:repeating-linear-gradient(transparent 0 27px,#a9c8e6 27px 28px);padding:14px 18px;font:400 15px/28px "Special Elite","Courier New",monospace;color:#1c1a17;overflow:hidden;box-shadow:0 1px 0 #0000000f}
+.pp3 .bk{transform:rotateX(180deg);background:#e9e2d0;background-image:none}
+.p1{top:0;transform-origin:50% 100%}
+.p2{top:33.33%}
+.p3{top:66.66%;transform-origin:50% 0}
+.p1 .fc b{font:400 22px/1.2 "Special Elite",monospace}
+.p2 .fc p{margin:0;word-break:break-word}
+.p3 .fc span{display:block;text-align:right;font:600 24px/1 var(--f-hand);color:#c8322b;margin-top:40px}
+.envback,.envfront,.flap{position:absolute;left:0;right:0;bottom:0;height:42%;opacity:0;transition:opacity .3s,transform .6s cubic-bezier(.3,1.3,.5,1)}
+.envback{background:#c9b48a;border-radius:6px;z-index:1;transform:translateY(40px)}
+.envfront{z-index:4;border-radius:6px;background:linear-gradient(to top right,transparent calc(50% - 1px),#c3ad80 50%,transparent calc(50% + 1px)) left/50% 100% no-repeat,linear-gradient(to top left,transparent calc(50% - 1px),#c3ad80 50%,transparent calc(50% + 1px)) right/50% 100% no-repeat,#e8d8b2;box-shadow:0 14px 24px #0004;transform:translateY(40px)}
+.flap{z-index:5;height:26%;top:58%;bottom:auto;transform-origin:50% 0;transform:rotateX(178deg);transform-style:preserve-3d;transition:transform .55s cubic-bezier(.5,0,.3,1),opacity .3s}
+.flap .ff,.flap .fb{position:absolute;inset:0;clip-path:polygon(0 0,100% 0,50% 100%);backface-visibility:hidden}
+.flap .ff{background:#d9c69c;filter:drop-shadow(0 4px 4px #0003)}
+.flap .fb{background:#cdb98f;transform:rotateX(180deg)}
+.wax{position:absolute;left:50%;top:calc(84% - 34px);bottom:auto;width:62px;height:62px;margin-left:-31px;z-index:6;border-radius:50%;background:radial-gradient(circle at 35% 30%,#ff6a5a,#c8322b 55%,#8f1a14);box-shadow:0 0 0 5px #b8261f,0 0 0 7px #8f1a1499,0 8px 14px #0006;display:grid;place-items:center;opacity:0;transform:scale(2.4) rotate(-30deg)}
+.wax span{font:400 30px/1 "DM Serif Display",Georgia,serif;color:#7a120d;text-shadow:0 1px 0 #ff8f80}
+.fold.s1 .p3{transform:rotateX(178deg)}
+.fold.s2 .p1{transform:rotateX(-178deg)}
+.fold.s3 .envback,.fold.s3 .envfront,.fold.s3 .flap{opacity:1;transform:none}
+.fold.s3 .flap{transform:rotateX(178deg)}
+.fold.s3 .paper{transform:translateY(calc(var(--h) * .86 * .27)) scale(.9)}
+.fold.s4 .flap{transform:rotateX(0)}
+.fold.s5 .wax{animation:stamp .55s cubic-bezier(.3,1.6,.5,1) forwards}
+@keyframes stamp{0%{opacity:0;transform:scale(2.4) rotate(-30deg)}60%{opacity:1;transform:scale(.88,1.08) rotate(4deg)}80%{transform:scale(1.06,.94)}100%{opacity:1;transform:scale(1) rotate(0)}}
+.fold.s6 .env{transform:translate(70%,-140%) rotate(24deg) scale(.5);opacity:0}
+.fold.s6b .env{transform:translateY(-22%) scale(.62)}
+.sentmsg{position:absolute;left:0;right:0;bottom:0;display:grid;gap:8px;justify-items:center;text-align:center;font:500 15px/1.45 var(--f-body);color:#1c1a17;animation:wopen .35s ease-out}
+.sentmsg b{font:400 26px/1 "Special Elite",monospace}
+.sentmsg span{max-width:40ch}
+.sentmsg .seal{background:#c8322b;color:#fff;border:0;border-radius:999px;padding:11px 18px;font:700 14px/1 var(--f-body);cursor:pointer}
+.sentmsg span b{font:700 15px/1.4 var(--f-mono);word-break:break-all}
+@media (prefers-reduced-motion:reduce){.fold *{transition:none!important;animation:none!important}.fold.s5 .wax{opacity:1;transform:none}}
+
 </style>
 </head>
 <body>
@@ -1132,10 +1174,26 @@ function confetti(r,c){if(RM)return;const cols=[c,'#fff','#f5b301','#ff4fa3','#2
     $('#anon').focus(); $('#seal').addEventListener('click',send)}
   async function send(){const t=$('#anon').value.trim();const st=$('#cst');if(!t){st.innerHTML='<p class="note">Write something first.</p>';return}
     $('#seal').disabled=true;
-    try{ if(!db||!uid) throw 0; const ref=db.doc('inbox/'+uid); const snap=await ref.get(); const letters=((snap.exists&&snap.data().letters)||[]).slice(-19).concat({text:t,at:Date.now()});
-      await ref.set({letters}); st.innerHTML='<p><b>Sealed and sent.</b> She’ll never know it was you.</p>'; $('#anon').value=''; say('a letter for us?!')}
-    catch(e){ st.innerHTML=`<div class="fallback">This page can’t take letters from visitors directly. Copy your letter and send it to <b>krishna.agrwlx@gmail.com</b> from any address.<div style="margin-top:10px"><button class="seal" id="cpl" type="button">Copy letter</button></div></div>`;
-      $('#cpl').addEventListener('click',async()=>{try{await navigator.clipboard.writeText(t);$('#cpl').textContent='Copied'}catch(_){ $('#anon').select();$('#cpl').textContent='Selected, press copy'}}); $('#seal').disabled=false}}
+    const saving=(async()=>{ if(!db||!uid) throw 0; const ref=db.doc('inbox/'+uid); const snap=await ref.get(); const letters=((snap.exists&&snap.data().letters)||[]).slice(-19).concat({text:t,at:Date.now()}); await ref.set({letters}); return true})().catch(()=>false);
+    const ok=await foldAndSeal(t, saving);
+    if(ok){say('a letter for us?!')}
+  }
+  function esc(x){return String(x).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]))}
+  async function foldAndSeal(t,saving){const L=$('#letter'), body=$('#lBody');const H=Math.max(360,L.clientHeight-40);
+    const snippet=esc(t.length>220?t.slice(0,220)+'…':t);
+    body.innerHTML=`<div class="fold" style="--h:${H}px" aria-live="polite"><span class="sr">Folding and sealing your letter…</span>
+      <div class="env"><div class="envback"></div>
+        <div class="paper"><div class="pp3 p1"><div class="fc"><b>Dear Krishna,</b></div><div class="bk"></div></div><div class="pp3 p2"><div class="fc"><p>${snippet}</p></div></div><div class="pp3 p3"><div class="fc"><span>— someone</span></div><div class="bk"></div></div></div>
+        <div class="envfront"></div><div class="flap"><div class="ff"></div><div class="fb"></div></div>
+        <div class="wax"><span>K</span></div></div>
+      <div class="sentmsg" hidden></div></div>`;
+    const f=body.querySelector('.fold');const wait=ms=>new Promise(r=>setTimeout(r,RM?0:ms));
+    await wait(80);f.classList.add('s1');sfx('paper');await wait(600);f.classList.add('s2');sfx('paper');await wait(650);f.classList.add('s3');await wait(700);f.classList.add('s4');sfx('paper');await wait(600);f.classList.add('s5');sfx('pop');await wait(700);
+    const ok=await saving;const m=f.querySelector('.sentmsg');
+    if(ok){f.classList.add('s6');sfx('tear');await wait(900);m.innerHTML='<b>Sealed and sent.</b><span>She’ll never know it was you.</span><button type="button" class="seal" id="again">Write another</button>';m.hidden=false;$('#again').onclick=compose}
+    else{f.classList.add('s6b');await wait(650);m.innerHTML=`<b>Sealed!</b><span>This page can’t post letters from here yet. Copy it and send it to <b>krishna.agrwlx@gmail.com</b> from any address.</span><button type="button" class="seal" id="cpl">Copy letter</button>`;m.hidden=false;
+      $('#cpl').addEventListener('click',async()=>{try{await navigator.clipboard.writeText(t);$('#cpl').textContent='Copied'}catch(_){ $('#cpl').textContent='Copy failed, select it above'}})}
+    return ok}
   // eyes
   let inPile=false; pile.addEventListener('pointerenter',()=>{inPile=true;eyes.classList.add('wide')}); pile.addEventListener('pointerleave',()=>{inPile=false;eyes.classList.remove('wide')});
   addEventListener('pointermove',e=>{eyes.querySelectorAll('.eyeb').forEach(ey=>{const r=ey.getBoundingClientRect();const cx=r.left+r.width/2,cy=r.top+r.height/2;const dx=e.clientX-cx,dy=e.clientY-cy,d=Math.hypot(dx,dy)||1;const m=Math.min(1,d/260);
