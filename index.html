@@ -4,11 +4,19 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="description" content="Krishna Agarwal: a creative, running six lives. Retro desktop, hanging conversation cards, letters and a receipt of your visit.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Krishna's Secret Files">
+<meta property="og:description" content="Krishna Agarwal: a creative, running six lives. Retro desktop, hanging conversation cards, letters and a receipt of your visit.">
+<meta property="og:image" content="og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="og.jpg">
+<meta name="theme-color" content="#1f7a45">
 <title>Krishna's Secret Files</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Archivo+Black&family=Anton&family=Bungee&family=Bungee+Shade&family=Caveat:wght@600&family=DM+Serif+Display:ital@0;1&family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&family=Pacifico&family=Permanent+Marker&family=Press+Start+2P&family=Rock+Salt&family=Silkscreen:wght@400;700&family=Special+Elite&family=VT323&display=swap">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Archivo+Black&family=Anton&family=Bungee&family=Caveat:wght@600&family=DM+Serif+Display:ital@0;1&family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&family=Pacifico&family=Permanent+Marker&family=Rock+Salt&family=Silkscreen:wght@400;700&family=Special+Elite&family=VT323&display=swap">
 <style>
 /* Layout concept: Krishna's life as a desk of paper things. A zero-gravity playground of her name and her six selves,
    an arcade character-select, a cinema of her people, a pile of letters with eyes in the gap, a retro Notepad phone,
@@ -731,8 +739,14 @@ footer.foot a:hover{transform:rotate(-3deg)}
 .poster .pmem{font:400 13px/1.35 "Special Elite",monospace;color:#f5eedcd9;margin-top:4px}
 .poster .pft{margin-top:6px;padding-top:6px;border-top:1px dashed #f5eedc55;font:700 8px/1 var(--f-mono);letter-spacing:.14em;color:#f5eedc88}
 .poster button{color:#f5eedc!important}
-@media (max-width:700px){.q1{top:34px}.q2{top:78px;bottom:auto;right:4%;font-size:34px}.q2 br{display:none}.q2 .ex{font-size:18px}.pp.vip{width:calc(var(--w) * 1.2);margin-inline:calc(var(--w) * -.1)}.poster .pimg{height:110px}}
+@media (max-width:700px){.q1{top:34px}.q2{top:76px;bottom:auto;right:4%;font-size:clamp(24px,8vw,34px)}.q2 br{display:none}.q2 .ex{font-size:18px}.pp.vip{width:calc(var(--w) * 1.2);margin-inline:calc(var(--w) * -.1)}.poster .pimg{height:110px}}
 @media (prefers-reduced-motion:reduce){.pp svg{transition:none}}
+
+.pp.vip:focus-visible{outline:3px solid #ffd21f;outline-offset:4px;border-radius:12px;filter:drop-shadow(0 12px 18px #000a);transform:scale(1.22) translateY(-8%)}
+.pp.vip:focus-visible .tag{opacity:1;transform:translate(-50%,-100%) rotate(var(--tr,-6deg)) scale(1)}
+.me:focus-visible{outline:3px solid #ffd21f;outline-offset:4px;border-radius:12px}
+.me:focus-visible .sil{opacity:0}.me:focus-visible img{opacity:1;transform:scale(1.18) translateY(-6%)}
+@media (hover:none){.lk{pointer-events:none}}
 </style>
 </head>
 <body>
@@ -1228,8 +1242,13 @@ function confetti(r,c){if(RM)return;const cols=[c,'#fff','#f5b301','#ff4fa3','#2
     const t=document.createElement('span');t.className='tag';t.textContent=V.role;const F=FONTS[k%FONTS.length];t.style.cssText=`font-family:${F[0]};background:${F[1]};color:${F[2]};--tr:${k%2?5:-6}deg`;p.appendChild(t);
     p.addEventListener('pointerenter',()=>{hoverAny=true;STATS.met.add(p);say('my people!')});p.addEventListener('pointerleave',()=>hoverAny=false);
     p.addEventListener('click',()=>{const on=p.classList.contains('on');aud.querySelectorAll('.pp.on').forEach(x=>x.classList.remove('on'));if(!on)p.classList.add('on');poster(V,p)});
-    return p}
+    kb(p,`${V.role}: open their poster`);return p}
   window.ROW3VIP=VIP;
+  // keyboard: focus acts like hover, Enter/Space acts like click
+  function kb(el,label){el.tabIndex=0;el.setAttribute('role','button');el.setAttribute('aria-label',label);
+    el.addEventListener('focus',()=>{if(el.matches(':focus-visible'))el.dispatchEvent(new PointerEvent('pointerenter'))});
+    el.addEventListener('blur',()=>el.dispatchEvent(new PointerEvent('pointerleave')));
+    el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();el.click()}})}
   const LAB=['honest critic','dance partner','travel buddy','spare keys','meme dealer','says “sleep!”','first to reply','co-conspirator'];
   const FONTS=[['"Permanent Marker",cursive','#f5b301','#111'],['Bungee,sans-serif','#ff2b1f','#fff'],['Pacifico,cursive','#fff','#2438d8'],['"Rock Salt",cursive','#b996e6','#111'],['VT323,monospace','#111','#9df29a'],['"Abril Fatface",serif','#f6a9cb','#111'],['Caveat,cursive','#addb72','#111']];
   const rnd=seed=>()=>((seed=seed*16807%2147483647)/2147483647);
@@ -1254,7 +1273,7 @@ function confetti(r,c){if(RM)return;const cols=[c,'#fff','#f5b301','#ff4fa3','#2
       let cnt=Math.floor(W/(w*.92))+1; if(ri===3&&cnt%2===0)cnt++;
       for(let c=0;c<cnt;c++){ if(ri===3&&(c===Math.floor(cnt/2)-2||c===Math.floor(cnt/2)-1||c===Math.floor(cnt/2)+1||c===Math.floor(cnt/2)+2)){const k=c-Math.floor(cnt/2);row.appendChild(vip(VIP[k<0?k+2:k+1],k<0?k+2:k+1));continue}
         if(ri===3&&c===Math.floor(cnt/2)){const me=document.createElement('div');me.className='me';me.setAttribute('aria-label','Krishna');me.innerHTML='<span class="sil"></span><img src="img/toon_me.webp" alt="Krishna, cartoon">';
-          me.addEventListener('pointerenter',()=>{th.classList.add('me-on');say('that’s US!')});me.addEventListener('pointerleave',()=>th.classList.remove('me-on'));me.addEventListener('click',()=>{me.classList.toggle('on');th.classList.toggle('me-on',me.classList.contains('on'))});row.appendChild(me);continue}
+          me.addEventListener('pointerenter',()=>{th.classList.add('me-on');say('that’s US!')});me.addEventListener('pointerleave',()=>th.classList.remove('me-on'));me.addEventListener('click',()=>{me.classList.toggle('on');th.classList.toggle('me-on',me.classList.contains('on'))});kb(me,'Krishna: everyone turns to look');row.appendChild(me);continue}
         const p=document.createElement('div');p.className='pp';p.innerHTML=person(++n);
         if((c+ri)%2===0){const F=FONTS[tagI%FONTS.length];const t=document.createElement('span');t.className='tag';t.textContent=LAB[tagI%LAB.length];t.style.cssText=`font-family:${F[0]};background:${F[1]};color:${F[2]};--tr:${(tagI%2?5:-6)}deg`;p.appendChild(t);tagI++}
         p.addEventListener('pointerenter',()=>{hoverAny=true;if(p.querySelector('.tag'))STATS.met.add(p)});p.addEventListener('pointerleave',()=>hoverAny=false);
@@ -1399,8 +1418,9 @@ ${['zs-eb','zs-fw','zs-ef','zs-wax'].map(c=>`<div class="zs-env ${c}w" style="--
     let d='M20 0'; const n=16; for(let i=1;i<=n;i++){const t=i/n;const x=20+Math.sin(a)*t*60*t+Math.sin(i*1.9)*6*(1-t*.3);const y=t*318; d+=` L${x.toFixed(1)} ${y.toFixed(1)}`} cordP.setAttribute('d',d)}
   sec.addEventListener('pointermove',e=>{const r=sec.getBoundingClientRect();target=((e.clientX-r.left)/r.width-.5)*.7});
   sec.addEventListener('pointerleave',()=>target=0);
-  (function swing(){requestAnimationFrame(swing); if(live) return; const idle=RM?0:Math.sin(performance.now()/900)*.06;
-    av+=((target+idle)-ang)*.02; av*=.92; ang+=av; hs.style.transform=`rotate(${(-ang*57).toFixed(2)}deg)`; drawCord(ang)})();
+  let phVis=false;new IntersectionObserver(es=>{const was=phVis;phVis=es[0].isIntersecting;if(phVis&&!was)requestAnimationFrame(swing)}).observe(sec);
+  function swing(){if(!phVis)return;requestAnimationFrame(swing); if(live) return; const idle=RM?0:Math.sin(performance.now()/900)*.06;
+    av+=((target+idle)-ang)*.02; av*=.92; ang+=av; hs.style.transform=`rotate(${(-ang*57).toFixed(2)}deg)`; drawCord(ang)}
   const now=()=>{const d=new Date();let h=d.getHours(),mi=String(d.getMinutes()).padStart(2,'0');const ap=h>=12?'pm':'am';h=h%12||12;return `${h}:${mi} ${ap}`};
   const six=`<div class="row6">${SIX.map(R=>`<img src="img/s_${R.k}_0.webp" alt="${R.n}">`).join('')}</div>`;
   const Q=[
@@ -1531,6 +1551,7 @@ dragDoc.z=40;
 function glove(dx,dy){const g=$('#glove');if(!g||RM)return;g.classList.remove('grab');void g.offsetWidth;g.style.setProperty('--gx',(dx>=0?1:-1)*480+'px');g.classList.add('grab');sfx('tear')}
 // Row 3 ticket profiles
 const KNOWN={'the 3am call':'picks up on the first ring. every time.','hype woman':'thinks every idea is “literally genius”.','honest critic':'says “hmm” in a way that saves projects.','dance partner':'knows every step of the kitchen routine.','travel buddy':'has the window seat. gives it up anyway.','chai o’clock':'shows up at 5pm with two cups.','spare keys':'has a key. has had it for years.','meme dealer':'sends 14 reels a day. 3 are good.','says “sleep!”':'texts “go to bed” at 1:59am.','first to reply':'replies before you hit send.','plot twist':'turned up out of nowhere. stayed.','co-conspirator':'in on every terrible idea.'};
+addEventListener('keydown',e=>{if(e.key==='Escape'){const tk=$('#ticket');if(tk&&!tk.hidden){tk.hidden=true}}});
 function poster(V,p){const th=$('#people');let tk=$('#ticket');if(!tk){tk=document.createElement('div');tk.id='ticket';th.appendChild(tk)}
   tk.className='ticket poster';tk.setAttribute('role','dialog');tk.setAttribute('aria-label',V.role);
   const n=[...th.querySelectorAll('.pp.vip')].indexOf(p)+1;
@@ -1649,7 +1670,7 @@ function ticket(p){const th=$('#people');let tk=$('#ticket');if(!tk){tk=document
 })();
 
 /* ------------ little krishna (3D) ------------ */
-(()=>{const box=$('#lk'), bub=$('#lkb'); if(!window.THREE){box.remove();return}
+function initLK(){const box=$('#lk'), bub=$('#lkb'); if(!window.THREE){box.remove();return}
   let rend; try{rend=new THREE.WebGLRenderer({alpha:true,antialias:true})}catch(e){box.remove();return}
   rend.setPixelRatio(Math.min(devicePixelRatio||1,2)); box.prepend(rend.domElement);
   const scene=new THREE.Scene(), cam=new THREE.PerspectiveCamera(30,150/180,.1,50); cam.position.set(0,1.3,7.2); cam.lookAt(0,1.1,0);
@@ -1712,7 +1733,11 @@ function ticket(p){const th=$('#people');let tk=$('#ticket');if(!tk){tk=document
     shadow.scale.setScalar(1-body.position.y*.35);
     box.style.transform=`translateX(${x}px)`; rend.render(scene,cam)}
   requestAnimationFrame(loop);
-})();
+}
+// load three.js only after the page is ready, so it never blocks the first paint
+(()=>{const go=()=>{const sc=document.createElement('script');sc.src='https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js';sc.async=true;sc.onload=initLK;sc.onerror=()=>{const b=$('#lk');b&&b.remove()};document.head.appendChild(sc)};
+  const idle=()=>('requestIdleCallback' in window)?requestIdleCallback(go,{timeout:1500}):setTimeout(go,300);
+  document.readyState==='complete'?idle():addEventListener('load',idle,{once:true})})();
 
 /* ------------ type her name ------------ */
 let typed='';
