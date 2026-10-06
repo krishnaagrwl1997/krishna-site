@@ -799,10 +799,47 @@ html.vault-open{overflow:hidden}
 @media (max-width:560px){.vdl{grid-template-columns:1fr;gap:0 0}.vdl dd{margin-bottom:8px}.vclip{top:-40px}.vpaper h2{margin-top:30px}.vstamp{top:300px}}
 .kpg button{display:grid;place-items:center;align-content:center;gap:1px;line-height:1}
 .kpg button small{font:700 7px/1 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:#7a7364;min-height:7px}
+
+/* ---------- boot ---------- */
+.boot{position:fixed;inset:0;z-index:300;display:grid;place-items:center;background:#008080;color:#fff;cursor:pointer;animation:bootout .45s 3.6s forwards}
+.boot.off{animation:bootout .4s forwards}
+@keyframes bootout{to{opacity:0;visibility:hidden}}
+.bootin{display:grid;justify-items:center;gap:10px;font:400 20px/1.2 var(--f-vt,monospace);width:min(360px,86vw)}
+.blogo{display:grid;grid-template-columns:1fr 1fr;gap:4px;width:64px;transform:skewY(-8deg) rotate(-6deg)}
+.blogo i{height:28px}.blogo i:nth-child(1){background:#ff2b1f}.blogo i:nth-child(2){background:#3dff6e}.blogo i:nth-child(3){background:#2438d8}.blogo i:nth-child(4){background:#ffd21f}
+.bootin b{font:400 46px/1 "Archivo Black",Anton,sans-serif;letter-spacing:-.02em}.bootin b span{font:400 22px/1 var(--f-pixel,monospace);color:#ffd21f;margin-left:6px;vertical-align:top}
+.bootin small{font:700 11px/1 var(--f-mono);letter-spacing:.2em;text-transform:uppercase;opacity:.75}
+.bbar{width:100%;height:16px;border:2px solid #fff;padding:2px;margin-top:10px}.bbar i{display:block;height:100%;width:0;background:repeating-linear-gradient(90deg,#fff 0 10px,transparent 10px 13px)}
+.bootin pre{margin:0;min-height:5.2em;width:100%;font:400 16px/1.3 var(--f-vt,monospace);white-space:pre;color:#d9fff4}
+.bootin em{font:400 12px/1 var(--f-mono);font-style:normal;opacity:.6}
+/* ---------- status line ---------- */
+.brandwrap{display:grid;gap:5px}
+.kstat{font:600 11px/1.2 var(--f-mono);color:var(--ink);opacity:.75;letter-spacing:.02em}
+.kstat::before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:#3dff6e;margin-right:6px;box-shadow:0 0 6px #3dff6e;vertical-align:1px;animation:kpulse 2s ease-in-out infinite}
+@keyframes kpulse{50%{opacity:.35}}
+/* ---------- night mode ---------- */
+.torch{position:fixed;inset:0;z-index:65;pointer-events:none;opacity:0;transition:opacity .8s;background:radial-gradient(circle 210px at var(--tx,50%) var(--ty,50%),#ffe9a812 0,#ffe9a808 45%,#050814e0 100%)}
+html.night .torch{opacity:1}
+.nightbar{white-space:nowrap;position:fixed;left:50%;top:calc(10px + env(safe-area-inset-top,0px));transform:translateX(-50%);z-index:92;display:flex;gap:10px;align-items:center;background:#0d1230;color:#e8ecff;border:2px solid #e8ecff;border-radius:999px;padding:6px 6px 6px 14px;font:600 12px/1.2 var(--f-mono);box-shadow:0 8px 20px #0008;max-width:calc(100vw - 24px)}
+.nightbar[hidden]{display:none}
+.nightbar button{border:0;border-radius:999px;background:#ffd21f;color:#141210;font:700 12px/1 var(--f-mono);padding:8px 12px;cursor:pointer;white-space:nowrap}
+@media (max-width:700px){.nightbar{top:auto;bottom:calc(58px + env(safe-area-inset-bottom,0px));font-size:11px}}
+/* ---------- ask K ---------- */
+.askk{position:relative;z-index:3;margin-top:18px;display:grid;gap:8px;max-width:560px}
+.askk label{font:600 22px/1.15 var(--f-hand);color:#ffe14a}
+.askrow{display:flex;gap:8px}
+.askrow input{flex:1;min-width:0;border:2px solid #ffffff55;background:#ffffff12;color:#fff;border-radius:999px;padding:11px 16px;font:500 15px/1 var(--f-body);outline:0}
+.askrow input::placeholder{color:#ffffff80}.askrow input:focus{border-color:#ffe14a}
+.askrow button{border:0;border-radius:999px;background:#ff4fa3;color:#fff;font:700 14px/1 var(--f-body);padding:0 18px;cursor:pointer}
+.askst{margin:0;min-height:1.2em;font:500 13px/1.4 var(--f-body);color:#ffffffc0}.askst a{color:#ffe14a}
+/* ---------- story button ---------- */
+.counter .btn.story{background:transparent;color:#fff;border:2px solid #fff;margin-top:8px}
 </style>
 </head>
 <body>
 
+<div class="boot" id="boot" aria-hidden="true"><div class="bootin"><div class="blogo"><i></i><i></i><i></i><i></i></div><b>Krishna<span>26</span></b><small>Creative Edition</small><div class="bbar"><i id="bbar"></i></div><pre id="blog"></pre><em>click anywhere to skip</em></div></div>
+<script>try{if(sessionStorage.getItem('k-booted')||matchMedia('(prefers-reduced-motion: reduce)').matches)document.getElementById('boot').remove()}catch(e){}</script>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <filter id="wobble"><feTurbulence type="fractalNoise" baseFrequency="0.012" numOctaves="2" seed="8"/><feDisplacementMap in="SourceGraphic" scale="46" xChannelSelector="R" yChannelSelector="G"/></filter>
@@ -811,7 +848,7 @@ html.vault-open{overflow:hidden}
 <div class="ruler" aria-hidden="true"></div>
 <div class="wrap">
   <nav class="nav" aria-label="Main">
-    <a class="brand" href="#play"><i></i>KRISHNA'S SECRET FILES</a>
+    <div class="brandwrap"><a class="brand" href="#play"><i></i>KRISHNA'S SECRET FILES</a><span class="kstat" id="kstat" aria-live="polite"></span></div>
     <ul>
       <li><a href="#play">Play</a></li>
       <li><a href="#hang">Hang w/ K</a></li>
@@ -843,6 +880,7 @@ html.vault-open{overflow:hidden}
     <div class="hsign" id="hsign"><div class="chains" aria-hidden="true"><i></i><i></i></div><div class="board"><b>HANG WITH <em>K</em></b><span>conversations, on a string</span></div></div>
     <div class="lines" id="lines"></div>
     <svg class="mic" viewBox="0 0 120 220" aria-hidden="true"><rect x="38" y="10" width="44" height="80" rx="22" fill="#2b2b30" stroke="#111" stroke-width="3"/><path d="M42 30h36M42 42h36M42 54h36M42 66h36" stroke="#55525c" stroke-width="2"/><path d="M28 60v12a32 32 0 0 0 64 0V60" fill="none" stroke="#3a3a40" stroke-width="5"/><path d="M60 104v100M30 206h60" stroke="#3a3a40" stroke-width="7" stroke-linecap="round"/></svg>
+    <form class="askk" id="askk" autocomplete="off"><label for="askq">Ask K anything. It might become the next card.</label><div class="askrow"><input id="askq" maxlength="160" placeholder="what’s your comfort food?" required><button type="submit">Send ↗</button></div><p class="askst" id="askst" aria-live="polite"></p></form>
     <div class="hfoot"><span>New cards every time a new conversation goes up.</span><a href="https://www.instagram.com/hang.withk/" target="_blank" rel="noopener">Follow @hang.withk ↗</a></div>
   </section>
   <div class="pull" id="pull" hidden role="dialog" aria-modal="true" aria-label="Conversation card"><div class="pcard" id="pcard"></div></div>
@@ -909,7 +947,7 @@ html.vault-open{overflow:hidden}
       <div class="cside">
         <p class="clead">What I do, and everything you did here, itemised.<br>Tear the receipt off to copy my email.</p>
         <div class="email" id="email">krishna.agrwlx@gmail.com</div>
-        <button class="btn" id="copy" type="button">Copy email</button>
+        <button class="btn" id="copy" type="button">Copy email</button><button class="btn story" id="storyBtn" type="button">Save my receipt for your story ↓</button>
         <div class="head-wrap" id="headWrap" aria-label="Krishna's head, turns to watch your cursor">
           <img id="head" src="img/head0.webp" alt="Krishna looking at you">
           <img class="peek" src="img/peek2.webp" alt="" aria-hidden="true">
@@ -933,6 +971,7 @@ html.vault-open{overflow:hidden}
 <div class="ruler" aria-hidden="true"></div>
 
 <div class="lk" id="lk" role="button" tabindex="0" aria-label="Little Krishna. Click her."><div class="lkb" id="lkb"></div><span class="lkhit" aria-hidden="true"></span></div>
+<div class="torch" id="torch" aria-hidden="true"></div><div class="nightbar" id="nightbar" hidden><span id="nbtxt"></span><button type="button" id="nbbtn">turn the lights on</button></div>
 <div class="introsign" id="introsign" aria-hidden="true"><div class="rope"></div><div class="card2"><span class="hook"></span><div class="flipper"><div class="s"><b>HANG WITH <em>K</em></b><span>come on in</span></div><div class="s b2"><b>WE’RE OPEN!</b></div></div></div></div>
 <button type="button" class="eggs" id="eggPill" aria-label="Secret files found: 0 of 6. Open the case file."><span class="elk" aria-hidden="true">🔒</span><span class="etx">Secret files</span><span class="dots" id="dots"><i></i><i></i><i></i><i></i><i></i><i></i></span><span id="eggN">0/6</span></button>
 <div class="toast" id="toast" role="status"></div>
@@ -1000,7 +1039,7 @@ function vault(fresh){if($('#vault'))return;const last=document.activeElement;
         <dt>Threat level</dt><dd>will hype your ideas to an unreasonable degree</dd>
       </dl>
       <p class="vnote">Okay. You found all six. That means you’re curious, and curious people are my favourite people. Say hi, and tell me which one was the hardest to find. <span>— K.</span></p>
-      <div class="vacts"><a class="vbtn" href="mailto:krishna.agrwlx@gmail.com?subject=${encodeURIComponent('I found all six files')}&body=${encodeURIComponent('Hi Krishna! The hardest one was: ')}">Tell her you cracked it</a><button type="button" class="vbtn ghost" id="vClose">Close the file</button></div>
+      <div class="vacts"><a class="vbtn" href="mailto:krishna.agrwlx@gmail.com?subject=${encodeURIComponent('I found all six files')}&body=${encodeURIComponent('Hi Krishna! The hardest one was: ')}">Tell her you cracked it</a><button type="button" class="vbtn ghost" id="vBadge">Save my agent badge ↓</button><button type="button" class="vbtn ghost" id="vClose">Close the file</button></div>
       <span class="vtime">case cracked in ${dur}</span>
       <div class="vstamp" aria-hidden="true">DECLASSIFIED</div>
     </div>
@@ -1009,7 +1048,7 @@ function vault(fresh){if($('#vault'))return;const last=document.activeElement;
   document.body.appendChild(v);document.documentElement.classList.add('vault-open');
   v.querySelectorAll('.vred').forEach(b=>b.addEventListener('click',()=>{b.classList.add('shown');b.setAttribute('aria-label','Revealed');sfx('paper')}));
   const close=()=>{const a=v.animate([{opacity:1},{opacity:0}],{duration:RM?1:260,fill:'forwards'});a.onfinish=()=>{v.remove();document.documentElement.classList.remove('vault-open');last&&last.focus&&last.focus()}};
-  $('#vClose').onclick=close;v.addEventListener('click',e=>{if(e.target===v)close()});
+  $('#vClose').onclick=close;$('#vBadge').onclick=()=>agentBadge(dur);v.addEventListener('click',e=>{if(e.target===v)close()});
   const esc=e=>{if(e.key==='Escape'){close();removeEventListener('keydown',esc)}};addEventListener('keydown',esc);
   const F=v.querySelector('.vfold'),C=v.querySelector('.vcover'),S=v.querySelector('.vstamp');
   if(RM){C.style.display='none';S.style.opacity=1;$('#vClose').focus();return}
@@ -1301,8 +1340,8 @@ If it isn't, the next one will be.
 })();
 
 /* ------------ page-load intro sign ------------ */
-(()=>{const s=$('#introsign');if(!s||RM){s&&s.remove();return}
-  requestAnimationFrame(()=>s.classList.add('go'));s.addEventListener('animationend',e=>{if(e.target===s)s.remove()});setTimeout(()=>s.remove(),3400)})();
+function startIntro(){const s=$('#introsign');if(!s||RM){s&&s.remove();return}
+  requestAnimationFrame(()=>s.classList.add('go'));s.addEventListener('animationend',e=>{if(e.target===s)s.remove()});setTimeout(()=>s.remove(),3400)}
 
 function confetti(r,c){if(RM)return;const cols=[c,'#fff','#f5b301','#ff4fa3','#2438d8','#addb72'];for(let i=0;i<60;i++){const d=document.createElement('i');d.className='confetti';d.style.background=cols[i%cols.length];
   const x=r.left+r.width/2,y=r.top+r.height*.4;d.style.left=x+'px';d.style.top=y+'px';document.body.appendChild(d);const a=Math.random()*Math.PI*2,v=200+Math.random()*380;
@@ -1451,7 +1490,7 @@ function confetti(r,c){if(RM)return;const cols=[c,'#fff','#f5b301','#ff4fa3','#2
     $('#anon').focus(); $('#seal').addEventListener('click',send)}
   async function send(){const t=$('#anon').value.trim();const st=$('#cst');if(!t){st.innerHTML='<p class="note">Write something first.</p>';return}
     $('#seal').disabled=true;
-    const saving=(async()=>{ if(!db||!uid) throw 0; const ref=db.doc('inbox/'+uid); const snap=await ref.get(); const letters=((snap.exists&&snap.data().letters)||[]).slice(-19).concat({text:t,at:Date.now()}); await ref.set({letters}); return true})().catch(()=>false);
+    const saving=(async()=>{ if(!db||!uid) throw 0; const ref=db.doc('inbox/'+uid); const snap=await ref.get(); const letters=((snap.exists&&snap.data().letters)||[]).slice(-19).concat({text:t,at:Date.now()}); if(snap.exists) await ref.update({letters}); else await ref.set({letters}); return true})().catch(()=>false);
     const ok=await foldAndSeal(t, saving);egg('sealed');
     if(ok){say('a letter for us?!')}
   }
@@ -1815,6 +1854,18 @@ function initLK(){const box=$('#lk'), bub=$('#lkb'); if(!window.THREE){box.remov
   const limb=(x,y,len,r,mat,shoe)=>{const pv=new THREE.Group();pv.position.set(x,y,0);body.add(pv);const m=mesh(new THREE.CylinderGeometry(r,r*.9,len,10),mat,0,-len/2,0,pv);if(shoe){mesh(new THREE.BoxGeometry(.24,.14,.36),black,0,-len-.02,.06,pv);mesh(new THREE.BoxGeometry(.25,.04,.37),white,0,-len-.09,.06,pv)}else{mesh(new THREE.SphereGeometry(r*1.15,10,8),skin,0,-len,0,pv)}return pv};
   const legL=limb(-.18,.5,.46,.1,skin,true), legR=limb(.18,.5,.46,.1,skin,true);
   const armL=limb(-.42,1.26,.52,.1,shirt,false), armR=limb(.42,1.26,.52,.1,shirt,false); armL.rotation.z=-.2; armR.rotation.z=.2;
+  // ---- outfits: 3D glasses (Row 3), apron (counter), phone (Unsaid), pyjamas + nightcap (night)
+  const OUT={};const grp=(p=body)=>{const g=new THREE.Group();g.visible=false;p.add(g);return g};
+  OUT.glasses=grp(head);mesh(new THREE.BoxGeometry(.86,.24,.06),white,0,0,.6,OUT.glasses);mesh(new THREE.BoxGeometry(.3,.15,.04),M(0xe3242b),-.21,0,.635,OUT.glasses);mesh(new THREE.BoxGeometry(.3,.15,.04),M(0x16b8d8),.21,0,.635,OUT.glasses);
+  OUT.apron=grp();mesh(new THREE.BoxGeometry(.5,.62,.05),red,0,.86,.38,OUT.apron);mesh(new THREE.BoxGeometry(.04,.36,.04),red,-.16,1.24,.32,OUT.apron);mesh(new THREE.BoxGeometry(.04,.36,.04),red,.16,1.24,.32,OUT.apron);mesh(new THREE.BoxGeometry(.2,.12,.03),white,0,.78,.42,OUT.apron);
+  OUT.phone=grp(head);const hs=mesh(new THREE.BoxGeometry(.16,.62,.16),red,.66,-.08,.12,OUT.phone);hs.rotation.z=.18;mesh(new THREE.SphereGeometry(.13,12,10),red,.62,.2,.18,OUT.phone);mesh(new THREE.SphereGeometry(.13,12,10),red,.72,-.36,.12,OUT.phone);
+  OUT.cap=grp(head);const cone=mesh(new THREE.ConeGeometry(.5,.95,20),M(0x6d8fd6),.08,.78,-.02,OUT.cap);cone.rotation.z=-.35;mesh(new THREE.TorusGeometry(.5,.08,8,24),white,0,.38,0,OUT.cap).rotation.x=Math.PI/2;mesh(new THREE.SphereGeometry(.13,10,8),white,.32,1.18,-.02,OUT.cap);
+  const DAY={shirt:0xfbfbf6,skirt:0x151515},PJ={shirt:0xb9d0ff,skirt:0x6d8fd6};let outfit='',isNight=false;
+  const wear=k=>{outfit=k;OUT.glasses.visible=k==='people';OUT.apron.visible=k==='hi';OUT.phone.visible=k==='unsaid'};
+  window.LK={night(on){if(on===isNight)return;isNight=on;OUT.cap.visible=on;band.visible=!on;shirt.color.setHex(on?PJ.shirt:DAY.shirt);skirt.color.setHex(on?PJ.skirt:DAY.skirt)},wear};
+  const vis={};const pick=()=>{const best=Object.entries(vis).sort((a,b)=>b[1]-a[1])[0];wear(best&&best[1]>.25?best[0]:'')};
+  ['people','hi','unsaid'].forEach(id=>{const sec=document.getElementById(id);if(sec)new IntersectionObserver(es=>{vis[id]=es[0].intersectionRatio;pick()},{threshold:[0,.25,.5,.75,1]}).observe(sec)});
+  window.KNIGHT&&KNIGHT();
   const shadow=new THREE.Mesh(new THREE.CircleGeometry(.6,24),new THREE.MeshBasicMaterial({color:0x000000,transparent:true,opacity:.18})); shadow.rotation.x=-Math.PI/2; shadow.position.y=.001; scene.add(shadow);
   function size(){const r=box.getBoundingClientRect();rend.setSize(r.width,r.height,false);cam.aspect=r.width/r.height;cam.updateProjectionMatrix()} size(); addEventListener('resize',size);
   // behaviour
@@ -1851,6 +1902,7 @@ function initLK(){const box=$('#lk'), bub=$('#lkb'); if(!window.THREE){box.remov
     if(sleeping){head.rotation.z=.32+Math.sin(t*1.4)*.04;head.rotation.x=.18;EYES.forEach(e=>e.scale.set(1,.12,1));armL.rotation.x=0;armR.rotation.x=0}else{head.rotation.x=0;EYES.forEach(e=>e.scale.set(1,1,1))}
     if(near&&!sleeping&&jump<=0){root.rotation.y*=.5;armR.rotation.z=2.5+Math.sin(t*12)*.35;armR.rotation.x=0}
     shadow.scale.setScalar(1-body.position.y*.35);
+    if(outfit==='unsaid'&&!near&&!sleeping){armR.rotation.z=2.35;armR.rotation.x=-.3}
     box.style.transform=`translateX(${x}px)`; rend.render(scene,cam)}
   requestAnimationFrame(loop);
 }
@@ -1858,6 +1910,104 @@ function initLK(){const box=$('#lk'), bub=$('#lkb'); if(!window.THREE){box.remov
 (()=>{const go=()=>{const sc=document.createElement('script');sc.src='https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js';sc.async=true;sc.onload=initLK;sc.onerror=()=>{const b=$('#lk');b&&b.remove()};document.head.appendChild(sc)};
   const idle=()=>('requestIdleCallback' in window)?requestIdleCallback(go,{timeout:1500}):setTimeout(go,300);
   document.readyState==='complete'?idle():addEventListener('load',idle,{once:true})})();
+
+/* ------------ boot screen ------------ */
+(()=>{const b=$('#boot');if(!b){startIntro();return}
+  const log=$('#blog'),bar=$('#bbar');const L=['Loading chai.dll ........ ok','Mounting six_lives ...... ok','Waking Little K ......... ok','Dusting off Row 3 ....... ok'];
+  let i=0,done=false;const t0=performance.now();
+  const end=()=>{if(done)return;done=true;try{sessionStorage.setItem('k-booted','1')}catch(_){}
+    b.classList.add('off');setTimeout(()=>{b.remove();startIntro()},420)};
+  const tick=()=>{if(done)return;const p=Math.min(1,(performance.now()-t0)/1700);bar.style.width=(p*100)+'%';
+    const n=Math.floor(p*L.length+.2);while(i<n&&i<L.length){log.textContent+=(i?'\n':'')+L[i++]}
+    if(p<1)requestAnimationFrame(tick);else setTimeout(end,250)};
+  requestAnimationFrame(tick);b.addEventListener('click',end);addEventListener('keydown',end,{once:true});setTimeout(end,4000)})();
+
+/* ------------ saving generated images ------------ */
+async function saveImage(cv,filename){const blob=await new Promise(r=>cv.toBlob(r,'image/png'));if(!blob){toast('Couldn’t make the image');return}
+  let dl=null;try{dl=await window.claude?.use?.('downloads')}catch(_){}
+  if(dl){try{await dl.save({filename,data:blob});toast('Saved! Tag @hang.withk 💛')}catch(e){if(e&&e.code!=='declined')toast('Couldn’t save it here')}return}
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=filename;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},1500);toast('Saved! Tag @hang.withk 💛')}
+const IST=()=>{const p=new Intl.DateTimeFormat('en-GB',{timeZone:'Asia/Kolkata',hour:'2-digit',minute:'2-digit',weekday:'short',day:'2-digit',month:'2-digit',year:'numeric',hour12:false}).formatToParts(new Date());const g=t=>(p.find(x=>x.type===t)||{}).value;return{h:+g('hour')%24,m:+g('minute'),wd:g('weekday'),d:g('day'),mo:g('month'),y:g('year')}};
+function canvasBase(w,h){const cv=document.createElement('canvas');cv.width=w;cv.height=h;const c=cv.getContext('2d');
+  c.fillStyle='#1f7a45';c.fillRect(0,0,w,h);for(let x=0;x<=w;x+=27){c.fillStyle=x%135===0?'#ffffff33':'#ffffff14';c.fillRect(x,0,x%135===0?2:1,h)}for(let y=0;y<=h;y+=27){c.fillStyle=y%135===0?'#ffffff33':'#ffffff14';c.fillRect(0,y,w,y%135===0?2:1)}
+  return [cv,c]}
+const FONT=(px,fam,wt='')=>`${wt} ${px}px ${fam}`.trim();
+function fitText(c,txt,x,y,maxW,px,fam,wt=''){let p=px;c.font=FONT(p,fam,wt);while(c.measureText(txt).width>maxW&&p>12){p-=2;c.font=FONT(p,fam,wt)}c.fillText(txt,x,y)}
+async function loadFonts(){try{await Promise.all(['118px Anton','64px "Permanent Marker"','30px "JetBrains Mono"','bold 30px "JetBrains Mono"','34px Caveat'].map(f=>document.fonts.load(f)))}catch(_){}}
+function zigzag(c,x,y,w,h){c.beginPath();c.moveTo(x,y);for(let i=0;i<=w;i+=20)c.lineTo(x+i,y+(i/20%2?12:0));c.lineTo(x+w,y+h);for(let i=w;i>=0;i-=20)c.lineTo(x+i,y+h-(i/20%2?12:0));c.closePath()}
+
+/* ------------ shareable receipt (story size) ------------ */
+async function storyReceipt(){await loadFonts();
+  const [cv,c]=canvasBase(1080,1920);const t=IST();const order=String(1000+Math.floor(Math.random()*9000));
+  c.textAlign='center';c.fillStyle='#ffd21f';c.font=FONT(64,'"Permanent Marker",cursive');c.save();c.translate(540,190);c.rotate(-.05);c.fillText('I visited',0,0);c.restore();
+  c.fillStyle='#fff';fitText(c,"KRISHNA'S COUNTER",540,320,960,118,'Anton,Impact,sans-serif');
+  const X=150,Y=390,W=780,H=1270;c.save();c.translate(540,Y+H/2);c.rotate(-.025);c.translate(-540,-(Y+H/2));
+  c.shadowColor='#0007';c.shadowBlur=40;c.shadowOffsetY=24;c.fillStyle='#f5eedc';zigzag(c,X,Y,W,H);c.fill();c.shadowColor='transparent';
+  const mono=s=>FONT(s,'"JetBrains Mono","Courier New",monospace');let y=Y+90;const L=X+60,Rt=X+W-60;c.fillStyle='#1b1a17';
+  const center=(txt,sz,wt='')=>{c.textAlign='center';c.font=FONT(sz,'"JetBrains Mono","Courier New",monospace',wt);c.fillText(txt,540,y);y+=sz*1.5};
+  const row=(a,b,sz=30,wt='')=>{c.font=FONT(sz,'"JetBrains Mono","Courier New",monospace',wt);c.textAlign='left';c.fillText(a,L,y);c.textAlign='right';c.fillText(String(b),Rt,y);y+=sz*1.55};
+  const dash=()=>{c.textAlign='center';c.font=mono(28);c.fillStyle='#1b1a1788';c.fillText('- '.repeat(22),540,y);c.fillStyle='#1b1a17';y+=50};
+  center("KRISHNA'S COUNTER",40,'700');center('Bengaluru · open late',28);row(`${t.d}.${t.mo}.${t.y}`,`${String(t.h).padStart(2,'0')}:${String(t.m).padStart(2,'0')} IST`);row('ORDER',`#${order}`);dash();
+  center("TODAY'S SPECIAL",26,'700');center('Senior Product Designer',38,'700');dash();
+  center('YOUR VISIT',26,'700');
+  row('Cards pulled',`${STATS.cards.size}/8`);row('Row 3 people met',STATS.met.size);row('Letters opened',STATS.letters.size);row('Unsaid things said',STATS.said);row('Secrets found',`${found.size}/6`);row('Little K caught',found.has('little')?'yes!':'not yet');dash();
+  center('No pitch. No prize.',30);center('Just a creative, saying hi.',30,'700');dash();row('TOTAL','₹0',44,'700');y+=16;
+  let bx=X+150;for(let i=0;bx<X+W-150;i++){const w=1+((i*7+3)%4);c.fillRect(bx,y,w*3,110);bx+=w*3+3+(i%3)*2}y+=150;center('THANK YOU, COME AGAIN',26,'700');
+  c.restore();
+  c.textAlign='center';c.fillStyle='#141414';const tag='@hang.withk';c.font=FONT(52,'Anton,Impact,sans-serif');const tw=c.measureText(tag).width+80;
+  c.fillStyle='#ffd21f';c.beginPath();c.roundRect?c.roundRect(540-tw/2,1720,tw,92,46):c.rect(540-tw/2,1720,tw,92);c.fill();c.fillStyle='#141414';c.fillText(tag,540,1785);
+  await saveImage(cv,'krishnas-counter-receipt.png')}
+$('#storyBtn').addEventListener('click',storyReceipt);
+
+/* ------------ agent badge for the ones who cracked the file ------------ */
+async function agentBadge(dur){await loadFonts();
+  let id=ls.get('k-agent');if(!id){id=String(1000+Math.floor(Math.random()*9000));ls.set('k-agent',id)}
+  const cv=document.createElement('canvas');cv.width=1080;cv.height=1920;const c=cv.getContext('2d');
+  const g=c.createRadialGradient(540,800,100,540,900,1100);g.addColorStop(0,'#3a2716');g.addColorStop(1,'#0b0806');c.fillStyle=g;c.fillRect(0,0,1080,1920);
+  c.textAlign='center';c.fillStyle='#ffd21f';fitText(c,'I cracked K’s secret files',540,250,960,60,'"Permanent Marker",cursive');
+  c.save();c.translate(540,960);c.rotate(-.04);
+  c.shadowColor='#000a';c.shadowBlur=50;c.shadowOffsetY=30;c.fillStyle='#d9b77a';c.fillRect(-400,-560,800,1120);c.shadowColor='transparent';
+  c.fillStyle='#f6f0e1';c.fillRect(-370,-530,740,1060);
+  c.fillStyle='#c8322b';c.font=FONT(28,'"JetBrains Mono",monospace','700');c.fillText('TOP SECRET · FILE Nº 007 · EYES ONLY',0,-470);
+  const img=new Image();img.src='img/toon_me.webp';try{await img.decode()}catch(_){}
+  c.fillStyle='#fff';c.save();c.rotate(.04);c.fillRect(-170,-430,340,400);c.fillStyle='#008080';c.fillRect(-150,-410,300,300);
+  if(img.naturalWidth){const s=Math.max(300/img.naturalWidth,300/img.naturalHeight);const w=img.naturalWidth*s,h=img.naturalHeight*s;c.save();c.beginPath();c.rect(-150,-410,300,300);c.clip();c.drawImage(img,-w/2,-410+300-h,w,h);c.restore()}
+  c.fillStyle='#1b1a17';c.font=FONT(34,'"Caveat",cursive','600');c.fillText('exhibit A',0,-62);c.restore();
+  c.fillStyle='#1b1a17';c.font=FONT(30,'"JetBrains Mono",monospace','700');c.fillText('THIS CERTIFIES THAT',0,40);
+  fitText(c,`AGENT #${id}`,0,170,680,120,'Anton,Impact,sans-serif');
+  c.font=FONT(32,'"JetBrains Mono",monospace');c.fillText('found all six secrets and read',0,240);c.fillText('the file nobody was supposed to.',0,286);
+  fitText(c,`CLEARANCE: K-LEVEL · CRACKED IN ${dur}`,0,350,680,30,'"JetBrains Mono",monospace','700');
+  c.save();c.translate(190,470);c.rotate(-.18);c.strokeStyle='#c8322b';c.lineWidth=8;c.strokeRect(-210,-60,420,100);c.fillStyle='#c8322b';fitText(c,'DECLASSIFIED',0,20,380,76,'Anton,Impact,sans-serif');c.restore();
+  c.restore();
+  c.fillStyle='#ffd21f';fitText(c,'find them yourself → @hang.withk',540,1740,960,52,'Anton,Impact,sans-serif');
+  await saveImage(cv,`agent-${id}-k-files.png`)}
+
+/* ------------ Bengaluru time: status + night mode ------------ */
+(()=>{const st=$('#kstat'),bar=$('#nightbar'),txt=$('#nbtxt'),btn=$('#nbbtn'),torch=$('#torch');
+  const q=new URLSearchParams(location.search).get('night');let lightsOn=false;
+  const status=t=>{const h=t.h,wk=t.wd==='Fri'||t.wd==='Sat';
+    return h<5?'asleep. leave a letter ✉':h<8?'waking up, slowly':h<10?'on her first chai ☕':h<13?'deep in Figma':h<14?'on lunch break':h<18?'designing something':h<20?'out for a walk':h<22?(wk?'on a dance floor somewhere 💃':'dancing in the kitchen 💃'):'should be asleep. isn’t.'};
+  const clock=t=>{const h12=t.h%12||12;return `${h12}:${String(t.m).padStart(2,'0')}${t.h<12?'am':'pm'}`};
+  function update(){const t=IST();st.textContent=`Bengaluru ${clock(t)} · K is ${status(t)}`;
+    const night=q==='1'||(q!=='0'&&(t.h>=22||t.h<5));
+    document.documentElement.classList.toggle('night',night&&!lightsOn);bar.hidden=!night;
+    txt.textContent=lightsOn?`🌙 ${clock(t)} in Bengaluru`:`🌙 ${clock(t)} in Bengaluru · K’s ${t.h>=22?'meant to be asleep':'asleep'}`;
+    btn.textContent=lightsOn?'lights off':'lights on';
+    window.LK&&LK.night(night)}
+  btn.addEventListener('click',()=>{lightsOn=!lightsOn;sfx('click');update()});
+  let tx=innerWidth/2,ty=innerHeight/2;const mv=(x,y)=>{tx=x;ty=y;torch.style.setProperty('--tx',x+'px');torch.style.setProperty('--ty',y+'px')};mv(tx,ty);
+  addEventListener('pointermove',e=>mv(e.clientX,e.clientY),{passive:true});addEventListener('pointerdown',e=>mv(e.clientX,e.clientY),{passive:true});
+  update();setInterval(update,30000);window.KNIGHT=update})();
+
+/* ------------ ask K anything ------------ */
+(()=>{const f=$('#askk'),inp=$('#askq'),st=$('#askst');if(!f)return;
+  f.addEventListener('submit',async e=>{e.preventDefault();const q=inp.value.trim();if(!q)return;const b=f.querySelector('button');b.disabled=true;st.textContent='sending…';
+    let ok=false;try{const db=await window.claude?.use?.('db'),user=await window.claude?.use?.('user');const uid=user?await user.id():null;
+      if(db&&uid){const ref=db.doc('inbox/'+uid);const snap=await ref.get();const qs=((snap.exists&&snap.data().questions)||[]).slice(-19).concat({text:q,at:Date.now()});
+        if(snap.exists)await ref.update({questions:qs});else await ref.set({questions:qs});ok=true}}catch(_){}
+    b.disabled=false;
+    if(ok){inp.value='';st.textContent='Sent! Watch @hang.withk 👀';say('ooh, good question!');sfx('pop')}
+    else{st.innerHTML=`This page can’t post from here yet. <a href="mailto:krishna.agrwlx@gmail.com?subject=${encodeURIComponent('A question for Hang with K')}&body=${encodeURIComponent(q)}">Send it as an email ↗</a>`}})})();
 
 /* ------------ type her name ------------ */
 let typed='';
