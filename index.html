@@ -747,6 +747,58 @@ footer.foot a:hover{transform:rotate(-3deg)}
 .me:focus-visible{outline:3px solid #ffd21f;outline-offset:4px;border-radius:12px}
 .me:focus-visible .sil{opacity:0}.me:focus-visible img{opacity:1;transform:scale(1.18) translateY(-6%)}
 @media (hover:none){.lk{pointer-events:none}}
+
+/* ---------- secret files: pill, case file, vault ---------- */
+button.eggs{border:0;cursor:pointer;font:700 10px/1 var(--f-pixel);color:var(--stamp)}
+button.eggs:hover{transform:rotate(-2deg) scale(1.05)}
+.eggs .elk{font-size:13px}
+.eggs.bump{animation:ebump .6s cubic-bezier(.3,1.8,.5,1)}
+@keyframes ebump{40%{transform:rotate(-6deg) scale(1.25)}}
+.eggs.open{background:#ff2b1f;color:#fff;box-shadow:0 0 0 3px #ffd21f,0 8px 16px #0005;animation:eglow 1.6s ease-in-out infinite}
+.eggs.open .dots i{border-color:#fff}.eggs.open .dots i.on{background:#fff}
+@keyframes eglow{50%{box-shadow:0 0 0 6px #ffd21f,0 8px 22px #ff2b1f88}}
+@media (max-width:700px){.eggs{display:flex!important;left:auto;right:10px;top:calc(10px + env(safe-area-inset-top,0px));bottom:auto;padding:7px 9px;gap:6px}.eggs .etx{display:none}.eggs .dots i{width:7px;height:7px}}
+.casefile{position:fixed;left:16px;bottom:64px;z-index:96;width:min(320px,calc(100vw - 32px));background:#f4ecd8;color:#1c1a17;border:2px solid #1c1a17;box-shadow:6px 6px 0 #1c1a17;padding:14px 16px;font:400 14px/1.4 "Special Elite",monospace;transform:rotate(-1deg);animation:wopen .25s ease-out}
+.casefile b{font:700 12px/1 var(--f-mono);letter-spacing:.12em;color:#c8322b}
+.casefile .cf-sub{display:block;font:600 16px/1.1 var(--f-hand);margin:4px 0 8px;color:#6b665c}
+.casefile ol{list-style:none;margin:0;padding:0;display:grid;gap:7px}
+.casefile li{display:grid;grid-template-columns:20px 1fr;gap:8px;align-items:start}
+.casefile li i{width:18px;height:18px;border:2px solid #1c1a17;display:grid;place-items:center;font:700 13px/1 var(--f-mono);font-style:normal;color:#c8322b}
+.casefile li.got span{text-decoration:line-through 2px #c8322b;opacity:.65}
+.casefile .cf-x{margin-top:10px;background:#1c1a17;color:#f4ecd8;border:0;padding:7px 12px;font:700 11px/1 var(--f-mono);cursor:pointer}
+.casefile .sr,.vault .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+@media (max-width:700px){.casefile{left:auto;right:10px;top:52px;bottom:auto}}
+.lkhit{position:absolute;left:28%;right:28%;top:22%;bottom:4%;pointer-events:auto;border-radius:40%}
+html.vault-open{overflow:hidden}
+.vault{position:fixed;inset:0;z-index:140;display:grid;place-items:center;padding:18px;background:radial-gradient(circle at 50% 40%,#2a1d12ee,#0b0806f5);overflow:auto}
+.vfold{position:relative;width:min(680px,100%);perspective:1800px;transform:translateY(110vh)}
+.vtab{position:absolute;left:28px;top:-30px;background:#d9b77a;color:#3d2a12;font:700 11px/1 var(--f-mono);letter-spacing:.12em;padding:10px 16px 12px;border-radius:8px 8px 0 0;box-shadow:inset 0 -3px 0 #0001}
+.vpaper{position:relative;background:#f6f0e1;background-image:repeating-linear-gradient(transparent 0 31px,#d9cfb855 31px 32px);border:10px solid #d9b77a;border-radius:4px;padding:clamp(22px,4vw,40px);color:#1c1a17;font:400 15px/1.5 "Special Elite","Courier New",monospace;box-shadow:0 40px 80px #000a}
+.vkick{display:block;font:700 10px/1.3 var(--f-mono);letter-spacing:.14em;color:#c8322b;max-width:30ch}
+.vpaper h2{margin:10px 0 16px;font:400 clamp(30px,5vw,46px)/1 "Abril Fatface",serif;letter-spacing:-.01em;max-width:12ch}
+.vclip{position:absolute;right:clamp(14px,4vw,34px);top:-22px;width:clamp(110px,22vw,150px);background:#fff;padding:8px 8px 26px;transform:rotate(5deg);box-shadow:0 10px 20px #0004}
+.vclip img{display:block;width:100%;aspect-ratio:1;object-fit:cover;object-position:50% 20%;background:#008080}
+.vclip span{position:absolute;left:0;right:0;bottom:6px;text-align:center;font:600 16px/1 var(--f-hand)}
+.vclip::before{content:"";position:absolute;left:50%;top:-14px;width:16px;height:40px;border:3px solid #8a8a8a;border-radius:10px;transform:translateX(-50%) rotate(-8deg)}
+.vdl{display:grid;grid-template-columns:max-content 1fr;gap:6px 16px;margin:0 0 18px}
+.vdl dt{font:700 10px/1.9 var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:#6b665c}
+.vdl dd{margin:0}
+.vdl a{color:#c8322b}
+.vred{font:inherit;color:transparent;background:#141210;border:0;padding:0 4px;cursor:pointer;border-radius:1px;transition:color .3s,background .5s;text-align:left}
+.vred:hover,.vred:focus-visible,.vred.shown{color:#1c1a17;background:#ffd21f66}
+.vnote{font:600 clamp(20px,2.6vw,25px)/1.25 var(--f-hand);color:#1b2cc8;margin:0 0 16px;max-width:46ch;transform:rotate(-.6deg)}
+.vnote span{display:block;text-align:right;color:#c8322b}
+.vacts{display:flex;flex-wrap:wrap;gap:10px}
+.vbtn{display:inline-block;background:#c8322b;color:#fff;text-decoration:none;border:2px solid #1c1a17;border-radius:999px;padding:11px 18px;font:700 14px/1 var(--f-body);cursor:pointer;box-shadow:3px 3px 0 #1c1a17}
+.vbtn.ghost{background:#f6f0e1;color:#1c1a17}
+.vtime{display:block;margin-top:14px;font:700 10px/1 var(--f-mono);letter-spacing:.12em;color:#6b665c}
+.vstamp{position:absolute;right:clamp(14px,5vw,46px);top:clamp(190px,34%,240px);font:400 clamp(26px,5vw,46px)/1 Anton,sans-serif;letter-spacing:.06em;color:#c8322b;border:5px solid #c8322b;padding:6px 14px;transform:rotate(-14deg);opacity:0;mix-blend-mode:multiply;pointer-events:none;mask:radial-gradient(circle at 30% 40%,#000 0 60%,#0008 80%);-webkit-mask:radial-gradient(circle at 30% 40%,#000 0 60%,#0008 80%)}
+.vcover{position:absolute;inset:-10px -10px -10px -10px;background:#d9b77a;border-radius:4px;transform-origin:0 50%;backface-visibility:hidden;display:grid;place-items:center;align-content:center;gap:14px;box-shadow:inset 0 0 0 2px #c4a062,0 30px 60px #0008;background-image:linear-gradient(90deg,#0000 0 96%,#c4a062 96%)}
+.vcover span{font:400 120px/1 "DM Serif Display",serif;color:#3d2a12}
+.vcover b{font:400 26px/1 Anton,sans-serif;letter-spacing:.2em;color:#c8322b;border:3px solid #c8322b;padding:6px 14px;transform:rotate(-6deg)}
+@media (max-width:560px){.vdl{grid-template-columns:1fr;gap:0 0}.vdl dd{margin-bottom:8px}.vclip{top:-40px}.vpaper h2{margin-top:30px}.vstamp{top:300px}}
+.kpg button{display:grid;place-items:center;align-content:center;gap:1px;line-height:1}
+.kpg button small{font:700 7px/1 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:#7a7364;min-height:7px}
 </style>
 </head>
 <body>
@@ -880,9 +932,9 @@ footer.foot a:hover{transform:rotate(-3deg)}
 </div>
 <div class="ruler" aria-hidden="true"></div>
 
-<div class="lk" id="lk" role="button" tabindex="0" aria-label="Little Krishna. Click her."><div class="lkb" id="lkb"></div></div>
+<div class="lk" id="lk" role="button" tabindex="0" aria-label="Little Krishna. Click her."><div class="lkb" id="lkb"></div><span class="lkhit" aria-hidden="true"></span></div>
 <div class="introsign" id="introsign" aria-hidden="true"><div class="rope"></div><div class="card2"><span class="hook"></span><div class="flipper"><div class="s"><b>HANG WITH <em>K</em></b><span>come on in</span></div><div class="s b2"><b>WE’RE OPEN!</b></div></div></div></div>
-<div class="eggs" aria-live="polite"><span>Declassified</span><span class="dots" id="dots"><i></i><i></i><i></i><i></i><i></i><i></i></span><span id="eggN">0/6</span></div>
+<button type="button" class="eggs" id="eggPill" aria-label="Secret files found: 0 of 6. Open the case file."><span class="elk" aria-hidden="true">🔒</span><span class="etx">Secret files</span><span class="dots" id="dots"><i></i><i></i><i></i><i></i><i></i><i></i></span><span id="eggN">0/6</span></button>
 <div class="toast" id="toast" role="status"></div>
 
 <script>
@@ -892,15 +944,83 @@ const $ = s => document.querySelector(s);
 const IMG = n => `img/${n}.webp`;
 /* ------------ easter eggs ------------ */
 const found = new Set();
-const EGGS={little:'You caught little Krishna!',peel:'Engineer label peeled off. It never stuck.',paisley:'Bandana burst!',peek:'Caught peeking over the shades.',idle:'You went quiet, so she turned around.',word:'You typed her name. Roll the titles!'};
+const EGGS={
+  little:{n:'Catch the tiny one running around.',t:'You caught little Krishna!'},
+  people:{n:'Meet everyone in my row.',t:'Row 3, fully met. They like you.'},
+  cards:{n:'Pull three conversations off the line.',t:'Three cards pulled. Chatty!'},
+  sealed:{n:'Seal a secret.',t:'Sealed with a K. Secret kept.'},
+  dial:{n:'Call me. Spell it out on the keypad.',t:'You dialled my name. Who told you?!'},
+  coin:{n:'Pay a rupee at the counter.',t:'₹1 well spent.'}};
+const EXTRA={peel:'Engineer label peeled off. It never stuck.',paisley:'Bandana burst!',peek:'Caught peeking over the shades.',idle:'You went quiet, so she turned around.',word:'You typed her name. Roll the titles!'};
+const KEYS=Object.keys(EGGS);
+const ls={get(k){try{return localStorage.getItem(k)}catch(_){return null}},set(k,v){try{localStorage.setItem(k,v)}catch(_){}}};
+try{JSON.parse(ls.get('k-eggs')||'[]').forEach(k=>KEYS.includes(k)&&found.add(k))}catch(_){}
+if(!ls.get('k-start'))ls.set('k-start',String(Date.now()));
 let toastT;
 function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('on'),2600)}
-function egg(k){ if(found.has(k)) return; found.add(k);
-  [...$('#dots').children].forEach((d,i)=>d.classList.toggle('on',i<found.size)); $('#eggN').textContent=`${found.size}/6`;
-  const st=document.querySelector('.stamp .cnt'); if(st) st.textContent=`${found.size}/6 DECLASSIFIED`;
-  toast(found.size===6?'All six files declassified. You know her now.':EGGS[k]);
+function eggUI(){const n=found.size;[...$('#dots').children].forEach((d,i)=>d.classList.toggle('on',i<n));$('#eggN').textContent=`${n}/6`;
+  const p=$('#eggPill');p.classList.toggle('open',n===6);p.querySelector('.elk').textContent=n===6?'🔓':'🔒';p.querySelector('.etx').textContent=n===6?'Open the file':'Secret files';
+  p.setAttribute('aria-label',n===6?'All six found. Open the top secret file.':`Secret files found: ${n} of 6. Open the case file.`);
+  const st=document.querySelector('.stamp .cnt'); if(st) st.textContent=`${n}/6 DECLASSIFIED`}
+function egg(k){ if(!EGGS[k]){if(EXTRA[k])toast(EXTRA[k]);return}
+  if(found.has(k)) return; found.add(k); ls.set('k-eggs',JSON.stringify([...found])); eggUI();
+  const p=$('#eggPill');p.classList.remove('bump');void p.offsetWidth;p.classList.add('bump');
+  if(found.size===6){ls.set('k-done',String(Date.now()));toast('All six found. Something just unlocked…');setTimeout(()=>vault(true),1400)}
+  else toast(`${EGGS[k].t}  (${found.size}/6)`);
 }
+function caseFile(){let c=$('#casefile');if(c){c.remove();return}
+  c=document.createElement('div');c.id='casefile';c.className='casefile';c.setAttribute('role','dialog');c.setAttribute('aria-label','Case file: six secrets');
+  c.innerHTML=`<b>CASE FILE · K</b><span class="cf-sub">find all six to open her secret file</span><ol>${KEYS.map(k=>`<li class="${found.has(k)?'got':''}"><i aria-hidden="true">${found.has(k)?'✓':''}</i><span>${EGGS[k].n}</span>${found.has(k)?'<em class="sr">found</em>':''}</li>`).join('')}</ol><button type="button" class="cf-x">close</button>`;
+  document.body.appendChild(c);c.querySelector('.cf-x').onclick=()=>c.remove();c.querySelector('.cf-x').focus()}
+$('#eggPill').addEventListener('click',()=>found.size===6?vault(false):caseFile());
+addEventListener('keydown',e=>{if(e.key==='Escape'){const c=$('#casefile');if(c)c.remove()}});
+eggUI();
 
+/* ------------ the hidden page: her top secret file ------------ */
+function vault(fresh){if($('#vault'))return;const last=document.activeElement;
+  const t0=+ls.get('k-start')||Date.now(), t1=+ls.get('k-done')||Date.now();const sec=Math.max(1,Math.round((t1-t0)/1000));
+  const dur=sec<3600?`${String(Math.floor(sec/60)).padStart(2,'0')}:${String(sec%60).padStart(2,'0')}`:`${Math.floor(sec/3600)}h ${Math.floor(sec%3600/60)}m`;
+  const red=(txt)=>`<button type="button" class="vred" aria-label="Redacted. Reveal">${txt}</button>`;
+  const v=document.createElement('div');v.id='vault';v.className='vault';v.setAttribute('role','dialog');v.setAttribute('aria-modal','true');v.setAttribute('aria-labelledby','vT');
+  v.innerHTML=`<div class="vfold">
+    <div class="vtab">FILE Nº 007 · EYES ONLY</div>
+    <div class="vpaper">
+      <div class="vclip" aria-hidden="true"><img src="img/toon_me.webp" alt=""><span>exhibit A</span></div>
+      <span class="vkick">TOP SECRET · PERSONAL · DO NOT SHARE (okay, maybe share)</span>
+      <h2 id="vT">Subject file: Krishna</h2>
+      <dl class="vdl">
+        <dt>Alias</dt><dd>K · Little K · the one in seat 7</dd>
+        <dt>Occupation</dt><dd>Senior Product Designer, by day</dd>
+        <dt>Side quest</dt><dd>runs <a href="https://www.instagram.com/hang.withk/" target="_blank" rel="noopener">@hang.withk</a>, conversations on a string</dd>
+        <dt>Base</dt><dd>Bengaluru</dd>
+        <dt>Weaknesses</dt><dd>${red('mountains, new cafés, any dance floor')}</dd>
+        <dt>As a kid, wanted to be</dt><dd>${red('a kind person. still on it.')}</dd>
+        <dt>Still figuring out</dt><dd>${red('what I want to be. and that’s okay.')}</dd>
+        <dt>Currently learning</dt><dd>go for the experiences. it’s scary. go anyway.</dd>
+        <dt>Threat level</dt><dd>will hype your ideas to an unreasonable degree</dd>
+      </dl>
+      <p class="vnote">Okay. You found all six. That means you’re curious, and curious people are my favourite people. Say hi, and tell me which one was the hardest to find. <span>— K.</span></p>
+      <div class="vacts"><a class="vbtn" href="mailto:krishna.agrwlx@gmail.com?subject=${encodeURIComponent('I found all six files')}&body=${encodeURIComponent('Hi Krishna! The hardest one was: ')}">Tell her you cracked it</a><button type="button" class="vbtn ghost" id="vClose">Close the file</button></div>
+      <span class="vtime">case cracked in ${dur}</span>
+      <div class="vstamp" aria-hidden="true">DECLASSIFIED</div>
+    </div>
+    <div class="vcover" aria-hidden="true"><span>K.</span><b>CONFIDENTIAL</b></div>
+  </div>`;
+  document.body.appendChild(v);document.documentElement.classList.add('vault-open');
+  v.querySelectorAll('.vred').forEach(b=>b.addEventListener('click',()=>{b.classList.add('shown');b.setAttribute('aria-label','Revealed');sfx('paper')}));
+  const close=()=>{const a=v.animate([{opacity:1},{opacity:0}],{duration:RM?1:260,fill:'forwards'});a.onfinish=()=>{v.remove();document.documentElement.classList.remove('vault-open');last&&last.focus&&last.focus()}};
+  $('#vClose').onclick=close;v.addEventListener('click',e=>{if(e.target===v)close()});
+  const esc=e=>{if(e.key==='Escape'){close();removeEventListener('keydown',esc)}};addEventListener('keydown',esc);
+  const F=v.querySelector('.vfold'),C=v.querySelector('.vcover'),S=v.querySelector('.vstamp');
+  if(RM){C.style.display='none';S.style.opacity=1;$('#vClose').focus();return}
+  F.animate([{transform:'translateY(110vh) rotate(8deg)'},{transform:'translateY(-14px) rotate(-1.5deg)',offset:.8},{transform:'translateY(0) rotate(-1deg)'}],{duration:800,easing:'cubic-bezier(.2,.9,.3,1)',fill:'forwards'});
+  sfx('paper');
+  setTimeout(()=>{sfx('paper');C.animate([{transform:'rotateY(0deg)'},{transform:'rotateY(-172deg)'}],{duration:900,easing:'cubic-bezier(.6,0,.3,1)',fill:'forwards'}).onfinish=()=>C.style.visibility='hidden'},900);
+  setTimeout(()=>{S.animate([{opacity:0,transform:'rotate(-14deg) scale(2.6)'},{opacity:1,transform:'rotate(-14deg) scale(.92)',offset:.6},{opacity:1,transform:'rotate(-14deg) scale(1)'}],{duration:380,easing:'cubic-bezier(.3,1.3,.5,1)',fill:'forwards'});sfx('pop');
+    v.querySelector('.vpaper').animate([{transform:'translate(0,0)'},{transform:'translate(-3px,3px)'},{transform:'translate(2px,-1px)'},{transform:'translate(0,0)'}],{duration:220});
+    if(fresh){const r=S.getBoundingClientRect();confetti(r,'#ff2b1f')}},2000);
+  setTimeout(()=>$('#vClose').focus({preventScroll:true}),2100);
+}
 
 /* ------------ ransom letters ------------ */
 const RSTY=[
@@ -1166,7 +1286,7 @@ If it isn't, the next one will be.
   let lw=linesEl.clientWidth;addEventListener('resize',()=>{if(Math.abs(linesEl.clientWidth-lw)>50){lw=linesEl.clientWidth;layout();cards.forEach(c=>{c.drop=0;c.dv=0});place()}});
   // pulled card
   let cur=null,lastF=null;
-  function openCard(st){cur=st;lastF=document.activeElement;const c=CARDS[st.i];STATS.cards.add(st.i);st.el.classList.add('gone');
+  function openCard(st){cur=st;lastF=document.activeElement;const c=CARDS[st.i];STATS.cards.add(st.i);if(STATS.cards.size>=3)egg('cards');st.el.classList.add('gone');
     $('#pcard').innerHTML=`<button class="pclose" id="pclose" type="button">Hang it back ✕</button><div class="inner"><div class="side front"><span class="lbl2" style="font:700 11px/1 var(--f-mono);letter-spacing:.12em;color:#ffffff80;margin-bottom:14px">Q.${String(st.i+1).padStart(2,'0')} · HANG.WITHK</span><div class="q">${c.q}</div><span class="tap">tap to flip ↻</span></div>
       <div class="side back"><span class="lbl2">K SAYS</span><div class="qq">${c.q.replace(/<[^>]+>/g,'')}</div><div class="a">${c.a}</div><div class="acts"><a href="${IG}" target="_blank" rel="noopener">Watch on @hang.withk ↗</a><button type="button" id="pflip">↻ flip back</button></div></div></div>`;
     $('#pcard').classList.remove('flip');pull.hidden=false;$('#pclose').focus();
@@ -1332,7 +1452,7 @@ function confetti(r,c){if(RM)return;const cols=[c,'#fff','#f5b301','#ff4fa3','#2
   async function send(){const t=$('#anon').value.trim();const st=$('#cst');if(!t){st.innerHTML='<p class="note">Write something first.</p>';return}
     $('#seal').disabled=true;
     const saving=(async()=>{ if(!db||!uid) throw 0; const ref=db.doc('inbox/'+uid); const snap=await ref.get(); const letters=((snap.exists&&snap.data().letters)||[]).slice(-19).concat({text:t,at:Date.now()}); await ref.set({letters}); return true})().catch(()=>false);
-    const ok=await foldAndSeal(t, saving);
+    const ok=await foldAndSeal(t, saving);egg('sealed');
     if(ok){say('a letter for us?!')}
   }
   function esc(x){return String(x).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]))}
@@ -1552,7 +1672,7 @@ function glove(dx,dy){const g=$('#glove');if(!g||RM)return;g.classList.remove('g
 // Row 3 ticket profiles
 const KNOWN={'the 3am call':'picks up on the first ring. every time.','hype woman':'thinks every idea is “literally genius”.','honest critic':'says “hmm” in a way that saves projects.','dance partner':'knows every step of the kitchen routine.','travel buddy':'has the window seat. gives it up anyway.','chai o’clock':'shows up at 5pm with two cups.','spare keys':'has a key. has had it for years.','meme dealer':'sends 14 reels a day. 3 are good.','says “sleep!”':'texts “go to bed” at 1:59am.','first to reply':'replies before you hit send.','plot twist':'turned up out of nowhere. stayed.','co-conspirator':'in on every terrible idea.'};
 addEventListener('keydown',e=>{if(e.key==='Escape'){const tk=$('#ticket');if(tk&&!tk.hidden){tk.hidden=true}}});
-function poster(V,p){const th=$('#people');let tk=$('#ticket');if(!tk){tk=document.createElement('div');tk.id='ticket';th.appendChild(tk)}
+const MET4=new Set();function poster(V,p){MET4.add(V.img);if(MET4.size===4)setTimeout(()=>egg('people'),600);const th=$('#people');let tk=$('#ticket');if(!tk){tk=document.createElement('div');tk.id='ticket';th.appendChild(tk)}
   tk.className='ticket poster';tk.setAttribute('role','dialog');tk.setAttribute('aria-label',V.role);
   const n=[...th.querySelectorAll('.pp.vip')].indexOf(p)+1;
   tk.innerHTML=`<span class="pk">NOW SHOWING · ROW 3 · SEAT 0${n}</span><div class="pimg"><img src="img/${V.img}.webp" alt="${V.who||V.role}"></div><span class="pst">starring</span><b>${V.who||'my person'}</b><span class="pas">as <i>${V.role}</i></span><span class="pmem">“${V.line}”</span><span class="pft">A KRISHNA PRODUCTION · ADMIT ONE</span><button type="button" aria-label="Close poster">×</button>`;
@@ -1640,11 +1760,11 @@ function ticket(p){const th=$('#people');let tk=$('#ticket');if(!tk){tk=document
     new IntersectionObserver(es=>{if(es[0].isIntersecting&&!rang&&!hs.classList.contains('up')){rang=true;if(RM)return;hs.classList.add('ringing');const rb=document.createElement('span');rb.id='ringb';rb.className='ringb';rb.textContent='RING RING!';sec.appendChild(rb);sfx('ring');ringT=setInterval(()=>sfx('ring'),1600);setTimeout(stopRing,7000)}},{threshold:.45}).observe(sec);
     hs.addEventListener('click',stopRing);
     const kp=document.createElement('div');kp.className='kp';kp.setAttribute('aria-label','Keypad: dial K');
-    kp.innerHTML=`<div class="kpd" id="kpd" aria-live="polite">dial K…</div><div class="kpg">${['1','2','3','4','5','6','7','8','9','*','0','#'].map(n=>`<button type="button" data-n="${n}">${n}</button>`).join('')}</div><div class="kpr"><button type="button" class="kpc" id="kpc" aria-label="Clear">⌫</button><button type="button" class="kpcall" id="kpcall">Call</button></div>`;
+    kp.innerHTML=`<div class="kpd" id="kpd" aria-live="polite">dial K…</div><div class="kpg">${[['1',''],['2','abc'],['3','def'],['4','ghi'],['5','jkl'],['6','mno'],['7','pqrs'],['8','tuv'],['9','wxyz'],['*',''],['0',''],['#','']].map(([n,l])=>`<button type="button" data-n="${n}" aria-label="${n}${l?' '+l:''}">${n}<small>${l}</small></button>`).join('')}</div><div class="kpr"><button type="button" class="kpc" id="kpc" aria-label="Clear">⌫</button><button type="button" class="kpcall" id="kpcall">Call</button></div>`;
     sec.appendChild(kp);let num='';const disp=$('#kpd');
     kp.querySelectorAll('[data-n]').forEach(b=>b.addEventListener('click',()=>{if(num.length<12){num+=b.dataset.n;disp.textContent=num;sfx('key')}}));
     $('#kpc').addEventListener('click',()=>{num=num.slice(0,-1);disp.textContent=num||'dial K…'});
-    $('#kpcall').addEventListener('click',()=>{if(num.length<3){disp.textContent='too short!';return}const n=num;disp.textContent='calling…';stopRing();
+    $('#kpcall').addEventListener('click',()=>{if(num.length<3){disp.textContent='too short!';return}const n=num;if(n==='5747462'){disp.textContent='K-R-I-S-H-N-A ✓';stopRing();sfx('pop');egg('dial');setTimeout(()=>{const live=hs.classList.contains('up');if(!live)hs.click();setTimeout(()=>{window.UNSAID&&UNSAID.reply([['you SPELLED my name 😭'],['okay you’re officially in the secret club'],['ask me anything ↓']]);num=''},live?300:2800)},400);return}disp.textContent='calling…';stopRing();
       const live=hs.classList.contains('up');if(!live)hs.click();
       setTimeout(()=>{window.UNSAID&&UNSAID.reply([[`wait. did you just dial ${n}?`],['how did you even get this number 👀'],['…okay fine, ask me something ↓']]);disp.textContent='connected ✓';num=''},live?300:2800)})}
 
@@ -1655,7 +1775,7 @@ function ticket(p){const th=$('#people');let tk=$('#ticket');if(!tk){tk=document
     till.appendChild(g);
     const slot=document.createElement('div');slot.className='coinslot';slot.innerHTML='<span>₹</span>';mach.appendChild(slot);
     const coin=document.createElement('button');coin.type='button';coin.className='coin';coin.setAttribute('aria-label','Drop a ₹1 coin to print your receipt');coin.innerHTML='<span>₹1</span>';till.appendChild(coin);
-    coin.addEventListener('click',()=>{if(coin.classList.contains('drop'))return;coin.classList.add('drop');sfx('coin');setTimeout(()=>{$('#kGreen').click();say('ka-ching!')},650);setTimeout(()=>coin.classList.remove('drop'),2600)})}
+    coin.addEventListener('click',()=>{if(coin.classList.contains('drop'))return;coin.classList.add('drop');sfx('coin');setTimeout(()=>egg('coin'),900);setTimeout(()=>{$('#kGreen').click();say('ka-ching!')},650);setTimeout(()=>coin.classList.remove('drop'),2600)})}
 
   // ---- scroll transitions: paper plane + falling popcorn between sections
   const wrap=document.querySelector('.wrap');const plane=document.createElement('div');plane.className='plane';plane.setAttribute('aria-hidden','true');
