@@ -598,7 +598,7 @@ footer.foot a:hover{transform:rotate(-3deg)}
 .kpg button:active,.kpr button:active{transform:translateY(2px);box-shadow:0 1px 0 #a9a294}
 .kpr{display:grid;grid-template-columns:1fr 2fr;gap:6px}
 .kpcall{background:#2fae4e!important;color:#fff}
-@media (max-width:1100px){.kp{position:relative;right:auto;top:auto;margin:16px auto 0;width:min(240px,100%)}}
+@media (max-width:959px){.kp{position:relative;right:auto;top:auto;margin:16px auto 0;width:min(240px,100%)}}
 /* receipt */
 .glove{position:absolute;left:50%;bottom:520px;width:120px;z-index:6;pointer-events:none;opacity:0;transform:translate(-50%,0)}
 .glove.grab{animation:grab 1s cubic-bezier(.4,0,.3,1) forwards}
@@ -834,6 +834,36 @@ html.night .torch{opacity:1}
 .askst{margin:0;min-height:1.2em;font:500 13px/1.4 var(--f-body);color:#ffffffc0}.askst a{color:#ffe14a}
 /* ---------- story button ---------- */
 .counter .btn.story{background:transparent;color:#fff;border:2px solid #fff;margin-top:8px}
+
+/* ---------- unsaid: dialer sits beside the hanging phone ---------- */
+.kpbrand{font:700 10px/1 var(--f-mono);letter-spacing:.18em;color:#6b6456;display:flex;justify-content:space-between}
+.kpbrand i{font-style:normal;color:#c8322b}
+.kphint{font:600 15px/1.1 var(--f-hand);color:#6b6456;text-align:center}
+@media (min-width:960px){
+  .unsaid{grid-template-columns:minmax(0,640px) 210px;justify-content:center;column-gap:44px;align-items:center;--shift:-127px}
+  .unsaid>.sechead{grid-column:1/-1;width:100%}
+  .unsaid>.win{grid-column:1;grid-row:2}
+  .kp{position:relative;right:auto;top:auto;grid-column:2;grid-row:2;width:210px;margin:0;align-self:center;transform:rotate(2deg)}
+  .kp::before{content:"";position:absolute;left:-44px;top:50%;width:44px;height:3px;background:repeating-linear-gradient(90deg,#d8262b 0 6px,transparent 6px 8px);border-radius:2px}
+  .unsaid .cord,.unsaid .handset{left:calc(50% + var(--shift))}
+  .unsaid .pickup{right:auto;left:calc(50% + var(--shift) + 74px)}
+  .unsaid .ringb{left:calc(50% + var(--shift) + 70px)}
+  .unsaid .pxcursor{right:calc(50% - var(--shift) - 354px)}
+}
+/* ---------- mobile: secret-files pill tucks away while scrolling down ---------- */
+@media (max-width:700px){.eggs{transition:transform .3s ease}.eggs.tuck{transform:translateY(-160%)}}
+
+/* ---------- phone fixes ---------- */
+.till{height:var(--th,880px)}
+@media (max-width:860px){.till{height:var(--th,340px);transition:height .12s linear}}
+@media (max-width:700px){
+  .unsaid .ringb{left:auto;right:6px;top:250px;font-size:17px;padding:4px 7px}
+  .unsaid .pxcursor{display:none}
+  .unsaid .handset{width:84px;top:250px}
+  .unsaid .pickup{top:400px}
+  .pp.vip{width:calc(var(--w) * 1.06);margin-inline:calc(var(--w) * -.08)}
+  .me{width:calc(var(--w) * 1.9);margin-inline:calc(var(--w) * -.16)}
+}
 </style>
 </head>
 <body>
@@ -1799,7 +1829,7 @@ function ticket(p){const th=$('#people');let tk=$('#ticket');if(!tk){tk=document
     new IntersectionObserver(es=>{if(es[0].isIntersecting&&!rang&&!hs.classList.contains('up')){rang=true;if(RM)return;hs.classList.add('ringing');const rb=document.createElement('span');rb.id='ringb';rb.className='ringb';rb.textContent='RING RING!';sec.appendChild(rb);sfx('ring');ringT=setInterval(()=>sfx('ring'),1600);setTimeout(stopRing,7000)}},{threshold:.45}).observe(sec);
     hs.addEventListener('click',stopRing);
     const kp=document.createElement('div');kp.className='kp';kp.setAttribute('aria-label','Keypad: dial K');
-    kp.innerHTML=`<div class="kpd" id="kpd" aria-live="polite">dial K…</div><div class="kpg">${[['1',''],['2','abc'],['3','def'],['4','ghi'],['5','jkl'],['6','mno'],['7','pqrs'],['8','tuv'],['9','wxyz'],['*',''],['0',''],['#','']].map(([n,l])=>`<button type="button" data-n="${n}" aria-label="${n}${l?' '+l:''}">${n}<small>${l}</small></button>`).join('')}</div><div class="kpr"><button type="button" class="kpc" id="kpc" aria-label="Clear">⌫</button><button type="button" class="kpcall" id="kpcall">Call</button></div>`;
+    kp.innerHTML=`<span class="kpbrand">K-PHONE <i>☎</i></span><div class="kpd" id="kpd" aria-live="polite">dial K…</div><div class="kpg">${[['1',''],['2','abc'],['3','def'],['4','ghi'],['5','jkl'],['6','mno'],['7','pqrs'],['8','tuv'],['9','wxyz'],['*',''],['0',''],['#','']].map(([n,l])=>`<button type="button" data-n="${n}" aria-label="${n}${l?' '+l:''}">${n}<small>${l}</small></button>`).join('')}</div><div class="kpr"><button type="button" class="kpc" id="kpc" aria-label="Clear">⌫</button><button type="button" class="kpcall" id="kpcall">Call</button></div><span class="kphint">psst… try spelling my name</span>`;
     sec.appendChild(kp);let num='';const disp=$('#kpd');
     kp.querySelectorAll('[data-n]').forEach(b=>b.addEventListener('click',()=>{if(num.length<12){num+=b.dataset.n;disp.textContent=num;sfx('key')}}));
     $('#kpc').addEventListener('click',()=>{num=num.slice(0,-1);disp.textContent=num||'dial K…'});
@@ -2008,6 +2038,14 @@ async function agentBadge(dur){await loadFonts();
     b.disabled=false;
     if(ok){inp.value='';st.textContent='Sent! Watch @hang.withk 👀';say('ooh, good question!');sfx('pop')}
     else{st.innerHTML=`This page can’t post from here yet. <a href="mailto:krishna.agrwlx@gmail.com?subject=${encodeURIComponent('A question for Hang with K')}&body=${encodeURIComponent(q)}">Send it as an email ↗</a>`}})})();
+
+/* ------------ mobile: tuck fixed badges while scrolling down ------------ */
+(()=>{let ly=scrollY;addEventListener('scroll',()=>{const y=scrollY,p=$('#eggPill');if(!p)return;if(Math.abs(y-ly)<12)return;p.classList.toggle('tuck',y>ly&&y>200);ly=y},{passive:true})})();
+
+/* ------------ counter: till grows with the receipt on phones ------------ */
+(()=>{const till=$('#till'),rc=$('#receipt');if(!till||!rc||!window.ResizeObserver)return;const mq=matchMedia('(max-width:860px)');
+  const fit=()=>{if(!mq.matches){till.style.removeProperty('--th');return}const h=rc.classList.contains('torn')?0:rc.getBoundingClientRect().height;till.style.setProperty('--th',Math.max(340,Math.round(h)+262)+'px')};
+  new ResizeObserver(fit).observe(rc);mq.addEventListener?.('change',fit);fit()})();
 
 /* ------------ type her name ------------ */
 let typed='';
