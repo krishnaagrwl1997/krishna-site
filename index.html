@@ -735,7 +735,7 @@ footer.foot a:hover{transform:rotate(-3deg)}
 .poster .pimg{position:relative;margin:6px 0 4px;height:150px;background:radial-gradient(circle at 50% 70%,#ff2b1f 0 45%,#a8160f 70%);overflow:hidden;border-radius:3px}
 .poster .pimg img{position:absolute;bottom:0;left:50%;transform:translateX(-50%);height:96%;width:auto;max-width:none;filter:grayscale(.2) contrast(1.05) drop-shadow(0 6px 8px #0007)}
 .poster .pst{font:700 10px/1 var(--f-mono);letter-spacing:.3em;text-transform:uppercase;color:#f5eedc99}
-.poster b{font:400 30px/1 "Abril Fatface",serif;color:#fff;text-transform:capitalize}
+.poster b{font:400 30px/1 "Abril Fatface",serif;color:#fff}
 .poster .pas{font:500 13px/1.1 var(--f-body)}.poster .pas i{font:600 20px/1 var(--f-hand);color:#ffd21f;font-style:normal}
 .poster .pmem{font:400 13px/1.35 "Special Elite",monospace;color:#f5eedcd9;margin-top:4px}
 .poster .pft{margin-top:6px;padding-top:6px;border-top:1px dashed #f5eedc55;font:700 8px/1 var(--f-mono);letter-spacing:.14em;color:#f5eedc88}
@@ -1227,7 +1227,7 @@ If it isn't, the next one will be.
     o.el.querySelector('[data-w]').onclick=()=>o.el.querySelector('[data-a="x"]').click()}
   function bin(){const F=[['engineer_plan.doc','txt'],['fear_of_starting_over.tmp','txt'],['9_to_5.exe','exe'],['sleep_schedule.xls','txt'],['playing_small.bak','txt']];
     const o=openWin('bin',{title:'Recycle Bin',icon:'bin',w:470,body:`<div class="addr">Address <span>C:\\Recycled\\</span></div><div class="files95">${F.map(([f,ic])=>`<button type="button" class="ico" data-f="${f}">${I[ic]}<span>${f}</span></button>`).join('')}</div><div class="status95"><span>${F.length} object(s)</span><span>permanently unrestorable</span></div>`});
-    o.el.querySelectorAll('.files95 .ico').forEach(b=>{const f=()=>{const d=openWin('restore',{title:'Restore',icon:'warn',w:340,body:`<div class="dlg">${I.warn}<div>Restore <b>${b.dataset.f}</b>?<br>Krishna has decided this one stays deleted.</div><div class="bt"><button type="button" class="btn95" data-c>Fair enough</button></div></div>`});d.el.querySelector('[data-c]').onclick=()=>d.el.querySelector('[data-a="x"]').click();if(b.dataset.f==='engineer_plan.doc')say('I wanted to be an engineer…')};
+    o.el.querySelectorAll('.files95 .ico').forEach(b=>{const f=()=>{const d=openWin('restore',{title:'Restore',icon:'warn',w:340,body:`<div class="dlg">${I.warn}<div>Restore <b>${b.dataset.f}</b>?<br>Krishna has decided this one stays deleted.</div><div class="bt"><button type="button" class="btn95" data-c>Fair enough</button></div></div>`});d.el.querySelector('[data-c]').onclick=()=>d.el.querySelector('[data-a="x"]').click();if(b.dataset.f==='engineer_plan.doc')say('I wanna be kind to everyone!')};
       b.addEventListener('dblclick',f);b.addEventListener('click',e=>{if(e.pointerType==='touch'||e.detail===0)f()});b.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();f()}})})}
   // start menu
   const SM=[['folder','Six lives',()=>explorer()],['pc','My Krishna',()=>props()],['txt','Letters',()=>go('letters')],['exe','Unsaid',()=>go('unsaid')],['mov','Row 3',()=>go('people')],['mic','Hang with K',()=>go('hang')],['bat','Checkout',()=>go('hi')],['paint','Paint',()=>DESK_APPS.paint()],['amp','K.amp',()=>DESK_APPS.amp()],['mov','Screensaver',()=>DESK_APPS.saver()],null,['sleep','Shut down…',()=>shut()]];
@@ -1314,10 +1314,10 @@ If it isn't, the next one will be.
   const IG='https://www.instagram.com/hang.withk/';
   const CARDS=[
    {q:'Things I thought I’d have <mark>figured out</mark> by now?',a:'What I want to be in life. Honestly? Still figuring it out.'},
-   {q:'Are comfort zones a little <mark>overrated?</mark>',a:'I think so. Most of the best things I’ve done started with “this is a terrible idea.”'},
+   {q:'Are comfort zones a little <mark>overrated?</mark>',a:'Yes! Put yourself in uncomfortable situations. That’s how your mind keeps learning, trying and experiencing new things.'},
    {q:'What do you do when you feel <mark>stuck?</mark>',a:'Change the environment. A walk, a mountain, a new café. My brain needs new walls.'},
-   {q:'Who do you call at <mark>3am?</mark>',a:'Row 3. You’ll meet them a little further down.'},
-   {q:'What does <mark>hanging out</mark> mean to you?',a:'Chai, phones face down, and someone saying “okay, but tell me the real version.”'},
+   {q:'Who do you call at <mark>3am?</mark>',a:'Choti bachiiii. (You’ll meet her in Row 3.)'},
+   {q:'What does <mark>hanging out</mark> mean to you?',a:'Being able to be myself, without thinking about people judging me.'},
    {q:'What did <mark>little you</mark> want to be?',a:'A kind person. Someone who spreads happiness everywhere and always has kindness to give.'},
    {q:'What are you <mark>learning</mark> right now?',a:'Go for the experiences. I know it’s scary sometimes, but trust me, go for it.'},
    {q:'A very <mark>personal</mark> question?',a:'Ask me one. That’s literally what the page is for.'}
@@ -1385,7 +1385,7 @@ function confetti(r,c){if(RM)return;const cols=[c,'#fff','#f5b301','#ff4fa3','#2
   // real people, drawn in the crowd's flat style. who = name (fill in), role = label, line = memory
   const GLS=`<rect x="27" y="40" width="46" height="13" rx="2" fill="#f7f7f5"/><g class="lens"><rect x="32" y="43" width="14" height="7" fill="#1a1a1a"/><rect x="54" y="43" width="14" height="7" fill="#1a1a1a"/></g>`;
   const VIP=[
-   {img:'p1',who:'',role:'the 3am call',line:'picks up on the first ring. every time.',svg:`
+   {img:'p1',who:'Milinn',role:'hype man',line:'thinks every idea of mine is genius.',svg:`
      <path d="M4 120 Q6 80 50 76 Q94 80 96 120Z" fill="#b9a0cf"/>
      <rect x="43" y="62" width="14" height="18" fill="#c99a74"/>
      <path d="M28 86 Q50 100 72 86 Q70 74 50 76 Q30 74 28 86Z" fill="#a68abd"/>
@@ -1393,7 +1393,7 @@ function confetti(r,c){if(RM)return;const cols=[c,'#fff','#f5b301','#ff4fa3','#2
      <ellipse cx="50" cy="47" rx="17" ry="21" fill="#c99a74"/>
      <path d="M32 44 Q30 22 50 22 Q70 22 69 42 Q66 32 56 31 Q46 34 38 30 Q33 36 32 44Z" fill="#17120e"/>
      ${GLS}<path d="M44 60 Q50 62 56 60" stroke="#5a2a20" stroke-width="1.6" fill="none" stroke-linecap="round"/>`},
-   {img:'p2',who:'',role:'chai o’clock',line:'the calmest person in any room.',svg:`
+   {img:'p2',who:'okmegha',role:'chai o’clock',line:'the calmest person in any room.',svg:`
      <path d="M30 40 Q28 18 50 18 Q72 18 70 40 L72 70 Q66 64 66 52 L34 52 Q34 64 28 70Z" fill="#17120e"/>
      <path d="M4 120 Q6 82 50 78 Q94 82 96 120Z" fill="#ead6b0"/>
      <path d="M30 80 L56 120 L80 120 L46 79Z" fill="#f2b31a"/><path d="M46 79 L80 120" stroke="#b3262b" stroke-width="4"/>
@@ -1404,7 +1404,7 @@ function confetti(r,c){if(RM)return;const cols=[c,'#fff','#f5b301','#ff4fa3','#2
      <g fill="#17120e">${[0,1,2,3,4,5].map(k=>`<ellipse cx="${69+k*.8}" cy="${66+k*9}" rx="5" ry="6"/>`).join('')}</g>
      <circle cx="50" cy="36" r="2.2" fill="#d1262b"/>${GLS}
      <path d="M44 60 Q50 63 56 60" stroke="#6a2320" stroke-width="1.8" fill="none" stroke-linecap="round"/>`},
-   {img:'p3',who:'',role:'hype woman',line:'thinks every idea of mine is genius. bless her.',svg:`
+   {img:'p3',who:'Choti bachi',role:'the 3am call',line:'the one I call at 3am. every time.',svg:`
      <path d="M28 48 Q26 18 50 18 Q74 18 72 48 L78 100 L22 100Z" fill="#17120e"/>
      <path d="M4 120 Q6 82 50 78 Q94 82 96 120Z" fill="#cfd38e"/>
      <g fill="#c4505a">${[[20,100],[34,92],[66,94],[80,104],[28,112],[72,114],[50,108]].map(([x,y])=>`<circle cx="${x}" cy="${y}" r="2.2"/>`).join('')}</g>
@@ -1417,7 +1417,7 @@ function confetti(r,c){if(RM)return;const cols=[c,'#fff','#f5b301','#ff4fa3','#2
      <circle cx="33" cy="58" r="2" fill="#d9a92a"/><circle cx="67" cy="58" r="2" fill="#d9a92a"/>
      <circle cx="50" cy="36" r="2.2" fill="#d1262b"/>${GLS}
      <path d="M42 58 Q50 67 58 58Z" fill="#fff" stroke="#6a2320" stroke-width="1.4" stroke-linejoin="round"/>`},
-   {img:'p4',who:'',role:'plot twist',line:'looks serious. absolutely is not.',svg:`
+   {img:'p4',who:'Yo bro!',role:'plot twist',line:'looks serious. absolutely is not.',svg:`
      <path d="M4 120 Q6 80 50 76 Q94 80 96 120Z" fill="#202020"/>
      <path d="M38 78 L50 104 L62 78Z" fill="#383838"/><path d="M48 82 h4 l2 24 l-4 5 l-4 -5Z" fill="#b8955a"/>
      <path d="M36 78 L48 108 L30 100Z M64 78 L52 108 L70 100Z" fill="#111"/>
@@ -1479,12 +1479,12 @@ function confetti(r,c){if(RM)return;const cols=[c,'#fff','#f5b301','#ff4fa3','#2
 /* ------------ letters pile ------------ */
 (()=>{const pile=$('#pile'), modal=$('#modal'), lb=$('#lBody'), eyes=$('#peekEyes');
   const LETTERS=[
-   {to:'to the 8-year-old who said “engineer”',date:'filed 01.10.2026',body:['You weren’t wrong, you were early. You liked building things. You still do. They just happen to have colours and music now.','Keep the stubbornness. Lose the fear of starting over.']},
-   {to:'to whoever is reading this at 2am',date:'filed at 02:14',body:['Hi. Drink water. Close the 40 tabs. The idea will still be good in the morning.','If it isn’t, the next one will be.']},
-   {to:'to the mountains',date:'filed from a window seat',body:['You made me feel small in the best way. Thank you for the silence, the cold chai and the sunsets I didn’t photograph.','I’ll be back with better shoes.']},
-   {to:'to the dance floor',date:'filed after midnight',body:['Same room, bigger energy. You are the only place where I stop thinking and just move.','See you Friday.']},
-   {to:'to the people in row 3',date:'filed with love',body:['You know who you are. You picked up at 3am, hyped the half-baked ideas and told me the truth when it stung.','Don’t trust anyone. Except you lot.']},
-   {to:'to future me',date:'open in 2030',body:['Did you keep making things? Did you keep dancing badly in the kitchen?','If yes: good. If no: this is your sign.']}
+   {to:'to the 8-year-old who wanted to be kind',date:'filed 01.10.2026',body:['I want to be kind to everyone.']},
+   {to:'to whoever is reading this at 2am',date:'filed at 02:14',body:['Sab theek ho jayega!','Just keep trying.']},
+   {to:'to the mountains',date:'filed from a window seat',body:['I’m all yours.']},
+   {to:'to the dance floor',date:'filed after midnight',body:['Oh! I love dancinggg.']},
+   {to:'to the people in row 3',date:'filed with love',body:['My gangggg.']},
+   {to:'to future me',date:'open in 2030',body:['Always got your back.']}
   ];
   const SCRIB=`<svg class="scrib" viewBox="0 0 200 80" style="left:10%;bottom:12%;width:60%"><path d="M5 60 C40 20, 80 70, 120 30 S180 40, 195 10" fill="none" stroke="#c8322b" stroke-width="2.4" stroke-linecap="round"/></svg>`;
   const SCRIBW=SCRIB.replace('#c8322b','#fff');
@@ -1619,7 +1619,7 @@ ${['zs-eb','zs-fw','zs-ef','zs-wax'].map(c=>`<div class="zs-env ${c}w" style="--
    ['send a pic',[['ok one',null,'s_city_5'],['city girl me']]],
    ['fav time of day?',[['golden hour. every version of me agrees',null,'s_wander_2']]],
    ['dance tho?',[['always',null,'s_dance_1'],['movement feels like freedom']]],
-   ['what did you want to be as a kid?',[['engineer, apparently'],['plot twist: a creative ✨',null,'s_film_0']]],
+   ['what did you want to be as a kid?',[['a kind person'],['still my favourite goal ✨',null,'s_film_0']]],
    ['can we collab?',[['YES'],['email\'s right below ↓']]]
   ];
   const add=(side,html,st)=>{const d=document.createElement('div');d.className='msg '+side+(st?' sticker':'');d.innerHTML=html+`<time>${now()}</time>`;log.appendChild(d);log.scrollTop=log.scrollHeight;return d};
@@ -1901,7 +1901,7 @@ function initLK(){const box=$('#lk'), bub=$('#lkb'); if(!window.THREE){box.remov
   function size(){const r=box.getBoundingClientRect();rend.setSize(r.width,r.height,false);cam.aspect=r.width/r.height;cam.updateProjectionMatrix()} size(); addEventListener('resize',size);
   // behaviour
   let x=innerWidth*.7, tx=x, state='idle', until=performance.now()+1500, face=0, jump=0, giggle=0, last=performance.now();
-  const LINES=['hehe!','hihi!','wheee!','is that… ME?!','we got SO tall','I wanted to be an engineer…','we became a filmmaker?!','catch me!','hehehe'];
+  const LINES=['hehe!','hihi!','wheee!','is that… ME?!','we got SO tall','I wanna be kind to everyone!','we became a filmmaker?!','catch me!','hehehe'];
   const CTX={play:'is that… ME?!',hang:'pull a card! pull a card!',people:'who ARE all these people?',letters:'ooh, secret letters!',unsaid:'can I talk on the phone??',hi:'ooh, a receipt!'};
   let bt; say=(t)=>{bub.textContent=t;bub.classList.add('on');clearTimeout(bt);bt=setTimeout(()=>bub.classList.remove('on'),2200);giggle=1};
   const seen={}; document.querySelectorAll('section[id]').forEach(s=>new IntersectionObserver(es=>{if(es[0].isIntersecting&&!seen[s.id]&&CTX[s.id]){seen[s.id]=1;setTimeout(()=>say(CTX[s.id]),600)}},{threshold:.45}).observe(s));
