@@ -884,6 +884,45 @@ html.night .torch{opacity:1}
   .counter .band{display:none}
 }
 @media (min-width:861px) and (max-height:820px){.counter{padding-top:10px}.counter .till{height:calc(100vh - 14px);min-height:600px}.counter .receipt .dash{margin:5px 0}.counter .receipt{font-size:11.5px;line-height:1.25;padding-top:24px}.counter .receipt .bars{height:26px}.counter .machine{height:196px}.counter .paperwrap{bottom:174px}}
+
+.poster .pimg.photo img{position:absolute;inset:0;width:100%;height:100%;transform:none;left:0;object-fit:cover;filter:none}
+.pp.vip.kid{transform-origin:50% 100%}
+.pp.vip.front{width:calc(var(--w) * 1.08);margin-inline:calc(var(--w) * -.02)}
+
+/* ---------- Little K: game layer ---------- */
+.lkchip{position:absolute;left:50%;top:-4px;transform:translateX(-50%);display:flex;gap:1px;align-items:center;background:#fff;border:2px solid #141210;border-radius:999px;padding:2px 7px;font:700 10px/1 var(--f-mono);color:#141210;white-space:nowrap;pointer-events:none;box-shadow:2px 2px 0 #141210}
+.lkchip b{margin-right:4px;color:#c8322b}.lkchip i{font-style:normal;color:#ff2b6a}.lkchip i.o{color:#bbb}
+.lkchip.pop{animation:ebump .6s cubic-bezier(.3,1.8,.5,1)}
+.lk.away{opacity:0;pointer-events:none!important;transition:opacity .4s}
+.lk.catching .lkhit{left:0;right:0;top:0;bottom:0}
+.lk.catching{cursor:crosshair}
+.lkmenu{position:fixed;z-index:95;width:220px;background:#fff8e7;border:3px solid #141210;border-radius:16px;padding:10px;display:grid;gap:6px;box-shadow:5px 5px 0 #141210;animation:wopen .2s ease-out}
+.lkmenu[hidden]{display:none}
+.lkmenu b{font:600 20px/1 var(--f-hand);color:#c8322b;text-align:center}
+.lkmenu button{display:flex;justify-content:space-between;align-items:center;border:2px solid #141210;background:#fff;border-radius:10px;padding:8px 10px;font:700 13px/1 var(--f-body);cursor:pointer;color:#141210}
+.lkmenu button:hover,.lkmenu button:focus-visible{background:#ffd21f}
+.lkmenu small{font:600 10px/1 var(--f-mono);opacity:.6}
+.lkm-st{font:600 10px/1.3 var(--f-mono);color:#6b665c;text-align:center}
+.lkhud{position:fixed;left:50%;top:calc(14px + env(safe-area-inset-top,0px));transform:translateX(-50%);z-index:96;background:#141210;color:#fff;border-radius:999px;padding:10px 18px;font:700 15px/1 var(--f-mono);box-shadow:0 8px 20px #0006;white-space:nowrap}
+.lkhud[hidden]{display:none}.lkhud b{color:#ffd21f;font-size:20px}
+.lkdance{position:fixed;left:50%;bottom:calc(150px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);z-index:95;background:#1b2cc8;color:#fff;border:3px solid #141210;border-radius:18px;padding:12px 14px;display:grid;gap:10px;justify-items:center;box-shadow:5px 5px 0 #141210;min-width:250px}
+.lkdance[hidden]{display:none}
+.lkdance .ds{font:700 14px/1 var(--f-mono)}
+.lkdance .dseq{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;max-width:300px}
+.lkdance .dseq i{width:30px;height:30px;display:grid;place-items:center;border-radius:8px;background:#ffffff22;font:700 18px/1 var(--f-mono);font-style:normal}
+.lkdance .dseq i.k{background:#ffd21f;color:#141210}.lkdance .dseq i.ok{background:#3dff6e;color:#141210}.lkdance .dseq i.bad{background:#ff2b1f}
+.lkdance .dbtns{display:grid;grid-template-columns:repeat(4,52px);gap:8px}
+.lkdance .dbtns button{height:46px;border:2px solid #141210;border-radius:12px;background:#fff;font:700 22px/1 var(--f-mono);cursor:pointer;box-shadow:0 4px 0 #141210}
+.lkdance .dbtns button:active{transform:translateY(3px);box-shadow:0 1px 0 #141210}
+.lkdance .dx{border:0;background:none;color:#fffa;font:600 11px/1 var(--f-mono);cursor:pointer;text-decoration:underline}
+.chaicup{position:fixed;z-index:96;display:grid;justify-items:center;gap:2px;background:none;border:0;cursor:grab;touch-action:none;animation:coinbob 2.4s ease-in-out infinite}
+.chaicup span{font-size:46px;line-height:1;filter:drop-shadow(0 6px 6px #0005)}
+.chaicup small{font:600 14px/1 var(--f-hand);color:#fff;background:#141210;padding:3px 7px;border-radius:999px;white-space:nowrap}
+.chaicup.held{cursor:grabbing;animation:none;transform:scale(1.12) rotate(-8deg)}
+.kpeek{position:absolute;z-index:60;width:64px;border:0;background:none;padding:0;cursor:pointer;animation:kpeek 2.2s ease-in-out infinite}
+.kpeek svg{display:block;width:100%;filter:drop-shadow(0 4px 4px #0006)}
+@keyframes kpeek{0%,100%{transform:translateY(8px)}40%,60%{transform:translateY(0)}}
+@media (prefers-reduced-motion:reduce){.kpeek,.chaicup{animation:none}}
 </style>
 </head>
 <body>
@@ -1054,6 +1093,7 @@ function eggUI(){const n=found.size;[...$('#dots').children].forEach((d,i)=>d.cl
 function egg(k){ if(!EGGS[k]){if(EXTRA[k])toast(EXTRA[k]);return}
   if(found.has(k)) return; found.add(k); ls.set('k-eggs',JSON.stringify([...found])); eggUI();
   const p=$('#eggPill');p.classList.remove('bump');void p.offsetWidth;p.classList.add('bump');
+  window.LKG&&LKG.level(true);
   if(found.size===6){ls.set('k-done',String(Date.now()));toast('All six found. Something just unlocked…');setTimeout(()=>vault(true),1400)}
   else toast(`${EGGS[k].t}  (${found.size}/6)`);
 }
@@ -1458,6 +1498,70 @@ function confetti(r,c){if(RM)return;const cols=[c,'#fff','#f5b301','#ff4fa3','#2
     el.addEventListener('focus',()=>{if(el.matches(':focus-visible'))el.dispatchEvent(new PointerEvent('pointerenter'))});
     el.addEventListener('blur',()=>el.dispatchEvent(new PointerEvent('pointerleave')));
     el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();el.click()}})}
+
+  // ---- more of her people, drawn by a small flat-style generator (same vocabulary as the crowd)
+  function flat(P){const sk=P.skin,hc=P.hairC||'#17120e';let back='',front='',body='',extra='';
+    // hair behind the head
+    if(P.hair==='long')back=`<path d="M28 48 Q26 18 50 18 Q74 18 72 48 L78 98 L22 98Z" fill="${hc}"/>`;
+    if(P.hair==='wavy')back=`<path d="M27 48 Q24 18 50 17 Q76 18 73 48 Q82 70 76 96 L24 96 Q18 70 27 48Z" fill="${hc}"/>`;
+    if(P.hair==='bob')back=`<path d="M29 46 Q27 19 50 19 Q73 19 71 46 L73 70 Q62 72 60 62 L40 62 Q38 72 27 70Z" fill="${hc}"/>`;
+    // torso
+    body+=`<path d="M4 120 Q6 80 50 76 Q94 80 96 120Z" fill="${P.top}"/>`;
+    if(P.inner)body+=`<path d="M36 78 L50 120 L64 78Z" fill="${P.inner}"/>`;
+    if(P.open)body+=`<path d="M36 78 L44 120 L30 120 L28 84Z M64 78 L56 120 L70 120 L72 84Z" fill="${P.top}"/><path d="M36 78 L44 120 M64 78 L56 120" stroke="#0004" stroke-width="1.5"/>`;
+    if(P.check)body+=`<g stroke="${P.check}" stroke-width="2" opacity=".55">${[16,30,70,84].map(x=>`<path d="M${x} 86 V120"/>`).join('')}${[94,106].map(y=>`<path d="M8 ${y} H32 M68 ${y} H92"/>`).join('')}</g>`;
+    if(P.dots)body+=`<g fill="${P.dots}">${[[18,96],[30,108],[44,92],[58,104],[72,94],[84,108],[24,116],[66,116],[50,114]].map(([x,y])=>`<circle cx="${x}" cy="${y}" r="2.4"/>`).join('')}</g>`;
+    if(P.zip)body+=`<path d="M50 80 V120" stroke="${P.zip}" stroke-width="2.5"/><path d="M22 96 h14 M64 96 h14" stroke="${P.zip}" stroke-width="2"/>`;
+    if(P.text)body+=`<text x="50" y="108" text-anchor="middle" font-family="Anton,Impact,sans-serif" font-size="13" fill="${P.text}">FTCH</text>`;
+    if(P.tie)body+=`<path d="M38 78 L50 96 L62 78Z" fill="#fff"/><path d="M48 82 h4 l2 24 l-4 5 l-4 -5Z" fill="${P.tie}"/>`;
+    if(P.collar)body+=`<path d="M40 79 L50 90 L60 79" fill="none" stroke="${P.collar}" stroke-width="3"/>`;
+    if(P.strap)body+=`<path d="M30 80 L66 120" stroke="${P.strap}" stroke-width="5"/>`;
+    if(P.gold)body+=`<path d="M40 78 Q50 92 60 78" stroke="#d9a92a" stroke-width="3" fill="none"/>`;
+    // neck + head
+    body+=`<rect x="43" y="62" width="14" height="17" fill="${sk}"/><ellipse cx="50" cy="47" rx="17" ry="21" fill="${sk}"/>`;
+    // hair on top
+    const H={short:`<path d="M33 42 Q33 24 50 24 Q67 24 67 42 Q60 31 50 32 Q40 31 33 42Z" fill="${hc}"/>`,
+      swept:`<path d="M32 44 Q30 22 50 22 Q70 22 69 42 Q64 30 54 31 Q44 34 38 30 Q33 36 32 44Z" fill="${hc}"/>`,
+      curly:`<g fill="${hc}">${[[36,30],[44,24],[53,22],[62,26],[67,34],[33,38],[48,28],[58,30]].map(([x,y])=>`<circle cx="${x}" cy="${y}" r="7"/>`).join('')}</g>`,
+      buzz:`<path d="M33 44 Q33 25 50 25 Q67 25 67 44 Q62 33 50 33 Q38 33 33 44Z" fill="${hc}" opacity=".9"/>`,
+      long:`<path d="M33 46 Q32 24 50 24 Q68 24 67 46 Q62 30 50 30 Q38 30 33 46Z" fill="${hc}"/>`,
+      wavy:`<path d="M32 46 Q30 22 50 22 Q70 22 68 46 Q64 30 52 31 Q40 30 32 46Z" fill="${hc}"/>`,
+      bob:`<path d="M32 46 Q31 23 50 23 Q69 23 68 44 Q60 30 46 33 Q38 36 32 46Z" fill="${hc}"/>`,
+      cap:`<path d="M32 38 Q33 20 50 20 Q67 20 68 38Z" fill="${P.capC||'#222'}"/><path d="M50 36 Q66 34 80 40 Q66 42 50 40Z" fill="${P.capC||'#222'}"/>`};
+    let top=H[P.hair]||H.short;
+    if(P.beard)extra+=`<path d="M33 50 Q33 72 50 72 Q67 72 67 50 Q63 60 56 60 Q50 57 44 60 Q37 60 33 50Z" fill="${hc}" opacity="${P.beard}"/>`;
+    if(P.bindi)extra+=`<circle cx="50" cy="36" r="2.2" fill="#d1262b"/>`;
+    if(P.hoops)extra+=`<circle cx="33" cy="58" r="3.4" fill="none" stroke="#d9a92a" stroke-width="1.6"/><circle cx="67" cy="58" r="3.4" fill="none" stroke="#d9a92a" stroke-width="1.6"/>`;
+    if(P.drops)extra+=`<circle cx="33" cy="58" r="2" fill="#d9a92a"/><circle cx="67" cy="58" r="2" fill="#d9a92a"/>`;
+    if(P.flowers)extra+=`<g fill="#fff">${[[30,40],[28,50],[31,30]].map(([x,y])=>`<circle cx="${x}" cy="${y}" r="3"/>`).join('')}</g>`;
+    const eyes=P.shades?`<rect x="27" y="40" width="46" height="13" rx="6" fill="${P.shades}"/><rect x="30" y="42" width="40" height="3" fill="#fff6"/>`:GLS;
+    const mouth=P.grin?`<path d="M42 58 Q50 67 58 58Z" fill="#fff" stroke="#6a2320" stroke-width="1.4" stroke-linejoin="round"/>`:`<path d="M44 60 Q50 63 56 60" stroke="#5a2a20" stroke-width="1.6" fill="none" stroke-linecap="round"/>`;
+    if(P.phone)extra+=`<rect x="66" y="40" width="8" height="18" rx="2" fill="#222"/>`;
+    if(P.wave)extra+=`<path d="M86 120 L82 86" stroke="${sk}" stroke-width="9" stroke-linecap="round"/><circle cx="81" cy="82" r="6" fill="${sk}"/>`;
+    return back+body+top+extra+eyes+mouth}
+  function famSvg(){return `<path d="M0 120 Q2 92 22 90 Q42 92 44 120Z M56 120 Q58 92 78 90 Q98 92 100 120Z" fill="#c0282d"/><path d="M30 120 Q32 98 50 96 Q68 98 70 120Z" fill="#2f6d4a"/>
+    <ellipse cx="22" cy="74" rx="12" ry="15" fill="#b98060"/><ellipse cx="78" cy="74" rx="12" ry="15" fill="#c99a74"/><ellipse cx="50" cy="82" rx="10" ry="12" fill="#d4a07c"/>
+    <path d="M10 72 Q10 56 22 56 Q34 56 34 70 Q28 62 22 63 Q14 63 10 72Z M66 72 Q66 56 78 56 Q90 56 90 70 Q84 62 78 63 Q70 63 66 72Z M40 80 Q40 68 50 68 Q60 68 60 80 Q55 73 50 74 Q45 73 40 80Z" fill="#17120e"/>
+    <g fill="#f7f7f5"><rect x="11" y="70" width="22" height="7" rx="1"/><rect x="67" y="70" width="22" height="7" rx="1"/><rect x="41" y="79" width="18" height="6" rx="1"/></g>
+    <g fill="#1a1a1a"><rect x="13" y="72" width="7" height="3"/><rect x="24" y="72" width="7" height="3"/><rect x="69" y="72" width="7" height="3"/><rect x="80" y="72" width="7" height="3"/><rect x="43" y="80" width="6" height="3"/><rect x="51" y="80" width="6" height="3"/></g>
+    <path d="M18 84 Q22 87 26 84 M74 84 Q78 87 82 84 M47 90 Q50 92 53 90" stroke="#5a2a20" stroke-width="1.4" fill="none"/>`}
+  const MORE=[
+   {img:'q1',who:'',role:'new haircut energy',line:'walked into the salon, walked out a whole new person.',P:{skin:'#c99a74',hair:'bob',hairC:'#3b2616',top:'#6e6168',inner:'#151515',open:1,check:'#cfc6c9',hoops:1,grin:0}},
+   {img:'q2',who:'',role:'laughs the loudest',line:'the laugh you can hear from three tables away.',P:{skin:'#c98d6a',hair:'long',top:'#c0282d',dots:'#f4e6d8',drops:1,grin:1}},
+   {img:'q3',who:'',role:'café hopper',line:'knows every good coffee spot in the city.',P:{skin:'#c08a68',hair:'curly',top:'#7e1f2a',inner:'#f5f5f5',open:1,beard:.35,grin:1}},
+   {img:'q5',who:'',role:'festival queen',line:'all flowers, all colour, all heart.',P:{skin:'#b98060',hair:'long',top:'#c0282d',gold:1,flowers:1,bindi:1,grin:1}},
+   {img:'q10',who:'',role:'first to say hi',line:'waves at you from across the room. every time.',P:{skin:'#c99a74',hair:'wavy',hairC:'#2a1a10',top:'#f4f1ea',collar:'#dcd6c8',wave:1,grin:1}},
+   {img:'fam',who:'',role:'the whole fam',line:'loud, warm, and always one more plate.',photo:1,fam:1},
+   {img:'q4',who:'',role:'drip check',line:'blue jacket, blue shades, zero chill.',P:{skin:'#8d5a3b',hair:'short',top:'#1e88e5',zip:'#0d47a1',shades:'#1e6fe0',grin:1}},
+   {img:'q6',who:'',role:'calm in a storm',line:'the softest smile and the steadiest advice.',P:{skin:'#b98060',hair:'buzz',top:'#efe3c8',collar:'#d8caa8',strap:'#e7c25a',grin:1}},
+   {img:'q7',who:'',role:'on video call',line:'always there, even through a tiny screen.',P:{skin:'#d4a07c',hair:'swept',top:'#1d2333',text:'#e8c547',grin:1}},
+   {img:'q8',who:'',role:'always on a call',line:'“haan bolo”. one sec. still on the call.',P:{skin:'#b98060',hair:'cap',capC:'#2b2b2e',top:'#f4f4f2',collar:'#ddd',beard:.8,phone:1}},
+   {img:'q9',who:'',role:'storyteller',line:'every story comes with hand gestures.',P:{skin:'#a8724f',hair:'short',top:'#1c1c1c',inner:'#f2f2f2',open:1,grin:1}},
+   {img:'q11',who:'',role:'tiny boss',line:'sunglasses on. tie on. meeting is now.',P:{skin:'#a8724f',hair:'short',top:'#e9e0dc',dots:'#b3262b',tie:'#6b1420',shades:'#1a1a1a',grin:0},kid:1}
+  ];
+  MORE.forEach(m=>{m.svg=m.fam?famSvg():flat(m.P)});
+  // seats: row index -> [offset from centre, person]
+  const SEATS={2:[[-1,0],[1,1],[-2,2],[2,3],[-3,4],[-4,5]],4:[[-1,6],[1,7],[-2,8],[-3,9],[2,10],[-4,11]]};
   const LAB=['honest critic','dance partner','travel buddy','spare keys','meme dealer','says “sleep!”','first to reply','co-conspirator'];
   const FONTS=[['"Permanent Marker",cursive','#f5b301','#111'],['Bungee,sans-serif','#ff2b1f','#fff'],['Pacifico,cursive','#fff','#2438d8'],['"Rock Salt",cursive','#b996e6','#111'],['VT323,monospace','#111','#9df29a'],['"Abril Fatface",serif','#f6a9cb','#111'],['Caveat,cursive','#addb72','#111']];
   const rnd=seed=>()=>((seed=seed*16807%2147483647)/2147483647);
@@ -1480,7 +1584,8 @@ function confetti(r,c){if(RM)return;const cols=[c,'#fff','#f5b301','#ff4fa3','#2
   function build(){aud.innerHTML='';const W=th.clientWidth;const rows=W<700?[40,46,54,62,72]:[64,74,86,100,116];let n=0,tagI=0;
     rows.forEach((w,ri)=>{const row=document.createElement('div');row.className='srow';row.style.setProperty('--w',w+'px');row.style.zIndex=ri+1;
       let cnt=Math.floor(W/(w*.92))+1; if(ri===3&&cnt%2===0)cnt++;
-      for(let c=0;c<cnt;c++){ if(ri===3&&(c===Math.floor(cnt/2)-2||c===Math.floor(cnt/2)-1||c===Math.floor(cnt/2)+1||c===Math.floor(cnt/2)+2)){const k=c-Math.floor(cnt/2);row.appendChild(vip(VIP[k<0?k+2:k+1],k<0?k+2:k+1));continue}
+      for(let c=0;c<cnt;c++){ {const mid=Math.floor(cnt/2);const hit=(SEATS[ri]||[]).find(([o])=>o===c-mid);if(hit){const V=MORE[hit[1]];const el=vip(V,4+hit[1]);if(ri===4)el.classList.add('front');row.appendChild(el);continue}}
+        if(ri===3&&(c===Math.floor(cnt/2)-2||c===Math.floor(cnt/2)-1||c===Math.floor(cnt/2)+1||c===Math.floor(cnt/2)+2)){const k=c-Math.floor(cnt/2);row.appendChild(vip(VIP[k<0?k+2:k+1],k<0?k+2:k+1));continue}
         if(ri===3&&c===Math.floor(cnt/2)){const me=document.createElement('div');me.className='me';me.setAttribute('aria-label','Krishna');me.innerHTML='<span class="sil"></span><img src="img/toon_me.webp" alt="Krishna, cartoon">';
           me.addEventListener('pointerenter',()=>{th.classList.add('me-on');say('that’s US!')});me.addEventListener('pointerleave',()=>th.classList.remove('me-on'));me.addEventListener('click',()=>{me.classList.toggle('on');th.classList.toggle('me-on',me.classList.contains('on'))});kb(me,'Krishna: everyone turns to look');row.appendChild(me);continue}
         const p=document.createElement('div');p.className='pp';p.innerHTML=person(++n);
@@ -1668,7 +1773,7 @@ function look(x){const r=hw.getBoundingClientRect();const dx=x-(r.left+r.width/2
   let f=0,m=false; const a=Math.abs(dx); if(a>r.width*.35) f=1; if(a>r.width*1.6) f=2; if(dx<0&&f) m=true;
   const k=f+'/'+m; if(k!==headKey&&!turned){headKey=k; head.src=IMG('head'+f); head.style.transform=m?'scaleX(-1)':'none'}}
 function wake(){if(turned){turned=false;cap.textContent="oh, you're back";headKey=''} clearTimeout(idleT);
-  idleT=setTimeout(()=>{turned=true;head.src=IMG('head3');head.style.transform='none';cap.textContent='…still there?';egg('idle')},7000)}
+  idleT=setTimeout(()=>{turned=true;head.src=IMG('head3');head.style.transform='none';cap.textContent='…still there?';const r=hw.getBoundingClientRect();if(hw.offsetParent&&r.bottom>0&&r.top<innerHeight)egg('idle')},7000)}
 hw.addEventListener('pointerenter',()=>{cap.textContent='caught you looking';egg('peek')});
 hw.addEventListener('pointerleave',()=>{cap.textContent='watching you'});
 const eng=$('#eng'); let pt; eng.addEventListener('pointerenter',()=>{pt=setTimeout(()=>{eng.classList.add('fall');egg('peel');setTimeout(()=>eng.classList.remove('fall'),5000)},500)}); eng.addEventListener('pointerleave',()=>clearTimeout(pt));
@@ -1707,7 +1812,7 @@ if(!RM){const onS=()=>{const y=scrollY;floats.forEach((f,i)=>{f.style.transform=
      `<div class="dash"></div>`,`<div class="sec">ON THE MENU</div>`,
      ...MENU.map(([a,b])=>row(a,b)),
      `<div class="dash"></div>`,`<div class="sec">YOUR VISIT</div>`,
-     row('Cards pulled',`${STATS.cards.size}/8`),row('Letters opened',STATS.letters.size),row('Row 3 regulars met',STATS.met.size),row('Unsaid things said',STATS.said),row('Secrets found',`${found.size}/6`),
+     row('Cards pulled',`${STATS.cards.size}/8`),row('Letters opened',STATS.letters.size),row('Row 3 regulars met',STATS.met.size),row('Unsaid things said',STATS.said),row('Secrets found',`${found.size}/6`),row('Little K level',`Lv${Math.min(7,1+found.size)} · ${(window.LKSTATE&&LKSTATE.hearts)||0}/5 ♥`),row('Catch-K best',(window.LKSTATE&&LKSTATE.best)||0),
      `<div class="dash"></div>`,`<div class="l">No pitch. No prize.</div>`,`<div class="l"><b>Just a creative, saying hi.</b></div>`,
      `<div class="dash"></div>`,row('<b>Total</b>','<b>₹0</b>'),
      `<div class="bars" aria-hidden="true">${bars}</div>`,`<div class="l c">krishna.agrwlx@gmail.com</div>`,`<div class="cut">- - - - ✂ tear here - - - -</div>`]}
@@ -1764,10 +1869,10 @@ function glove(dx,dy){const g=$('#glove');if(!g||RM)return;g.classList.remove('g
 // Row 3 ticket profiles
 const KNOWN={'the 3am call':'picks up on the first ring. every time.','hype woman':'thinks every idea is “literally genius”.','honest critic':'says “hmm” in a way that saves projects.','dance partner':'knows every step of the kitchen routine.','travel buddy':'has the window seat. gives it up anyway.','chai o’clock':'shows up at 5pm with two cups.','spare keys':'has a key. has had it for years.','meme dealer':'sends 14 reels a day. 3 are good.','says “sleep!”':'texts “go to bed” at 1:59am.','first to reply':'replies before you hit send.','plot twist':'turned up out of nowhere. stayed.','co-conspirator':'in on every terrible idea.'};
 addEventListener('keydown',e=>{if(e.key==='Escape'){const tk=$('#ticket');if(tk&&!tk.hidden){tk.hidden=true}}});
-const MET4=new Set();function poster(V,p){MET4.add(V.img);if(MET4.size===4)setTimeout(()=>egg('people'),600);const th=$('#people');let tk=$('#ticket');if(!tk){tk=document.createElement('div');tk.id='ticket';th.appendChild(tk)}
+const MET4=new Set();function poster(V,p){if(/^p\d$/.test(V.img))MET4.add(V.img);if(MET4.size===4)setTimeout(()=>egg('people'),600);const th=$('#people');let tk=$('#ticket');if(!tk){tk=document.createElement('div');tk.id='ticket';th.appendChild(tk)}
   tk.className='ticket poster';tk.setAttribute('role','dialog');tk.setAttribute('aria-label',V.role);
   const n=[...th.querySelectorAll('.pp.vip')].indexOf(p)+1;
-  tk.innerHTML=`<span class="pk">NOW SHOWING · ROW 3 · SEAT 0${n}</span><div class="pimg"><img src="img/${V.img}.webp" alt="${V.who||V.role}"></div><span class="pst">starring</span><b>${V.who||'my person'}</b><span class="pas">as <i>${V.role}</i></span><span class="pmem">“${V.line}”</span><span class="pft">A KRISHNA PRODUCTION · ADMIT ONE</span><button type="button" aria-label="Close poster">×</button>`;
+  tk.innerHTML=`<span class="pk">NOW SHOWING · ROW 3 · SEAT 0${n}</span><div class="pimg${V.photo?' photo':''}"><img src="img/${V.img}.webp" alt="${V.who||V.role}"></div><span class="pst">starring</span><b>${V.who||'my person'}</b><span class="pas">as <i>${V.role}</i></span><span class="pmem">“${V.line}”</span><span class="pft">A KRISHNA PRODUCTION · ADMIT ONE</span><button type="button" aria-label="Close poster">×</button>`;
   const r=p.getBoundingClientRect(),R=th.getBoundingClientRect();const w=Math.min(230,R.width-20);let x=r.left-R.left+r.width/2-w/2;x=Math.max(10,Math.min(R.width-w-10,x));
   tk.style.cssText=`left:${x}px;top:12px;width:${w}px`;tk.classList.remove('in');void tk.offsetWidth;tk.classList.add('in');tk.hidden=false;
   tk.querySelector('button').onclick=e=>{e.stopPropagation();tk.hidden=true};sfx('pop')}
@@ -1890,6 +1995,11 @@ function initLK(){const box=$('#lk'), bub=$('#lkb'); if(!window.THREE){box.remov
   const g=new Uint8Array([90,170,255]); const grad=new THREE.DataTexture(g,3,1,THREE.LuminanceFormat); grad.minFilter=grad.magFilter=THREE.NearestFilter; grad.needsUpdate=true;
   const M=c=>new THREE.MeshToonMaterial({color:c,gradientMap:grad});
   const skin=M(0xc98b62), hairM=M(0x1b120c), shirt=M(0xfbfbf6), skirt=M(0x151515), red=M(0xe0362b), black=M(0x111111), white=M(0xffffff), cheek=M(0xf08a8a);
+  // from her childhood photos: tartan skirt, red collar bow, little top pony, blue sandals
+  const plaid=(()=>{const c=document.createElement('canvas');c.width=c.height=64;const x=c.getContext('2d');x.fillStyle='#c43a2e';x.fillRect(0,0,64,64);
+    x.globalAlpha=.55;x.fillStyle='#2f5d3a';x.fillRect(0,20,64,10);x.fillRect(20,0,10,64);x.globalAlpha=.7;x.fillStyle='#f1c232';x.fillRect(0,44,64,3);x.fillRect(44,0,3,64);
+    x.globalAlpha=.35;x.fillStyle='#1a1a1a';x.fillRect(0,8,64,3);x.fillRect(8,0,3,64);const t=new THREE.CanvasTexture(c);t.wrapS=t.wrapT=THREE.RepeatWrapping;t.repeat.set(3,1);t.magFilter=THREE.NearestFilter;return t})();
+  skirt.map=plaid;skirt.color.setHex(0xffffff);skirt.needsUpdate=true;const sandal=M(0x3d6fd6);
   const root=new THREE.Group(); scene.add(root); const body=new THREE.Group(); root.add(body);
   const mesh=(geo,mat,x=0,y=0,z=0,p=body)=>{const m=new THREE.Mesh(geo,mat);m.position.set(x,y,z);p.add(m);return m};
   const head=new THREE.Group(); head.position.set(0,1.62,0); body.add(head);
@@ -1897,14 +2007,16 @@ function initLK(){const box=$('#lk'), bub=$('#lkb'); if(!window.THREE){box.remov
   const hair=mesh(new THREE.SphereGeometry(.68,32,24,0,Math.PI*2,0,1.75),hairM,0,.04,-.04,head); hair.rotation.x=-.42;
   mesh(new THREE.BoxGeometry(1.2,.22,.3),hairM,0,.32,.42,head).rotation.x=-.5;
   const sideL=mesh(new THREE.CylinderGeometry(.14,.2,.7,12),hairM,-.58,-.18,-.02,head), sideR=mesh(new THREE.CylinderGeometry(.14,.2,.7,12),hairM,.58,-.18,-.02,head);
-  const band=mesh(new THREE.TorusGeometry(.66,.07,10,40),red,0,.28,-.02,head); band.rotation.x=1.25;
-  mesh(new THREE.SphereGeometry(.12,10,8),red,.2,.5,-.62,head); mesh(new THREE.SphereGeometry(.1,10,8),red,-.14,.46,-.64,head);
+  const band=mesh(new THREE.TorusGeometry(.66,.07,10,40),red,0,.28,-.02,head); band.rotation.x=1.25; band.visible=false;
+  const pony=new THREE.Group();pony.position.set(.18,.66,-.22);head.add(pony);mesh(new THREE.SphereGeometry(.2,14,10),hairM,0,.1,-.08,pony);mesh(new THREE.TorusGeometry(.12,.05,8,16),red,0,0,0,pony).rotation.x=1.2;
+  
   const EYES=[];[-.22,.22].forEach(x=>{EYES.push(mesh(new THREE.SphereGeometry(.11,16,12),black,x,-.02,.55,head));mesh(new THREE.SphereGeometry(.04,8,6),white,x+.04,.03,.64,head);mesh(new THREE.SphereGeometry(.09,10,8),cheek,x*1.5,-.2,.5,head).scale.set(1,.55,.4)});
   const mouth=mesh(new THREE.TorusGeometry(.09,.025,8,16,Math.PI),M(0x5a1a14),0,-.26,.58,head); mouth.rotation.z=Math.PI;
   mesh(new THREE.CylinderGeometry(.34,.4,.62,20),shirt,0,1.02,0);
   mesh(new THREE.ConeGeometry(.2,.18,3),white,0,1.3,.33).rotation.x=Math.PI/2;
+  const bow=new THREE.Group();bow.position.set(0,.97,.4);bow.scale.setScalar(.8);body.add(bow);[-1,1].forEach(d=>{const w=mesh(new THREE.ConeGeometry(.1,.18,12),red,d*.1,0,0,bow);w.rotation.z=d*Math.PI/2});mesh(new THREE.SphereGeometry(.05,10,8),red,0,0,.02,bow);
   const sk=mesh(new THREE.CylinderGeometry(.38,.56,.38,20),skirt,0,.62,0);
-  const limb=(x,y,len,r,mat,shoe)=>{const pv=new THREE.Group();pv.position.set(x,y,0);body.add(pv);const m=mesh(new THREE.CylinderGeometry(r,r*.9,len,10),mat,0,-len/2,0,pv);if(shoe){mesh(new THREE.BoxGeometry(.24,.14,.36),black,0,-len-.02,.06,pv);mesh(new THREE.BoxGeometry(.25,.04,.37),white,0,-len-.09,.06,pv)}else{mesh(new THREE.SphereGeometry(r*1.15,10,8),skin,0,-len,0,pv)}return pv};
+  const limb=(x,y,len,r,mat,shoe)=>{const pv=new THREE.Group();pv.position.set(x,y,0);body.add(pv);const m=mesh(new THREE.CylinderGeometry(r,r*.9,len,10),mat,0,-len/2,0,pv);if(shoe){mesh(new THREE.SphereGeometry(r*1.1,10,8),skin,0,-len,.04,pv);mesh(new THREE.BoxGeometry(.26,.05,.38),sandal,0,-len-.09,.06,pv);mesh(new THREE.BoxGeometry(.26,.05,.05),sandal,0,-len-.03,.12,pv)}else{mesh(new THREE.SphereGeometry(r*1.15,10,8),skin,0,-len,0,pv)}return pv};
   const legL=limb(-.18,.5,.46,.1,skin,true), legR=limb(.18,.5,.46,.1,skin,true);
   const armL=limb(-.42,1.26,.52,.1,shirt,false), armR=limb(.42,1.26,.52,.1,shirt,false); armL.rotation.z=-.2; armR.rotation.z=.2;
   // ---- outfits: 3D glasses (Row 3), apron (counter), phone (Unsaid), pyjamas + nightcap (night)
@@ -1915,10 +2027,19 @@ function initLK(){const box=$('#lk'), bub=$('#lkb'); if(!window.THREE){box.remov
   OUT.cap=grp(head);const cone=mesh(new THREE.ConeGeometry(.5,.95,20),M(0x6d8fd6),.08,.78,-.02,OUT.cap);cone.rotation.z=-.35;mesh(new THREE.TorusGeometry(.5,.08,8,24),white,0,.38,0,OUT.cap).rotation.x=Math.PI/2;mesh(new THREE.SphereGeometry(.13,10,8),white,.32,1.18,-.02,OUT.cap);
   const DAY={shirt:0xfbfbf6,skirt:0x151515},PJ={shirt:0xb9d0ff,skirt:0x6d8fd6};let outfit='',isNight=false;
   const wear=k=>{outfit=k;OUT.glasses.visible=k==='people';OUT.apron.visible=k==='hi';OUT.phone.visible=k==='unsaid'};
-  window.LK={night(on){if(on===isNight)return;isNight=on;OUT.cap.visible=on;band.visible=!on;shirt.color.setHex(on?PJ.shirt:DAY.shirt);skirt.color.setHex(on?PJ.skirt:DAY.skirt)},wear};
+  window.LK={night(on){if(on===isNight)return;isNight=on;OUT.cap.visible=on;pony.visible=!on;bow.visible=!on;shirt.color.setHex(on?PJ.shirt:DAY.shirt);skirt.map=on?null:plaid;skirt.color.setHex(on?PJ.skirt:0xffffff);skirt.needsUpdate=true},wear};
   const vis={};const pick=()=>{const best=Object.entries(vis).sort((a,b)=>b[1]-a[1])[0];wear(best&&best[1]>.25?best[0]:'')};
   ['people','hi','unsaid'].forEach(id=>{const sec=document.getElementById(id);if(sec)new IntersectionObserver(es=>{vis[id]=es[0].intersectionRatio;pick()},{threshold:[0,.25,.5,.75,1]}).observe(sec)});
   window.KNIGHT&&KNIGHT();
+  // ---- level-up accessories (Lv2..Lv7)
+  const ACC=[];const acc=(p=body)=>{const g=new THREE.Group();g.visible=false;p.add(g);ACC.push(g);return g};
+  {const g=acc(head);mesh(new THREE.BoxGeometry(.8,.13,.08),black,0,.42,.38,g).rotation.x=-.5;[-.2,.2].forEach(x=>mesh(new THREE.BoxGeometry(.28,.14,.05),M(0x222a44),x,.42,.43,g).rotation.x=-.5)}
+  {const g=acc();mesh(new THREE.TorusGeometry(.36,.09,8,20),red,0,1.32,0,g).rotation.x=Math.PI/2;mesh(new THREE.BoxGeometry(.12,.34,.05),red,.16,1.12,.36,g).rotation.z=.2}
+  {const g=acc();mesh(new THREE.BoxGeometry(.5,.56,.26),M(0xf2c12e),0,1.0,-.42,g);mesh(new THREE.BoxGeometry(.4,.16,.08),M(0xe0a800),0,.86,-.56,g)}
+  {const g=acc();const bl=mesh(new THREE.SphereGeometry(.26,16,12),red,.72,2.5,0,g);bl.scale.y=1.15;mesh(new THREE.CylinderGeometry(.008,.008,1.4,4),white,.6,1.75,0,g).rotation.z=.15}
+  {const g=acc(head);[0,1,2,3,4].forEach(i=>{const a=i/5*Math.PI*2;mesh(new THREE.ConeGeometry(.08,.2,6),M(0xf5c518),Math.cos(a)*.42,.56,Math.sin(a)*.42,g)});mesh(new THREE.TorusGeometry(.44,.05,6,24),M(0xf5c518),0,.48,0,g).rotation.x=Math.PI/2}
+  {const g=acc();const cape=mesh(new THREE.BoxGeometry(.9,.95,.04),red,0,.78,-.38,g);cape.rotation.x=.12;g.userData.cape=cape}
+  const showLevel=lv=>ACC.forEach((g,i)=>g.visible=lv>=i+2);
   const shadow=new THREE.Mesh(new THREE.CircleGeometry(.6,24),new THREE.MeshBasicMaterial({color:0x000000,transparent:true,opacity:.18})); shadow.rotation.x=-Math.PI/2; shadow.position.y=.001; scene.add(shadow);
   function size(){const r=box.getBoundingClientRect();rend.setSize(r.width,r.height,false);cam.aspect=r.width/r.height;cam.updateProjectionMatrix()} size(); addEventListener('resize',size);
   // behaviour
@@ -1927,7 +2048,88 @@ function initLK(){const box=$('#lk'), bub=$('#lkb'); if(!window.THREE){box.remov
   const CTX={play:'is that… ME?!',hang:'pull a card! pull a card!',people:'who ARE all these people?',letters:'ooh, secret letters!',unsaid:'can I talk on the phone??',hi:'ooh, a receipt!'};
   let bt; say=(t)=>{bub.textContent=t;bub.classList.add('on');clearTimeout(bt);bt=setTimeout(()=>bub.classList.remove('on'),2200);giggle=1};
   const seen={}; document.querySelectorAll('section[id]').forEach(s=>new IntersectionObserver(es=>{if(es[0].isIntersecting&&!seen[s.id]&&CTX[s.id]){seen[s.id]=1;setTimeout(()=>say(CTX[s.id]),600)}},{threshold:.45}).observe(s));
-  box.addEventListener('click',()=>{jump=1;say(['hehehe!','you found me!','tickles!','again! again!'][Math.floor(Math.random()*4)]);egg('little')});
+  // ================= Little K: the game layer =================
+  const G={spd:1,catching:false,catchN:0,pose:null,poseT:0,sulk:false,hyper:0,hidden:false,menu:false,petT:0,lastLove:performance.now(),chai:[],dance:null};
+  const KS=(()=>{try{return JSON.parse(ls.get('k-lk')||'{}')}catch(_){return{}}})();KS.hearts=KS.hearts||0;KS.best=KS.best||0;KS.danceBest=KS.danceBest||0;KS.fav=KS.fav||{};
+  const save=()=>ls.set('k-lk',JSON.stringify(KS));const lv=()=>Math.min(7,1+found.size);window.LKSTATE=KS;KS.lv=lv();
+  const chip=document.createElement('span');chip.className='lkchip';chip.setAttribute('aria-hidden','true');box.appendChild(chip);
+  const drawChip=()=>{KS.lv=lv();chip.innerHTML=`<b>Lv${KS.lv}</b>${'<i>♥</i>'.repeat(KS.hearts)}${'<i class="o">♡</i>'.repeat(5-KS.hearts)}`};
+  const love=(n,why)=>{G.lastLove=performance.now();if(G.sulk){G.sulk=false;say('okay okay, I forgive you ♥')}const before=KS.hearts;KS.hearts=Math.min(5,KS.hearts+n);save();drawChip();if(KS.hearts>before){chip.classList.remove('pop');void chip.offsetWidth;chip.classList.add('pop');if(KS.hearts===5&&before<5)setTimeout(()=>{say('you’re my FAVOURITE ♥♥♥');toast('Little K loves you. 5/5 hearts ♥')},600)}};
+  window.LKG={level(up){const l=lv();showLevel(l);drawChip();if(up&&l>1){jump=1;say(`LEVEL UP! Lv${l} ✨`);const r=box.getBoundingClientRect();confetti(r,'#ff2b1f')}}};
+  showLevel(lv());drawChip();
+  // ---- menu
+  const menu=document.createElement('div');menu.className='lkmenu';menu.hidden=true;menu.setAttribute('role','menu');menu.setAttribute('aria-label','Play with Little K');
+  menu.innerHTML=`<b>play with me?</b><button type="button" role="menuitem" data-g="catch">🏃 Catch me! <small>20 sec</small></button><button type="button" role="menuitem" data-g="dance">💃 Dance-off</button><button type="button" role="menuitem" data-g="chai">☕ Give me chai</button><button type="button" role="menuitem" data-g="hide">🙈 Hide &amp; seek</button><span class="lkm-st" id="lkmst"></span>`;
+  document.body.appendChild(menu);
+  const openMenu=()=>{const r=box.getBoundingClientRect();menu.style.left=Math.max(8,Math.min(innerWidth-230,r.left+r.width/2-110))+'px';menu.style.bottom=(innerHeight-r.top+6)+'px';
+    $('#lkmst').textContent=`Lv${lv()} · ${KS.hearts}/5 ♥ · catch best ${KS.best} · dance best ${KS.danceBest}`;menu.hidden=false;G.menu=true;menu.querySelector('button').focus({preventScroll:true})};
+  const closeMenu=()=>{menu.hidden=true;G.menu=false};
+  addEventListener('pointerdown',e=>{if(G.menu&&!menu.contains(e.target)&&!box.contains(e.target))closeMenu()});
+  addEventListener('keydown',e=>{if(e.key==='Escape'&&G.menu)closeMenu()});
+  menu.addEventListener('click',e=>{const b=e.target.closest('[data-g]');if(!b)return;closeMenu();({catch:startCatch,dance:startDance,chai:spawnChai,hide:()=>hideSeek(true)})[b.dataset.g]()});
+  let clicks=0;
+  box.addEventListener('click',()=>{egg('little');
+    if(G.catching){G.catchN++;jump=.6;sfx('pop');say(['got me!','eek!','again?!','hehe!','no fair!'][G.catchN%5]);hud.querySelector('b').textContent=G.catchN;return}
+    if(G.dance)return;
+    jump=1;clicks++;if(clicks%3===1)love(1);
+    if(G.menu)closeMenu();else{say(['play with me?','hehehe!','tickles!','again! again!'][Math.floor(Math.random()*4)]);openMenu()}});
+  // ---- 1. catch-K
+  const hud=document.createElement('div');hud.className='lkhud';hud.hidden=true;hud.setAttribute('aria-live','polite');document.body.appendChild(hud);
+  function startCatch(){if(G.catching||G.dance)return;G.catching=true;G.catchN=0;sleeping=false;G.sulk=false;box.classList.add('catching');let left=20;
+    hud.innerHTML=`Catch Little K! <b>0</b> · <span>0:20</span>`;hud.hidden=false;say('catch me if you can!!');
+    const tk=setInterval(()=>{left--;hud.querySelector('span').textContent=`0:${String(left).padStart(2,'0')}`;if(left<=0){clearInterval(tk);endCatch()}},1000)}
+  function endCatch(){G.catching=false;box.classList.remove('catching');const n=G.catchN;const best=n>KS.best;if(best)KS.best=n;save();
+    hud.innerHTML=`You caught her <b>${n}</b> time${n===1?'':'s'}${best&&n?' · new best! 🏆':''}`;setTimeout(()=>hud.hidden=true,2600);
+    say(n>=10?'you’re TOO fast 😵':n?`${n}!! rematch?`:'too slow, hehe');if(n)love(1);STATS.catchN=n}
+  // ---- 6. dance-off
+  const dp=document.createElement('div');dp.className='lkdance';dp.hidden=true;dp.innerHTML=`<span class="ds">Watch me…</span><div class="dseq"></div><div class="dbtns">${[['L','←'],['U','↑'],['D','↓'],['R','→']].map(([k,a])=>`<button type="button" data-d="${k}" aria-label="${{L:'left',U:'up',D:'down',R:'right'}[k]}">${a}</button>`).join('')}</div><button type="button" class="dx">stop</button>`;document.body.appendChild(dp);
+  const ARW={L:'←',U:'↑',D:'↓',R:'→'};
+  const setPose=(p,ms=520)=>{G.pose=p;G.poseT=performance.now()+ms};
+  function startDance(){if(G.catching||G.dance)return;sleeping=false;G.sulk=false;state='idle';until=performance.now()+1e9;G.dance={seq:[],i:0,round:0,turn:'k'};dp.hidden=false;say('dance-off! copy me 💃');nextRound()}
+  function nextRound(){const D=G.dance;if(!D)return;D.round++;D.seq.push('LURD'[Math.floor(Math.random()*4)]);if(D.round===1)D.seq.push('LURD'[Math.floor(Math.random()*4)]);D.i=0;D.turn='k';
+    dp.querySelector('.ds').textContent=`Round ${D.round} · watch me…`;dp.querySelector('.dseq').innerHTML=D.seq.map(()=>'<i>?</i>').join('');
+    D.seq.forEach((m,j)=>setTimeout(()=>{if(G.dance!==D)return;setPose(m);sfx('key');const it=dp.querySelectorAll('.dseq i')[j];if(it){it.textContent=ARW[m];it.classList.add('k')}},700+j*700));
+    setTimeout(()=>{if(G.dance!==D)return;D.turn='you';dp.querySelector('.ds').textContent=`Your turn! ${D.seq.length} moves`;dp.querySelectorAll('.dseq i').forEach(i=>{i.textContent='?';i.classList.remove('k')})},700+D.seq.length*700+300)}
+  function danceInput(m){const D=G.dance;if(!D||D.turn!=='you')return;setPose(m,380);const it=dp.querySelectorAll('.dseq i')[D.i];
+    if(m===D.seq[D.i]){if(it){it.textContent=ARW[m];it.classList.add('ok')}D.i++;sfx('key');if(D.i===D.seq.length){D.turn='k';giggle=1;say(['yesss!','nailed it!','okay you can dance!'][D.round%3]);setTimeout(nextRound,900)}}
+    else{if(it){it.textContent=ARW[m];it.classList.add('bad')}endDance(D.round-1)}}
+  function endDance(score){const D=G.dance;if(!D)return;G.dance=null;until=performance.now()+1500;const best=score>KS.danceBest;if(best)KS.danceBest=score;save();
+    dp.querySelector('.ds').textContent=score?`You cleared ${score} round${score>1?'s':''}${best?' · new best! 🏆':''}`:'oops! try again?';say(score>=3?'dance partner unlocked 💃':'my turn again!');if(score)love(1);setTimeout(()=>{if(!G.dance)dp.hidden=true},2400)}
+  dp.addEventListener('click',e=>{const b=e.target.closest('[data-d]');if(b)danceInput(b.dataset.d);if(e.target.closest('.dx'))endDance(G.dance?G.dance.round-1:0)});
+  addEventListener('keydown',e=>{if(!G.dance)return;const m={ArrowLeft:'L',ArrowRight:'R',ArrowUp:'U',ArrowDown:'D'}[e.key];if(m){e.preventDefault();danceInput(m)}});
+  // ---- 2. chai
+  function spawnChai(){if(document.querySelector('.chaicup'))return;const c=document.createElement('button');c.type='button';c.className='chaicup';c.setAttribute('aria-label','Chai cup. Drag it onto Little K, or press Enter to give it to her');c.innerHTML='<span>☕</span><small>drag me to K</small>';
+    const r=box.getBoundingClientRect();c.style.left=Math.min(innerWidth-90,Math.max(10,r.left+(r.left>innerWidth/2?-140:160)))+'px';c.style.top=(innerHeight-230)+'px';document.body.appendChild(c);say('chai?! for ME?!');
+    let sx,sy,ox,oy,drag=false;
+    c.addEventListener('pointerdown',e=>{drag=true;c.setPointerCapture(e.pointerId);sx=e.clientX;sy=e.clientY;ox=c.offsetLeft;oy=c.offsetTop;c.classList.add('held')});
+    c.addEventListener('pointermove',e=>{if(!drag)return;c.style.left=(ox+e.clientX-sx)+'px';c.style.top=(oy+e.clientY-sy)+'px'});
+    const drop=()=>{const a=c.getBoundingClientRect(),b=box.getBoundingClientRect();return!(a.right<b.left||a.left>b.right||a.bottom<b.top||a.top>b.bottom)};
+    c.addEventListener('pointerup',()=>{drag=false;c.classList.remove('held');if(drop())drink(c)});
+    c.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();drink(c)}})}
+  function drink(c){c.remove();const now=performance.now();G.chai=G.chai.filter(t=>now-t<120000);G.chai.push(now);sfx('pop');jump=1;giggle=1;
+    if(G.chai.length>=3){G.chai=[];G.hyper=0;say('too… much… chai… zzz');setTimeout(()=>{sleeping=true},900)}
+    else{G.hyper=now+12000;say(G.chai.length===1?'CHAI!! ☕ I can run SO fast now':'MORE CHAI!! ⚡');love(1)}}
+  // ---- 4. hide and seek
+  const SPOTS=[['#pile','in the letters'],['#aud','in the crowd'],['#till','by the printer'],['#desk','on the desktop'],['#lines','on the hanging line']];
+  function hideSeek(manual){if(G.hidden||G.catching||G.dance||RM)return;const opts=SPOTS.filter(([q])=>document.querySelector(q));const [q]=opts[Math.floor(Math.random()*opts.length)];const host=document.querySelector(q);
+    G.hidden=true;try{sessionStorage.setItem('k-hid','1')}catch(_){}say('count to ten! 🙈');setTimeout(()=>{box.classList.add('away')},900);
+    const pk=document.createElement('button');pk.type='button';pk.className='kpeek';pk.setAttribute('aria-label','Little K is hiding here. Click to find her!');
+    pk.innerHTML=`<svg viewBox="0 0 80 60" aria-hidden="true"><circle cx="40" cy="40" r="22" fill="#c98b62"/><path d="M18 40 Q16 16 40 15 Q64 16 62 40 Q56 26 40 27 Q24 26 18 40Z" fill="#1b120c"/><circle cx="56" cy="12" r="8" fill="#1b120c"/><circle cx="56" cy="16" r="4" fill="none" stroke="#e0362b" stroke-width="3"/><circle cx="32" cy="40" r="4" fill="#111"/><circle cx="48" cy="40" r="4" fill="#111"/><circle cx="33.5" cy="38.5" r="1.3" fill="#fff"/><circle cx="49.5" cy="38.5" r="1.3" fill="#fff"/><ellipse cx="26" cy="48" rx="4" ry="2.4" fill="#f08a8a"/><ellipse cx="54" cy="48" rx="4" ry="2.4" fill="#f08a8a"/><rect x="10" y="52" width="60" height="10" rx="4" fill="#c98b62"/></svg>`;
+    if(getComputedStyle(host).position==='static')host.style.position='relative';pk.style.left=(12+Math.random()*70)+'%';pk.style.top=(18+Math.random()*50)+'%';host.appendChild(pk);
+    toast(manual?'She’s hiding! Find Little K somewhere on the page 👀':'Little K wandered off to hide… can you find her? 👀');
+    const back=(found)=>{clearTimeout(tm);pk.remove();G.hidden=false;box.classList.remove('away');x=found?x:innerWidth*.5;if(found){jump=1;say('you FOUND me!! 🙈');love(2);toast('Hide & seek champion 🏆');confetti(box.getBoundingClientRect(),'#ff2b1f')}else say('you didn’t find me, hehe 😜')};
+    pk.addEventListener('click',e=>{e.stopPropagation();const r=pk.getBoundingClientRect();confetti(r,'#ffd21f');back(true)});
+    const tm=setTimeout(()=>back(false),120000)}
+  setTimeout(()=>{let done=false;try{done=!!sessionStorage.getItem('k-hid')}catch(_){};if(!done&&!document.hidden)hideSeek(false)},75000);
+  // ---- 5. moods: favourite sections, sulking when ignored
+  ['hang','people'].forEach(id=>{const sec=document.getElementById(id);if(sec)new IntersectionObserver(es=>{if(es[0].isIntersecting&&!KS.fav[id]){KS.fav[id]=1;setTimeout(()=>{say(id==='hang'?'my FAVOURITE part!! ♥':'these are my people ♥');love(1)},1800)}},{threshold:.5}).observe(sec)});
+  // ---- 7. petting: hover her head
+  let petAt=0,petDone=0;
+  const petCheck=(now,br)=>{const hx=br.left+br.width/2,hy=br.top+br.height*.38;const onHead=Math.abs(mx-hx)<br.width*.28&&Math.abs(my-hy)<br.height*.18;
+    if(onHead&&!G.catching&&!G.dance){if(!petAt)petAt=now;const held=now-petAt;
+      if(held>1400&&petDone<1){petDone=1;giggle=1;say('hehe ♥ *purrs*');cheek.color.setHex(0xff5d7a);if(now-G.petT>20000){G.petT=now;love(1)}}
+      if(held>4500&&petDone<2){petDone=2;say('personal space!!');jump=1;cheek.color.setHex(0xf08a8a);state='run';tx=x<innerWidth/2?innerWidth-bw()-20:20;until=now+9000}}
+    else if(petAt){petAt=0;petDone=0;cheek.color.setHex(0xf08a8a)}};
   box.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();box.click()}});
   const W=()=>innerWidth, bw=()=>box.offsetWidth;
   let lastAct=performance.now(), mx=-999, my=-999, sleeping=false, waved=0, zzT=0;
@@ -1936,12 +2138,15 @@ function initLK(){const box=$('#lk'), bub=$('#lkb'); if(!window.THREE){box.remov
   function loop(now){requestAnimationFrame(loop);const dt=Math.min(.05,(now-last)/1000);last=now;const t=now/1000;
     const idleFor=now-lastAct; const sitting=!RM&&idleFor>12000; if(!RM&&idleFor>24000&&!sleeping){sleeping=true;say('zzz…')}
     if(sleeping&&now-zzT>3500){zzT=now;say(['zzz…','z z z','*snore*','mmm… chai…'][Math.floor(Math.random()*4)])}
-    if(sitting){state='idle';until=now+1500}
+    const busy=G.catching||G.dance||G.hidden;
+    if(sitting&&!busy){state='idle';until=now+1500}
+    if(!busy&&!G.sulk&&KS.hearts>0&&now-G.lastLove>100000&&now-lastAct<5000){G.sulk=true;say('hmph. you forgot about me 😤')}
     const br=box.getBoundingClientRect();const near=Math.hypot(mx-(br.left+br.width/2),my-(br.top+br.height/2))<170;
     if(near&&now-waved>6000&&!sleeping){waved=now;say(['hiii!','hello!!','*waves*','hi hi hi!'][Math.floor(Math.random()*4)])}
+    if(G.catching&&now>until){state='run';tx=Math.max(10,Math.min(W()-bw()-10,Math.random()*(W()-bw())));until=now+650+Math.random()*350}
     if(RM){state='idle'}
-    else if(now>until){ if(state==='idle'){state='run';tx=Math.max(10,Math.min(W()-bw()-10,Math.random()*(W()-bw())));until=now+9000;if(Math.random()<.35)say(LINES[Math.floor(Math.random()*LINES.length)])} else {state='idle';until=now+1800+Math.random()*3500} }
-    let speed=0; if(state==='run'){const d=tx-x;speed=Math.sign(d)*Math.min(Math.abs(d),240*dt);x+=speed;if(Math.abs(d)<2){state='idle';until=now+1500+Math.random()*3000}}
+    else if(now>until&&!G.dance&&!G.catching){ if(state==='idle'){state='run';tx=Math.max(10,Math.min(W()-bw()-10,Math.random()*(W()-bw())));until=now+9000;if(Math.random()<.35)say(LINES[Math.floor(Math.random()*LINES.length)])} else {state='idle';until=now+1800+Math.random()*3500} }
+    let speed=0; if(state==='run'){const d=tx-x;speed=Math.sign(d)*Math.min(Math.abs(d),240*dt*(G.catching?2.6:now<G.hyper?1.9:1));x+=speed;if(Math.abs(d)<2){state='idle';until=now+1500+Math.random()*3000}}
     x=Math.max(0,Math.min(W()-bw(),x));
     const running=Math.abs(speed)>.2, targetFace=running?(speed>0?1:-1):0; face+=(targetFace-face)*.12;
     root.rotation.y=face*1.1 + (running?0:Math.sin(t*.8)*.15);
@@ -1955,7 +2160,17 @@ function initLK(){const box=$('#lk'), bub=$('#lkb'); if(!window.THREE){box.remov
     if(sleeping){head.rotation.z=.32+Math.sin(t*1.4)*.04;head.rotation.x=.18;EYES.forEach(e=>e.scale.set(1,.12,1));armL.rotation.x=0;armR.rotation.x=0}else{head.rotation.x=0;EYES.forEach(e=>e.scale.set(1,1,1))}
     if(near&&!sleeping&&jump<=0){root.rotation.y*=.5;armR.rotation.z=2.5+Math.sin(t*12)*.35;armR.rotation.x=0}
     shadow.scale.setScalar(1-body.position.y*.35);
-    if(outfit==='unsaid'&&!near&&!sleeping){armR.rotation.z=2.35;armR.rotation.x=-.3}
+    if(outfit==='unsaid'&&!near&&!sleeping&&!G.pose){armR.rotation.z=2.35;armR.rotation.x=-.3}
+    if(now<G.hyper&&!running){body.position.y+=Math.abs(Math.sin(t*16))*.06}
+    if(G.sulk&&!busy){root.rotation.y=Math.PI*.9;legL.rotation.x=-1.45;legR.rotation.x=-1.45;body.position.y=-.4;mouth.scale.set(1,-1,1)}
+    if(G.pose&&now<G.poseT){const p=G.pose;root.rotation.y=0;armL.rotation.x=0;armR.rotation.x=0;
+      if(p==='U'){armL.rotation.z=-2.8;armR.rotation.z=2.8;body.position.y+=.15}
+      if(p==='D'){body.position.y-=.28;armL.rotation.z=-.9;armR.rotation.z=.9;legL.rotation.x=-.6;legR.rotation.x=-.6}
+      if(p==='L'){body.rotation.z=.35;armL.rotation.z=-1.7;armR.rotation.z=.6}
+      if(p==='R'){body.rotation.z=-.35;armR.rotation.z=1.7;armL.rotation.z=-.6}}
+    else{if(G.pose){G.pose=null;body.rotation.z=0}}
+    {const capeG=ACC[5];if(capeG.visible)capeG.userData.cape.rotation.x=.12+(running?.5:Math.sin(t*2)*.05)}
+    petCheck(now,br);
     box.style.transform=`translateX(${x}px)`; rend.render(scene,cam)}
   requestAnimationFrame(loop);
 }
