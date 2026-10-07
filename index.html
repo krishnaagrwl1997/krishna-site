@@ -865,6 +865,25 @@ html.night .torch{opacity:1}
   .pp.vip{width:calc(var(--w) * 1.06);margin-inline:calc(var(--w) * -.08)}
   .me{width:calc(var(--w) * 1.9);margin-inline:calc(var(--w) * -.16)}
 }
+
+/* ---------- counter fits one screen (desktop) ---------- */
+@media (min-width:861px){
+  .counter{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);grid-template-rows:auto 1fr;column-gap:clamp(20px,3vw,44px);padding:22px clamp(20px,3vw,40px) 0}
+  .counter .cbot{display:contents}
+  .counter .ctop{grid-column:1;grid-row:1;border-radius:20px;padding:22px 26px 26px;box-shadow:0 8px 0 #0b1a2e;align-self:start}
+  .counter .kname{font-size:clamp(46px,5.4vw,78px)}
+  .counter .kscript{font-size:clamp(26px,3vw,44px)}
+  .counter .burst{width:clamp(110px,11vw,150px);top:auto;bottom:-46px;right:-14px}
+  .counter .cside{grid-column:1;grid-row:2;align-self:start;padding:34px 0 24px}
+  .counter .till{grid-column:2;grid-row:1/3;height:min(calc(100vh - 40px),800px);min-height:640px}
+  .counter .machine{height:214px;padding-top:28px}
+  .counter .paperwrap{bottom:190px}
+  .counter .receipt{font-size:12.5px;line-height:1.32;padding:26px 16px 10px}
+  .counter .receipt .bars{height:34px}
+  .counter .head-wrap{width:min(130px,40%)}
+  .counter .band{display:none}
+}
+@media (min-width:861px) and (max-height:820px){.counter{padding-top:10px}.counter .till{height:calc(100vh - 14px);min-height:600px}.counter .receipt .dash{margin:5px 0}.counter .receipt{font-size:11.5px;line-height:1.25;padding-top:24px}.counter .receipt .bars{height:26px}.counter .machine{height:196px}.counter .paperwrap{bottom:174px}}
 </style>
 </head>
 <body>
@@ -1267,8 +1286,8 @@ If it isn't, the next one will be.
     o.el.querySelector('[data-x="rate"]').onclick=()=>{const R=strokes<2?['…a blank canvas. very conceptual. 7/10']:['10/10, going on my fridge.','museum-worthy. or at least desk-worthy.','I see it. I don’t know what it is. I love it.','Little K says “AGAIN!!”','framing this. no notes.'];
       const d=openWin('rate',{title:'K rates your art',icon:'paint',w:320,body:`<div class="dlg">${I.paint}<div><b>${R[Math.floor(Math.random()*R.length)]}</b></div><div class="bt"><button type="button" class="btn95" data-ok>Thanks K</button></div></div>`});d.el.querySelector('[data-ok]').onclick=()=>d.el.querySelector('[data-a="x"]').click();say('I wanna draw too!!')}}
   // ---- K.amp (chiptune player, synthesized)
-  const TR=[['ideas at 2am (lofi)',82,[60,63,67,70,67,63,62,58],[36,36,43,43]],['neon nights',118,[64,67,71,74,71,67,69,66],[40,40,47,45]],['salt & sun',100,[67,69,72,74,76,74,72,69],[43,43,48,48]],
-    ['kitchen dance party',128,[72,72,74,76,79,76,74,72],[48,48,43,45]],['window seat',90,[64,62,59,57,59,62,64,67],[40,38,36,38]],['one more take',110,[69,72,76,72,69,67,64,67],[45,45,41,43]]];
+  const TR=[['Kalyani · Shreya Ghoshal',82,[60,63,67,70,67,63,62,58],[36,36,43,43]],['Ojhal',96,[64,67,71,74,71,67,69,66],[40,40,47,45]],['Bairan',100,[67,69,72,74,76,74,72,69],[43,43,48,48]],
+    ['Barsaat',88,[72,72,74,76,79,76,74,72],[48,48,43,45]],['Parwah',92,[64,62,59,57,59,62,64,67],[40,38,36,38]],];
   let ac=null,an=null,gain=null,timer=null,cur=0,step=0,playing=false,vol=.5;
   const hz=m=>440*Math.pow(2,(m-69)/12);
   function blip(type,f,t,d,v){const o=ac.createOscillator(),g=ac.createGain();o.type=type;o.frequency.value=f;g.gain.setValueAtTime(v,t);g.gain.exponentialRampToValueAtTime(.0001,t+d);o.connect(g);g.connect(gain);o.start(t);o.stop(t+d+.02)}
@@ -1278,10 +1297,10 @@ If it isn't, the next one will be.
     timer=setInterval(()=>{while(next<ac.currentTime+.15){const i=step%16;blip('square',hz(mel[i%8]+(i>=8?12:0)*(cur%2)),next,sp*.9,.18);if(i%4===0)blip('triangle',hz(bass[(i/4)%4]),next,sp*3.6,.5);if(i%2===1)hat(next);step++;next+=sp}},40);ui()}
   function stop(){playing=false;clearInterval(timer);ui()}
   let ampEl=null;
-  function ui(){if(!ampEl)return;ampEl.querySelector('.ttl').textContent=`${String(cur+1).padStart(2,'0')}. ${TR[cur][0]} · K. · ${playing?'playing':'paused'} ·   `;ampEl.querySelector('[data-k="play"]').textContent=playing?'❚❚':'▶';ampEl.querySelectorAll('.pl li').forEach((l,i)=>l.classList.toggle('on',i===cur))}
+  function ui(){if(!ampEl)return;{const r=ampEl.querySelector('.areal');if(r)r.href='https://www.youtube.com/results?search_query='+encodeURIComponent(TR[cur][0].replace(' · ',' ')+' song')}ampEl.querySelector('.ttl').textContent=`${String(cur+1).padStart(2,'0')}. ${TR[cur][0]} · on K’s playlist · ${playing?'8-bit mood playing':'paused'} ·   `;ampEl.querySelector('[data-k="play"]').textContent=playing?'❚❚':'▶';ampEl.querySelectorAll('.pl li').forEach((l,i)=>l.classList.toggle('on',i===cur))}
   function amp(){const o=openWin('amp',{title:'K.amp',icon:'amp',w:330,body:`<div class="kamp"><div class="lcd2"><div class="mar"><span class="ttl"></span></div><canvas width="120" height="34"></canvas><span class="kbps">128 kbps · 44 khz · chai</span></div>
       <div class="kctl"><button type="button" data-k="prev" aria-label="Previous">⏮</button><button type="button" data-k="play" aria-label="Play or pause">▶</button><button type="button" data-k="next" aria-label="Next">⏭</button><input type="range" min="0" max="100" value="${vol*100}" aria-label="Volume"></div>
-      <ol class="pl">${TR.map((t,i)=>`<li><button type="button" data-i="${i}">${String(i+1).padStart(2,'0')}. ${t[0]}</button></li>`).join('')}</ol><p class="anote">synthesised on the spot · real playlist coming soon</p></div>`});
+      <ol class="pl">${TR.map((t,i)=>`<li><button type="button" data-i="${i}">${String(i+1).padStart(2,'0')}. ${t[0]}</button></li>`).join('')}</ol><p class="anote">K’s favourites, as tiny 8-bit moods. <a class="areal" target="_blank" rel="noopener" href="#">hear the real one ↗</a></p></div>`});
     ampEl=o.el;ui();
     o.el.querySelector('[data-k="play"]').onclick=()=>{playing?stop():start();if(playing)say('DANCE BREAK!!')};
     o.el.querySelector('[data-k="next"]').onclick=()=>{cur=(cur+1)%TR.length;step=0;playing?start():ui()};
@@ -1614,13 +1633,16 @@ ${['zs-eb','zs-fw','zs-ef','zs-wax'].map(c=>`<div class="zs-env ${c}w" style="--
   const now=()=>{const d=new Date();let h=d.getHours(),mi=String(d.getMinutes()).padStart(2,'0');const ap=h>=12?'pm':'am';h=h%12||12;return `${h}:${mi} ${ap}`};
   const six=`<div class="row6">${SIX.map(R=>`<img src="img/s_${R.k}_0.webp" alt="${R.n}">`).join('')}</div>`;
   const Q=[
-   ['who are you?',[['Krishna.'],['six people, one passport photo',six]]],
-   ['where are you rn?',[['Bengaluru, physically'],['mentally?',null,'s_sun_3']]],
-   ['send a pic',[['ok one',null,'s_city_5'],['city girl me']]],
-   ['fav time of day?',[['golden hour. every version of me agrees',null,'s_wander_2']]],
-   ['dance tho?',[['always',null,'s_dance_1'],['movement feels like freedom']]],
+   ['who are you?',[['Krishna. Senior Product Designer by day'],['and the K in @hang.withk',six]]],
+   ['where are you rn?',[['Bengaluru, physically'],['mentally? on a mountain somewhere',null,'s_sun_3']]],
+   ['what are you listening to?',[['Kalyani on loop 🎧'],['Ojhal, Bairan, Barsaat, Parwah next. it’s all on K.amp, up on my desktop']]],
+   ['who do you call at 3am?',[['Choti bachiiii 📞'],['you’ll find her in Row 3']]],
+   ['comfort zones?',[['overrated tbh'],['get uncomfortable. that’s how your mind keeps learning new things']]],
+   ['what does hanging out mean to you?',[['being myself'],['no thinking about who’s judging. just us']]],
+   ['dance tho?',[['always',null,'s_dance_1'],['Oh! I love dancinggg']]],
    ['what did you want to be as a kid?',[['a kind person'],['still my favourite goal ✨',null,'s_film_0']]],
-   ['can we collab?',[['YES'],['email\'s right below ↓']]]
+   ['what are you learning rn?',[['go for the experiences'],['I know it’s scary sometimes. trust me, go for it']]],
+   ['can we collab?',[['YES'],['email’s right below ↓']]]
   ];
   const add=(side,html,st)=>{const d=document.createElement('div');d.className='msg '+side+(st?' sticker':'');d.innerHTML=html+`<time>${now()}</time>`;log.appendChild(d);log.scrollTop=log.scrollHeight;return d};
   let busy=false;
@@ -1680,13 +1702,13 @@ if(!RM){const onS=()=>{const y=scrollY;floats.forEach((f,i)=>{f.style.transform=
     const bars=[...'krishna.agrwlx@gmail.com'].map((c,i)=>`<i style="width:${1+(c.charCodeAt(0)*7+i)%4}px"></i><i style="width:${1+(i%2)}px;background:transparent"></i>`).join('');
     return [
      `<div class="l c"><b>KRISHNA'S COUNTER</b></div>`,`<div class="l c">Bengaluru · open late</div>`,
-     row(`${pad(d.getDate())}.${pad(d.getMonth()+1)}.${d.getFullYear()}`,`${pad(d.getHours())}:${pad(d.getMinutes())}`),row('ORDER',`#${order}`),
-     `<div class="dash"></div>`,`<div class="l">Today's special</div>`,`<div class="l big">Senior Product Designer</div>`,`<div class="l w">Solo designer on 0→1 fintech. Ships in code.</div>`,
+     row(`${pad(d.getDate())}.${pad(d.getMonth()+1)}.${d.getFullYear()} · ${pad(d.getHours())}:${pad(d.getMinutes())}`,`#${order}`),
+     `<div class="dash"></div>`,`<div class="sec">TODAY'S SPECIAL</div>`,`<div class="l big">Senior Product Designer</div>`,`<div class="l w">Solo designer on 0→1 fintech. Ships in code.</div>`,
      `<div class="dash"></div>`,`<div class="sec">ON THE MENU</div>`,
      ...MENU.map(([a,b])=>row(a,b)),
      `<div class="dash"></div>`,`<div class="sec">YOUR VISIT</div>`,
-     row('Cards pulled',`${STATS.cards.size}/8`),row('Rooms explored',`${STATS.rooms.size}/6`),row('Letters opened',STATS.letters.size),row('Row 3 regulars met',STATS.met.size),row('Unsaid things said',STATS.said),row('Secrets found',`${found.size}/6`),row('Little K. caught',found.has('little')?'yes!':'not yet'),
-     `<div class="dash"></div>`,`<div class="l">No pitch.</div>`,`<div class="l">No prize.</div>`,`<div class="l"><b>Just a creative, saying hi.</b></div>`,
+     row('Cards pulled',`${STATS.cards.size}/8`),row('Letters opened',STATS.letters.size),row('Row 3 regulars met',STATS.met.size),row('Unsaid things said',STATS.said),row('Secrets found',`${found.size}/6`),
+     `<div class="dash"></div>`,`<div class="l">No pitch. No prize.</div>`,`<div class="l"><b>Just a creative, saying hi.</b></div>`,
      `<div class="dash"></div>`,row('<b>Total</b>','<b>₹0</b>'),
      `<div class="bars" aria-hidden="true">${bars}</div>`,`<div class="l c">krishna.agrwlx@gmail.com</div>`,`<div class="cut">- - - - ✂ tear here - - - -</div>`]}
   function print(){if(printing)return;printing=true;printed=true;clearTimeout(timer);rc.classList.remove('torn');rc.style.transform='';rc.style.removeProperty('--dx');rc.style.removeProperty('--dy');rc.style.transition='';
