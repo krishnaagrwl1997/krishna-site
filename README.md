@@ -3,7 +3,7 @@
 A playful personal brand site for Krishna Agarwal, built as one self-contained `index.html` plus an `img/` folder.
 
 ## Sections
-1. **Krishna 26** – a retro desktop with icons, draggable windows, a Start menu, Paint, the K.amp music player, a screensaver and tray notifications. A "Hang with K" sign swings in on load.
+1. **K's OS** – a retro desktop with icons, draggable windows, a Start menu, Paint, the K.amp music player, a screensaver and tray notifications. A "Hang with K" sign swings in on load.
 2. **Hang with K** – conversation cards from [@hang.withk](https://www.instagram.com/hang.withk/) hanging on a rope; pull one to flip it.
 3. **Row 3** – a black-and-white cinema audience of the people in Krishna's life.
 4. **Letters** – a pile of papers with eyes peeking out; click to open a letter, or write an anonymous one.
