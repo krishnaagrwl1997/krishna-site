@@ -925,6 +925,7 @@ html.night .torch{opacity:1}
 @media (prefers-reduced-motion:reduce){.kpeek,.chaicup{animation:none}}
 .kamp .ytbox{margin:8px 0;aspect-ratio:16/9;background:#000;border:2px solid;border-color:#808080 #fff #fff #808080}.kamp .ytbox[hidden]{display:none}.kamp .ytbox iframe{display:block;width:100%;height:100%;border:0}
 .kamp .areal{color:#3dff6e}
+.kamp .pl .plink{display:block;padding:3px 8px;font:400 17px/1.1 var(--f-vt);color:#3dff6e;text-decoration:none}.kamp .pl .plink:hover,.kamp .pl .plink:focus-visible{background:#0a246a;color:#fff}
 </style>
 </head>
 <body>
@@ -1332,7 +1333,10 @@ If it isn't, the next one will be.
   const TR=[['Kalyani','Shreya Ghoshal','z5y8Clp_TdE'],['Ojhal','Shunya','Lqpvg8vYRKA'],['Bairan','Banjaare','oafxkMv4xnc'],['Barsaat','','ebZj_nrmH-c'],['Parwah','','BfM86k78AO0']];
   let cur=0,playing=false,ampEl=null;
   const nm=t=>t[1]?`${t[0]} · ${t[1]}`:t[0];
-  function start(){if(!ampEl)return;playing=true;const box=ampEl.querySelector('.ytbox');
+  // YouTube's player only loads on the real site; inside previews that block embeds, songs open on YouTube instead
+  const EMBED=/(^|\.)github\.io$|^localhost$|^127\./.test(location.hostname);
+  const ytURL=i=>'https://www.youtube.com/watch?v='+TR[i][2];
+  function start(){if(!ampEl)return;if(!EMBED){const a=document.createElement('a');a.href=ytURL(cur);a.target='_blank';a.rel='noopener';document.body.appendChild(a);a.click();a.remove();say('opening it on YouTube 🎶');return}playing=true;const box=ampEl.querySelector('.ytbox');
     box.innerHTML=`<iframe src="https://www.youtube-nocookie.com/embed/${TR[cur][2]}?autoplay=1&rel=0&playsinline=1&modestbranding=1" title="${nm(TR[cur])}" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen loading="lazy"></iframe>`;box.hidden=false;ui()}
   function stop(){playing=false;if(ampEl){const box=ampEl.querySelector('.ytbox');box.innerHTML='';box.hidden=true}ui()}
   function ui(){if(!ampEl)return;const r=ampEl.querySelector('.areal');if(r)r.href='https://www.youtube.com/watch?v='+TR[cur][2];
@@ -1340,12 +1344,13 @@ If it isn't, the next one will be.
   function amp(){const o=openWin('amp',{title:'K.amp',icon:'amp',w:330,body:`<div class="kamp"><div class="lcd2"><div class="mar"><span class="ttl"></span></div><canvas width="120" height="34"></canvas><span class="kbps">K’s favourites · on repeat</span></div>
       <div class="ytbox" hidden></div>
       <div class="kctl"><button type="button" data-k="prev" aria-label="Previous">⏮</button><button type="button" data-k="play" aria-label="Play or stop">▶</button><button type="button" data-k="next" aria-label="Next">⏭</button></div>
-      <ol class="pl">${TR.map((t,i)=>`<li><button type="button" data-i="${i}">${String(i+1).padStart(2,'0')}. ${nm(t)}</button></li>`).join('')}</ol><p class="anote">Plays through YouTube. Not loading? <a class="areal" target="_blank" rel="noopener" href="#">open it on YouTube ↗</a></p></div>`});
+      <ol class="pl">${TR.map((t,i)=>EMBED?`<li><button type="button" data-i="${i}">${String(i+1).padStart(2,'0')}. ${nm(t)}</button></li>`:`<li><a class="plink" data-i="${i}" href="${ytURL(i)}" target="_blank" rel="noopener">${String(i+1).padStart(2,'0')}. ${nm(t)} ↗</a></li>`).join('')}</ol><p class="anote">${EMBED?'Plays through YouTube. Not loading?':'Tap a song to play it on YouTube.'} <a class="areal" target="_blank" rel="noopener" href="#">open it on YouTube ↗</a></p></div>`});
     ampEl=o.el;ui();
     o.el.querySelector('[data-k="play"]').onclick=()=>{playing?stop():start();if(playing)say('DANCE BREAK!!')};
     o.el.querySelector('[data-k="next"]').onclick=()=>{cur=(cur+1)%TR.length;playing?start():ui()};
     o.el.querySelector('[data-k="prev"]').onclick=()=>{cur=(cur+TR.length-1)%TR.length;playing?start():ui()};
     o.el.querySelectorAll('.pl button').forEach(b=>b.onclick=()=>{cur=+b.dataset.i;start();say(cur===0?'KALYANIII 🎶':'ooh I love this one!')});
+    o.el.querySelectorAll('.pl .plink').forEach(a=>a.addEventListener('click',()=>{cur=+a.dataset.i;ui();say(cur===0?'KALYANIII 🎶':'ooh I love this one!')}));
     o.el.querySelector('[data-a="x"]').addEventListener('click',()=>{stop();ampEl=null});
     const cv=o.el.querySelector('canvas'),c=cv.getContext('2d');let ph=0;
     (function viz(){if(!ampEl)return;requestAnimationFrame(viz);ph+=.08;c.clearRect(0,0,cv.width,cv.height);for(let i=0;i<16;i++){const v=playing?.25+.55*Math.abs(Math.sin(ph*(1+i*.13)+i)):.05+Math.random()*.03;const h=Math.max(2,v*cv.height);c.fillStyle=i%2?'#3dff6e':'#b7ff4a';c.fillRect(i*7.5,cv.height-h,5.5,h)}})()}
