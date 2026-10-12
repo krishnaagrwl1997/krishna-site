@@ -923,6 +923,8 @@ html.night .torch{opacity:1}
 .kpeek svg{display:block;width:100%;filter:drop-shadow(0 4px 4px #0006)}
 @keyframes kpeek{0%,100%{transform:translateY(8px)}40%,60%{transform:translateY(0)}}
 @media (prefers-reduced-motion:reduce){.kpeek,.chaicup{animation:none}}
+.kamp .ytbox{margin:8px 0;aspect-ratio:16/9;background:#000;border:2px solid;border-color:#808080 #fff #fff #808080}.kamp .ytbox[hidden]{display:none}.kamp .ytbox iframe{display:block;width:100%;height:100%;border:0}
+.kamp .areal{color:#3dff6e}
 </style>
 </head>
 <body>
@@ -1326,30 +1328,27 @@ If it isn't, the next one will be.
     o.el.querySelector('[data-x="rate"]').onclick=()=>{const R=strokes<2?['…a blank canvas. very conceptual. 7/10']:['10/10, going on my fridge.','museum-worthy. or at least desk-worthy.','I see it. I don’t know what it is. I love it.','Little K says “AGAIN!!”','framing this. no notes.'];
       const d=openWin('rate',{title:'K rates your art',icon:'paint',w:320,body:`<div class="dlg">${I.paint}<div><b>${R[Math.floor(Math.random()*R.length)]}</b></div><div class="bt"><button type="button" class="btn95" data-ok>Thanks K</button></div></div>`});d.el.querySelector('[data-ok]').onclick=()=>d.el.querySelector('[data-a="x"]').click();say('I wanna draw too!!')}}
   // ---- K.amp (chiptune player, synthesized)
-  const TR=[['Kalyani · Shreya Ghoshal',82,[60,63,67,70,67,63,62,58],[36,36,43,43]],['Ojhal',96,[64,67,71,74,71,67,69,66],[40,40,47,45]],['Bairan',100,[67,69,72,74,76,74,72,69],[43,43,48,48]],
-    ['Barsaat',88,[72,72,74,76,79,76,74,72],[48,48,43,45]],['Parwah',92,[64,62,59,57,59,62,64,67],[40,38,36,38]],];
-  let ac=null,an=null,gain=null,timer=null,cur=0,step=0,playing=false,vol=.5;
-  const hz=m=>440*Math.pow(2,(m-69)/12);
-  function blip(type,f,t,d,v){const o=ac.createOscillator(),g=ac.createGain();o.type=type;o.frequency.value=f;g.gain.setValueAtTime(v,t);g.gain.exponentialRampToValueAtTime(.0001,t+d);o.connect(g);g.connect(gain);o.start(t);o.stop(t+d+.02)}
-  function hat(t){const b=ac.createBuffer(1,ac.sampleRate*.05,ac.sampleRate),d=b.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=(Math.random()*2-1)*(1-i/d.length);const s=ac.createBufferSource(),g=ac.createGain(),f=ac.createBiquadFilter();f.type='highpass';f.frequency.value=6000;s.buffer=b;g.gain.value=.25;s.connect(f);f.connect(g);g.connect(gain);s.start(t)}
-  function start(){if(!ac){ac=new (window.AudioContext||window.webkitAudioContext)();gain=ac.createGain();an=ac.createAnalyser();an.fftSize=64;gain.connect(an);an.connect(ac.destination)}
-    ac.resume();gain.gain.value=vol*.35;playing=true;const [,bpm,mel,bass]=TR[cur];const sp=60/bpm/2;let next=ac.currentTime+.05;clearInterval(timer);
-    timer=setInterval(()=>{while(next<ac.currentTime+.15){const i=step%16;blip('square',hz(mel[i%8]+(i>=8?12:0)*(cur%2)),next,sp*.9,.18);if(i%4===0)blip('triangle',hz(bass[(i/4)%4]),next,sp*3.6,.5);if(i%2===1)hat(next);step++;next+=sp}},40);ui()}
-  function stop(){playing=false;clearInterval(timer);ui()}
-  let ampEl=null;
-  function ui(){if(!ampEl)return;{const r=ampEl.querySelector('.areal');if(r)r.href='https://www.youtube.com/results?search_query='+encodeURIComponent(TR[cur][0].replace(' · ',' ')+' song')}ampEl.querySelector('.ttl').textContent=`${String(cur+1).padStart(2,'0')}. ${TR[cur][0]} · on K’s playlist · ${playing?'8-bit mood playing':'paused'} ·   `;ampEl.querySelector('[data-k="play"]').textContent=playing?'❚❚':'▶';ampEl.querySelectorAll('.pl li').forEach((l,i)=>l.classList.toggle('on',i===cur))}
-  function amp(){const o=openWin('amp',{title:'K.amp',icon:'amp',w:330,body:`<div class="kamp"><div class="lcd2"><div class="mar"><span class="ttl"></span></div><canvas width="120" height="34"></canvas><span class="kbps">128 kbps · 44 khz · chai</span></div>
-      <div class="kctl"><button type="button" data-k="prev" aria-label="Previous">⏮</button><button type="button" data-k="play" aria-label="Play or pause">▶</button><button type="button" data-k="next" aria-label="Next">⏭</button><input type="range" min="0" max="100" value="${vol*100}" aria-label="Volume"></div>
-      <ol class="pl">${TR.map((t,i)=>`<li><button type="button" data-i="${i}">${String(i+1).padStart(2,'0')}. ${t[0]}</button></li>`).join('')}</ol><p class="anote">K’s favourites, as tiny 8-bit moods. <a class="areal" target="_blank" rel="noopener" href="#">hear the real one ↗</a></p></div>`});
+  // her playlist: the real songs, played through YouTube's own player
+  const TR=[['Kalyani','Shreya Ghoshal','z5y8Clp_TdE'],['Ojhal','Shunya','Lqpvg8vYRKA'],['Bairan','Banjaare','oafxkMv4xnc'],['Barsaat','','ebZj_nrmH-c'],['Parwah','','BfM86k78AO0']];
+  let cur=0,playing=false,ampEl=null;
+  const nm=t=>t[1]?`${t[0]} · ${t[1]}`:t[0];
+  function start(){if(!ampEl)return;playing=true;const box=ampEl.querySelector('.ytbox');
+    box.innerHTML=`<iframe src="https://www.youtube-nocookie.com/embed/${TR[cur][2]}?autoplay=1&rel=0&playsinline=1&modestbranding=1" title="${nm(TR[cur])}" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen loading="lazy"></iframe>`;box.hidden=false;ui()}
+  function stop(){playing=false;if(ampEl){const box=ampEl.querySelector('.ytbox');box.innerHTML='';box.hidden=true}ui()}
+  function ui(){if(!ampEl)return;const r=ampEl.querySelector('.areal');if(r)r.href='https://www.youtube.com/watch?v='+TR[cur][2];
+    ampEl.querySelector('.ttl').textContent=`${String(cur+1).padStart(2,'0')}. ${nm(TR[cur])} · on K’s playlist · ${playing?'now playing':'press play'} ·   `;ampEl.querySelector('[data-k="play"]').textContent=playing?'■':'▶';ampEl.querySelectorAll('.pl li').forEach((l,i)=>l.classList.toggle('on',i===cur))}
+  function amp(){const o=openWin('amp',{title:'K.amp',icon:'amp',w:330,body:`<div class="kamp"><div class="lcd2"><div class="mar"><span class="ttl"></span></div><canvas width="120" height="34"></canvas><span class="kbps">K’s favourites · on repeat</span></div>
+      <div class="ytbox" hidden></div>
+      <div class="kctl"><button type="button" data-k="prev" aria-label="Previous">⏮</button><button type="button" data-k="play" aria-label="Play or stop">▶</button><button type="button" data-k="next" aria-label="Next">⏭</button></div>
+      <ol class="pl">${TR.map((t,i)=>`<li><button type="button" data-i="${i}">${String(i+1).padStart(2,'0')}. ${nm(t)}</button></li>`).join('')}</ol><p class="anote">Plays through YouTube. Not loading? <a class="areal" target="_blank" rel="noopener" href="#">open it on YouTube ↗</a></p></div>`});
     ampEl=o.el;ui();
     o.el.querySelector('[data-k="play"]').onclick=()=>{playing?stop():start();if(playing)say('DANCE BREAK!!')};
-    o.el.querySelector('[data-k="next"]').onclick=()=>{cur=(cur+1)%TR.length;step=0;playing?start():ui()};
-    o.el.querySelector('[data-k="prev"]').onclick=()=>{cur=(cur+TR.length-1)%TR.length;step=0;playing?start():ui()};
-    o.el.querySelector('input').oninput=e=>{vol=e.target.value/100;if(gain)gain.gain.value=vol*.35};
-    o.el.querySelectorAll('.pl button').forEach(b=>b.onclick=()=>{cur=+b.dataset.i;step=0;start()});
+    o.el.querySelector('[data-k="next"]').onclick=()=>{cur=(cur+1)%TR.length;playing?start():ui()};
+    o.el.querySelector('[data-k="prev"]').onclick=()=>{cur=(cur+TR.length-1)%TR.length;playing?start():ui()};
+    o.el.querySelectorAll('.pl button').forEach(b=>b.onclick=()=>{cur=+b.dataset.i;start();say(cur===0?'KALYANIII 🎶':'ooh I love this one!')});
     o.el.querySelector('[data-a="x"]').addEventListener('click',()=>{stop();ampEl=null});
-    const cv=o.el.querySelector('canvas'),c=cv.getContext('2d');const arr=new Uint8Array(32);
-    (function viz(){if(!ampEl)return;requestAnimationFrame(viz);c.clearRect(0,0,cv.width,cv.height);if(an&&playing)an.getByteFrequencyData(arr);for(let i=0;i<16;i++){const v=playing&&an?arr[i+2]/255:.05+Math.random()*.03;const h=Math.max(2,v*cv.height);c.fillStyle=i%2?'#3dff6e':'#b7ff4a';c.fillRect(i*7.5,cv.height-h,5.5,h)}})()}
+    const cv=o.el.querySelector('canvas'),c=cv.getContext('2d');let ph=0;
+    (function viz(){if(!ampEl)return;requestAnimationFrame(viz);ph+=.08;c.clearRect(0,0,cv.width,cv.height);for(let i=0;i<16;i++){const v=playing?.25+.55*Math.abs(Math.sin(ph*(1+i*.13)+i)):.05+Math.random()*.03;const h=Math.max(2,v*cv.height);c.fillStyle=i%2?'#3dff6e':'#b7ff4a';c.fillRect(i*7.5,cv.height-h,5.5,h)}})()}
   // ---- screensaver
   const ss=$('#saver'); let idle=null, ssOn=false, ssRaf=0;
   function saver(){if(ssOn)return;ssOn=true;ss.hidden=false;const logo=ss.querySelector('.dvd');let x=40,y=40,vx=2.2,vy=1.7,hue=0;const W=()=>ss.clientWidth-logo.offsetWidth,H=()=>ss.clientHeight-logo.offsetHeight;
