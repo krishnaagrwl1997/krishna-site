@@ -980,6 +980,17 @@ html.night .torch{opacity:1}
 .grassgo.on{clip-path:inset(0)}
 .grassgo b{font:700 clamp(26px,5vw,44px)/1.1 var(--f-hand);color:#fff;text-shadow:0 3px 0 #0003;text-align:center;padding:16px}
 @media (max-width:700px){.ico.mhide{display:none}#wallT{min-height:2.1em;font-size:20px;line-height:1.05;max-width:16ch;text-align:center}.sticky{display:none}.welcome .wmore{display:none}.welcome .chk{display:none}.welcome p{font-size:14px}}
+
+/* ---------- visitor counter ---------- */
+.tray .visit{display:inline-flex;align-items:center;gap:4px;border:0;background:none;padding:0;cursor:pointer;font:inherit}
+.tray .visit[hidden]{display:none}
+.tray .visit b{font:400 15px/1 var(--f-vt);letter-spacing:.12em;color:#3dff6e;background:#101010;padding:2px 4px 1px;box-shadow:inset 1px 1px 0 #808080,inset -1px -1px 0 #fff}
+.vball{position:absolute;right:8px;bottom:44px;z-index:860;width:min(270px,calc(100% - 16px));background:#ffffe1;border:1px solid #000;border-radius:8px;padding:10px 26px 10px 12px;font:12px/1.4 Tahoma,Verdana,sans-serif;color:#000;box-shadow:3px 3px 0 #0003;display:grid;gap:4px;animation:wopen .25s ease-out}
+.vball[hidden]{display:none}
+.vball::after{content:"";position:absolute;right:56px;bottom:-9px;width:14px;height:14px;background:#ffffe1;border-right:1px solid #000;border-bottom:1px solid #000;transform:rotate(45deg)}
+.vball b{font-size:13px}
+.vball a{color:#0a246a;font-weight:700}
+.vball .vx{position:absolute;right:6px;top:4px;border:0;background:none;font:700 14px/1 Tahoma,sans-serif;cursor:pointer;color:#000}
 </style>
 </head>
 <body>
@@ -1010,14 +1021,14 @@ html.night .torch{opacity:1}
   <section class="monitor" id="play" aria-label="K’s OS, a desktop you can explore">
     <h1 style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Krishna, a creative in six lives</h1>
     <div class="desk" id="desk">
-      <div class="wall" aria-hidden="true"><span class="wdood" style="right:8%;top:14%;width:46px"><svg viewBox="0 0 60 60"><path d="M30 0C33 22 38 27 60 30 38 33 33 38 30 60 27 38 22 33 0 30 22 27 27 22 30 0z" fill="#ffd21f"/></svg></span><span class="wdood" style="left:30%;bottom:22%;width:40px;animation-delay:-3s"><svg viewBox="0 0 60 60"><circle cx="30" cy="30" r="27" fill="#ff4fa3" stroke="#000" stroke-width="3"/><circle cx="21" cy="25" r="4"/><circle cx="39" cy="25" r="4"/><path d="M18 36q12 12 24 0" fill="none" stroke="#000" stroke-width="4" stroke-linecap="round"/></svg></span><span class="wdood" style="right:24%;bottom:30%;width:54px;animation-delay:-6s"><svg viewBox="0 0 60 60"><ellipse cx="30" cy="14" rx="7" ry="13" fill="#fff" transform="rotate(0 30 30)"/><ellipse cx="30" cy="14" rx="7" ry="13" fill="#fff" transform="rotate(45 30 30)"/><ellipse cx="30" cy="14" rx="7" ry="13" fill="#fff" transform="rotate(90 30 30)"/><ellipse cx="30" cy="14" rx="7" ry="13" fill="#fff" transform="rotate(135 30 30)"/><ellipse cx="30" cy="14" rx="7" ry="13" fill="#fff" transform="rotate(180 30 30)"/><ellipse cx="30" cy="14" rx="7" ry="13" fill="#fff" transform="rotate(225 30 30)"/><ellipse cx="30" cy="14" rx="7" ry="13" fill="#fff" transform="rotate(270 30 30)"/><ellipse cx="30" cy="14" rx="7" ry="13" fill="#fff" transform="rotate(315 30 30)"/><circle cx="30" cy="30" r="8" fill="#ffd21f"/></svg></span><p class="ransom" id="wallR"></p><p id="wallT">a creative, running six lives</p></div>
+      <div class="wall" aria-hidden="true"><span class="wdood" style="right:8%;top:14%;width:46px"><svg viewBox="0 0 60 60"><path d="M30 0C33 22 38 27 60 30 38 33 33 38 30 60 27 38 22 33 0 30 22 27 27 22 30 0z" fill="#ffd21f"/></svg></span><span class="wdood" style="left:30%;bottom:22%;width:40px;animation-delay:-3s"><svg viewBox="0 0 60 60"><circle cx="30" cy="30" r="27" fill="#ff4fa3" stroke="#000" stroke-width="3"/><circle cx="21" cy="25" r="4"/><circle cx="39" cy="25" r="4"/><path d="M18 36q12 12 24 0" fill="none" stroke="#000" stroke-width="4" stroke-linecap="round"/></svg></span><span class="wdood" style="right:24%;bottom:30%;width:62px;animation-delay:-6s"><svg viewBox="0 0 60 60"><ellipse cx="30" cy="11" rx="6" ry="12" fill="#ffc21a" stroke="#000" stroke-width="1.5" transform="rotate(0 30 30)"/><ellipse cx="30" cy="11" rx="6" ry="12" fill="#ffc21a" stroke="#000" stroke-width="1.5" transform="rotate(30 30 30)"/><ellipse cx="30" cy="11" rx="6" ry="12" fill="#ffc21a" stroke="#000" stroke-width="1.5" transform="rotate(60 30 30)"/><ellipse cx="30" cy="11" rx="6" ry="12" fill="#ffc21a" stroke="#000" stroke-width="1.5" transform="rotate(90 30 30)"/><ellipse cx="30" cy="11" rx="6" ry="12" fill="#ffc21a" stroke="#000" stroke-width="1.5" transform="rotate(120 30 30)"/><ellipse cx="30" cy="11" rx="6" ry="12" fill="#ffc21a" stroke="#000" stroke-width="1.5" transform="rotate(150 30 30)"/><ellipse cx="30" cy="11" rx="6" ry="12" fill="#ffc21a" stroke="#000" stroke-width="1.5" transform="rotate(180 30 30)"/><ellipse cx="30" cy="11" rx="6" ry="12" fill="#ffc21a" stroke="#000" stroke-width="1.5" transform="rotate(210 30 30)"/><ellipse cx="30" cy="11" rx="6" ry="12" fill="#ffc21a" stroke="#000" stroke-width="1.5" transform="rotate(240 30 30)"/><ellipse cx="30" cy="11" rx="6" ry="12" fill="#ffc21a" stroke="#000" stroke-width="1.5" transform="rotate(270 30 30)"/><ellipse cx="30" cy="11" rx="6" ry="12" fill="#ffc21a" stroke="#000" stroke-width="1.5" transform="rotate(300 30 30)"/><ellipse cx="30" cy="11" rx="6" ry="12" fill="#ffc21a" stroke="#000" stroke-width="1.5" transform="rotate(330 30 30)"/><circle cx="30" cy="30" r="11" fill="#6b3d17" stroke="#000" stroke-width="2"/><g fill="#3d220c"><circle cx="35.0" cy="30.0" r="1.4"/><circle cx="32.48785523945863" cy="34.337116127970084" r="1.4"/><circle cx="27.47576947700071" cy="34.31604683324437" r="1.4"/><circle cx="25.0000063413623" cy="30.007963264582433" r="1.4"/><circle cx="27.548695893296504" cy="25.642121137932058" r="1.4"/><circle cx="32.560427386209206" cy="25.705327532867038" r="1.4"/><circle cx="30" cy="30" r="1.6"/></g></svg></span><p class="ransom" id="wallR"></p><p id="wallT">a creative, running six lives</p></div>
       <div class="sticky" id="sticky"><b>psst 👀</b>tap anything.<br>6 secrets hide in here.<br>oh, and there’s a picnic 🧺<i>— K</i></div>
       <div class="icons" id="icons" role="group" aria-label="Desktop icons"></div>
       <div class="startm" id="startm" hidden></div>
       <div class="saver" id="saver" hidden aria-hidden="true"><span class="dvd">K’s<small>OS</small></span><p>move the mouse to wake Krishna</p></div>
       <div class="balloon" id="balloon" hidden role="status"></div>
       <div class="shut" id="shut" hidden role="button" tabindex="0">It's now safe to turn off<br>your Krishna.<small>(just kidding. click to turn her back on)</small></div>
-      <div class="taskbar"><button type="button" class="startb" id="startb" aria-expanded="false" aria-controls="startm"><i>K</i>Start</button><div class="tasks" id="tasks"></div><div class="tray"><span aria-hidden="true">☕</span><span aria-hidden="true">🔊</span><span class="tclock" id="tclock"></span></div></div>
+      <div class="taskbar"><button type="button" class="startb" id="startb" aria-expanded="false" aria-controls="startm"><i>K</i>Start</button><div class="tasks" id="tasks"></div><div class="tray"><button type="button" class="visit" id="visit" hidden aria-label="Your visitor number"><span aria-hidden="true">🌻</span><b id="visitN">0000</b></button><span aria-hidden="true">☕</span><span aria-hidden="true">🔊</span><span class="tclock" id="tclock"></span></div></div>
     </div>
     <span class="brandplate">K’S OS</span><span class="knobs" aria-hidden="true"><i></i><i></i></span><span class="led" aria-hidden="true"></span>
   </section>
@@ -1361,6 +1372,16 @@ If it isn't, the next one will be.
   function shut(){const s=$('#shut');s.hidden=false;say('nooo, turn it back on!')}
   $('#shut').addEventListener('click',()=>{$('#shut').hidden=true;desk.classList.remove('on');void desk.offsetWidth;desk.classList.add('on')});
   // clock + wallpaper
+  // retro visitor counter (shared across everyone via a tiny public counter)
+  (async()=>{const btn=$('#visit'),out=$('#visitN');if(!btn)return;let n=null,back=false;try{const v=localStorage.getItem('kVisitor');if(v){n=+v;back=true}}catch(_){}
+    if(!n){try{const r=await fetch('https://abacus.jasoncameron.dev/hit/krishna-secret-files/visits',{cache:'no-store'});const j=await r.json();if(j&&j.value){n=j.value;try{localStorage.setItem('kVisitor',n)}catch(_){}}}catch(_){}}
+    if(!n)return;const pad=String(n).padStart(4,'0');out.textContent=pad;btn.hidden=false;
+    const site='https://krishnaagrwl1997.github.io/krishna-site/';
+    const tweet=`https://twitter.com/intent/tweet?text=${encodeURIComponent(`I’m visitor #${pad} on Krishna’s Secret Files 🌻`)}&url=${encodeURIComponent(site)}`;
+    const balloon=()=>{let b=$('#vball');if(!b){b=document.createElement('div');b.id='vball';b.className='vball';b.setAttribute('role','status');desk.appendChild(b)}
+      b.innerHTML=`<button type="button" class="vx" aria-label="Close">×</button><b>🌻 ${back?'welcome back, visitor':'you are visitor'} #${pad}!</b><span>${back?'you came back. that’s the nicest thing.':'thanks for stopping by. this place is a little bit me.'}</span><a href="${tweet}" target="_blank" rel="noopener">post your number ↗</a>`;
+      b.hidden=false;b.querySelector('.vx').onclick=()=>b.hidden=true;clearTimeout(b._t);b._t=setTimeout(()=>b.hidden=true,9000)};
+    btn.addEventListener('click',()=>{balloon();sfx('pop')});setTimeout(balloon,RM?300:2600)})();
   const clk=$('#tclock');const tick=()=>{const d=new Date();let h=d.getHours(),m=String(d.getMinutes()).padStart(2,'0');const ap=h>=12?'PM':'AM';h=h%12||12;clk.textContent=`${h}:${m} ${ap}`};tick();setInterval(tick,15000);
   ransom($('#wallR'),'KRISHNA',0);
   welcome();
