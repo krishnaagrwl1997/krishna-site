@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Hangout with K</title>
-<meta name="description" content="A picnic with Krishna and her people. Sit anywhere.">
+<meta name="description" content="A picnic mat in the sun. Pour some chai, take a photo, steal a charger.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Instrument+Sans:wght@500;600;700&display=swap">
 <style>
@@ -32,17 +32,19 @@ html,body{margin:0;height:100%;background:#cfe0ea;overflow:hidden;font:500 15px/
 .load{position:fixed;inset:0;z-index:10;display:grid;place-items:center;background:#f3ead8;font:700 30px/1.1 Caveat,cursive;color:var(--ink);transition:opacity .8s;text-align:center}
 .load.done{opacity:0;pointer-events:none}
 .load i{display:block;font:600 13px/1 "Instrument Sans";color:#7a705f;margin-top:10px;font-style:normal}
+.flash{position:fixed;inset:0;z-index:4;background:#fff;opacity:0;pointer-events:none}.flash.on{animation:flash .5s ease-out}@keyframes flash{0%{opacity:.85}100%{opacity:0}}
+.shade{position:fixed;inset:0;z-index:3;pointer-events:none;opacity:0;transition:opacity .6s;background:radial-gradient(ellipse 75% 70% at 50% 50%,rgba(70,40,0,.22),rgba(25,12,0,.6));}.shade.on{opacity:1}
 .nogl{position:fixed;inset:0;display:grid;place-items:center;padding:24px;text-align:center;background:#f3ead8;font:600 18px/1.4 "Instrument Sans"}
 @media (max-width:640px){.title{font-size:22px}.hint{font-size:19px}}
 @media (prefers-reduced-motion:reduce){.bub{transition:none}}
 </style></head><body>
-<canvas id="c" aria-label="A 3D picnic on a gingham mat with Krishna and her friends. Use the buttons at the bottom to interact."></canvas>
+<canvas id="c" aria-label="A 3D picnic on a gingham mat with chai, an instant camera, a speaker, snacks and more. Use the buttons at the bottom to interact."></canvas>
 <div class="ui top">
   <a class="pill" href="index.html" id="back" aria-label="Back to Krishna's Secret Files">← K’s files</a>
   <div class="btns"><button class="pill" id="tod" type="button">☀︎ afternoon</button><button class="pill" id="snd" type="button" aria-pressed="false">🔈 sound off</button></div>
 </div>
 <div class="ui bottom">
-  <span class="hint" id="hint">drag to look around · tap anything</span>
+  <span class="hint" id="hint">drag to walk around the mat · tap anything</span>
   <div class="chips" id="chips" role="group" aria-label="Things to tap"></div>
 </div>
 <div class="bub" id="bub" role="status" aria-live="polite"></div>
@@ -95,7 +97,7 @@ const sky=new THREE.Mesh(new THREE.SphereGeometry(90,48,24),new THREE.ShaderMate
 scene.add(sky);
 const hemi=new THREE.HemisphereLight(0xcfe6ff,0x5d7a35,.55);scene.add(hemi);
 const sun=new THREE.DirectionalLight(0xfff0d4,2.4);sun.castShadow=true;
-sun.shadow.mapSize.set(MOB?1024:2048,MOB?1024:2048);Object.assign(sun.shadow.camera,{left:-3,right:3,top:3,bottom:-3,near:.5,far:30});
+sun.shadow.mapSize.set(2048,2048);sun.shadow.radius=3;Object.assign(sun.shadow.camera,{left:-1.7,right:1.7,top:1.7,bottom:-1.7,near:.5,far:20});
 sun.shadow.bias=-.0004;sun.shadow.normalBias=.015;scene.add(sun);scene.add(sun.target);
 scene.fog=new THREE.Fog(0xdfe8e0,12,60);
 const TOD={
@@ -106,7 +108,7 @@ const TODK=Object.keys(TOD);let tod='afternoon';
 function setTod(k){tod=k;const t=TOD[k];sun.position.set(...t.dir);sun.color.set(t.col);sun.intensity=t.int;hemi.intensity=t.hemi;
   sky.material.uniforms.top.value.set(t.top);sky.material.uniforms.hor.value.set(t.hor);sky.material.uniforms.sunC.value.set(t.sunC);sky.material.uniforms.sunD.value.set(...t.vis);
   scene.fog.color.set(t.fog);R.toneMappingExposure=t.exp;$('#tod').textContent=t.l;
-  const tint=new THREE.Color(0xffffff).lerp(new THREE.Color(t.col),.22);people.forEach(p=>p.mat.color.copy(tint));if(env)makeEnv()}
+  const tint=new THREE.Color(0xffffff).lerp(new THREE.Color(t.col),.22);if(env)makeEnv()}
 // environment for reflections on the cans, built from the sky itself
 let env=null;const pmrem=new THREE.PMREMGenerator(R);
 function makeEnv(){const t=TOD[tod],c=canvas(512,256),x=c.getContext('2d'),g=x.createLinearGradient(0,0,0,256);
@@ -153,34 +155,33 @@ const MAT={w:2.4,d:1.7};
   const im=new THREE.InstancedMesh(g,m,220),o=new THREE.Object3D();let n=0;while(n<220){const x2=(rnd()*2-1)*5,z=-5+rnd()*8;if(Math.abs(x2)<MAT.w/2+.05&&Math.abs(z)<MAT.d/2+.05)continue;o.position.set(x2,.05+rnd()*.06,z);o.rotation.set((rnd()-.5)*.6,rnd()*6,(rnd()-.5)*.6);o.scale.setScalar(.7+rnd()*.6);o.updateMatrix();im.setMatrixAt(n++,o.matrix)}scene.add(im)}
 
 /* ---------------- the mat: woven gingham cotton that lifts in the wind ---------------- */
-const matG=new THREE.PlaneGeometry(MAT.w,MAT.d,120,85);matG.rotateX(-Math.PI/2);
-const mp=matG.attributes.position,MV=mp.count,base=new Float32Array(MV),mx=new Float32Array(MV),mz=new Float32Array(MV);
+const matG=new THREE.PlaneGeometry(MAT.w,MAT.d,MOB?150:220,MOB?106:156);matG.rotateX(-Math.PI/2);
+const mp=matG.attributes.position,MV=mp.count,base=new Float32Array(MV),fold=new Float32Array(MV),mx=new Float32Array(MV),mz=new Float32Array(MV);
+// soft draped folds, like cotton that was shaken out and dropped on the grass
+const FOLDS=[];for(let k=0;k<11;k++){const a=rnd()*Math.PI,cx=(rnd()-.5)*MAT.w*.95,cz=(rnd()-.5)*MAT.d*.95;FOLDS.push({cx,cz,ux:Math.cos(a),uz:Math.sin(a),L:.3+rnd()*.55,A:(.016+rnd()*.03)*(rnd()<.2?-.4:1),w:.035+rnd()*.07,sk:rnd()*.6+.4})}
 for(let i=0;i<MV;i++){const x=mp.getX(i),z=mp.getZ(i);mx[i]=x;mz[i]=z;
-  // lumps from the grass underneath + creases from being folded in a bag
-  let y=.012+fbm(x*3+4,z*3+9,4)*.012+noise(x*14,z*14)*.0025;
-  for(const c of[-MAT.w/4,0,MAT.w/4])y+=.0035*Math.exp(-((x-c)**2)/.0006)*(0.6+noise(z*6,c*9));
-  y+=.004*Math.exp(-(z*z)/.0007)*(0.6+noise(x*6,3));
-  y-=.006*Math.min(1,Math.max(0,1-Math.min(MAT.w/2-Math.abs(x),MAT.d/2-Math.abs(z))/.06)); // edges settle into the grass
-  base[i]=y}
+  let h=fbm(x*2.2+4,z*2.2+9,4)*.014-.007+noise(x*12,z*12)*.002;
+  for(const F of FOLDS){const dx=x-F.cx,dz=z-F.cz,t=dx*F.ux+dz*F.uz,d=-dx*F.uz+dz*F.ux;const along=Math.exp(-(t*t)/(F.L*F.L));
+    const prof=d>0?Math.exp(-d/(F.w*F.sk)):Math.exp(d/F.w);h+=F.A*along*prof*prof*(1+.25*Math.sin(t*14))}
+  fold[i]=h;
+  base[i]=.012-.006*Math.min(1,Math.max(0,1-Math.min(MAT.w/2-Math.abs(x),MAT.d/2-Math.abs(z))/.05))}// edges settle into the grass
+let pinF=null,pinN=-1;
 let matTex,matNor;
-{const W=2400,H=1700,c=canvas(W,H),x=c.getContext('2d');const cream='#f3eadb',red='184,26,32';
-  x.fillStyle=cream;x.fillRect(0,0,W,H);const sq=100;// 10cm checks
-  for(let i=0;i<W/sq;i+=2){x.fillStyle=`rgba(${red},${.6+((i*37)%7)/100})`;x.fillRect(i*sq+50,0,sq,H)}
-  for(let j=0;j<H/sq;j+=2){x.fillStyle=`rgba(${red},${.6+((j*29)%7)/100})`;x.fillRect(0,j*sq+50,W,sq)}
-  // thread texture, fuzz, fading and a few grass stains
-  const im=x.getImageData(0,0,W,H),d=im.data;
-  for(let j=0;j<H;j++)for(let i=0;i<W;i++){const k=(j*W+i)*4;const th=((i%3===0)?-7:0)+((j%3===0)?-6:0);const f=(noise(i*.9,j*.9)-.5)*16+(fbm(i/300,j/300,3)-.5)*22;const s=th+f;
-    d[k]+=s;d[k+1]+=s*.95;d[k+2]+=s*.9}
+{const W=2400,H=1700,c=canvas(W,H),x=c.getContext('2d');const im=x.createImageData(W,H),d=im.data;const sq=80;// 8cm checks, red cotton gingham
+  for(let j=0;j<H;j++){const hb=((j/sq)|0)%2===0;for(let i=0;i<W;i++){const k=(j*W+i)*4,vb=((i/sq)|0)%2===0;let r,g,b;
+    if(vb&&hb){r=214;g=26;b=26}
+    else if(vb||hb){const tw2=(i+j)%7<4;r=tw2?220:242;g=tw2?36:182;b=tw2?32:176}// twill: fine diagonal red and white threads
+    else{r=247;g=244;b=240}
+    const n=(noise(i*.8,j*.8)-.5)*12+(fbm(i/260,j/260,3)-.5)*14+((i%2)?-3:0)+((j%2)?-2:0);d[k]=r+n;d[k+1]=g+n*.9;d[k+2]=b+n*.9;d[k+3]=255}}
   x.putImageData(im,0,0);
-  for(let s=0;s<14;s++){const g=x.createRadialGradient(0,0,0,0,0,1);g.addColorStop(0,'rgba(70,90,30,.08)');g.addColorStop(1,'rgba(70,90,30,0)');x.save();x.translate(rnd()*W,rnd()*H);x.scale(40+rnd()*120,20+rnd()*60);x.fillStyle=g;x.beginPath();x.arc(0,0,1,0,7);x.fill();x.restore()}
+  for(let s=0;s<8;s++){const g=x.createRadialGradient(0,0,0,0,0,1);g.addColorStop(0,'rgba(80,90,40,.06)');g.addColorStop(1,'rgba(80,90,40,0)');x.save();x.translate(rnd()*W,rnd()*H);x.scale(40+rnd()*120,20+rnd()*60);x.fillStyle=g;x.beginPath();x.arc(0,0,1,0,7);x.fill();x.restore()}
   // hemmed edge with stitching
-  x.strokeStyle='rgba(245,236,220,.95)';x.lineWidth=36;x.strokeRect(18,18,W-36,H-36);x.strokeStyle='rgba(150,40,40,.7)';x.lineWidth=3;x.setLineDash([14,9]);x.strokeRect(44,44,W-88,H-88);
+  x.strokeStyle='rgba(214,26,26,.95)';x.lineWidth=30;x.strokeRect(15,15,W-30,H-30);x.strokeStyle='rgba(255,255,255,.55)';x.lineWidth=2.5;x.setLineDash([12,8]);x.strokeRect(36,36,W-72,H-72);
   matTex=tex(c);
-  // woven bump tile
-  const n=128,Hh=new Float32Array(n*n);for(let j=0;j<n;j++)for(let i=0;i<n;i++){const ci=(i>>3),cj=(j>>3),fx=(i&7)/8,fy=(j&7)/8;const warp=((ci+cj)&1)===0;
-    const v=warp?Math.sin(fx*Math.PI)*.8+.2*Math.sin(fy*Math.PI*2):Math.sin(fy*Math.PI)*.8+.2*Math.sin(fx*Math.PI*2);Hh[j*n+i]=v+noise(i*.5,j*.5)*.25}
-  matNor=tex(normalMap(Hh,n,n,2.2),[150,106],false)}
-const matM=new THREE.MeshStandardMaterial({map:matTex,normalMap:matNor,normalScale:new THREE.Vector2(.55,.55),roughness:.92,side:THREE.DoubleSide});
+  // twill bump: fine diagonal ribs
+  const n=64,Hh=new Float32Array(n*n);for(let j=0;j<n;j++)for(let i=0;i<n;i++)Hh[j*n+i]=Math.sin((i+j)/n*Math.PI*2*8)*.5+.5+noise(i*.7,j*.7)*.3;
+  matNor=tex(normalMap(Hh,n,n,1.6),[260,184],false)}
+const matM=new THREE.MeshStandardMaterial({map:matTex,normalMap:matNor,normalScale:new THREE.Vector2(.35,.35),roughness:.9,side:THREE.DoubleSide});
 const mat=new THREE.Mesh(matG,matM);mat.receiveShadow=true;mat.castShadow=true;scene.add(mat);
 const ripples=[],pins=[];
 
@@ -244,46 +245,175 @@ let bag,ring;
   const charm=new THREE.Mesh(new THREE.CylinderGeometry(.018,.018,.004,32),[new THREE.MeshStandardMaterial({color:0xffd21f,roughness:.3}),new THREE.MeshStandardMaterial({map:tex(cc),roughness:.25}),new THREE.MeshStandardMaterial({map:tex(cc),roughness:.25})]);
   charm.rotation.x=Math.PI/2;charm.position.y=-.064;ring.add(charm);ring.traverse(m=>m.castShadow=true);B.add(ring);
   ring.userData={a:0,v:0};
-  bag.position.set(-.92,.006,.42);bag.rotation.set(-.12,.55,0);scene.add(bag);pins.push([-.92,.42,.2]);
+  bag.position.set(-.86,.006,-.42);bag.rotation.set(-.12,.35,0);scene.add(bag);pins.push([-.86,-.42,.2]);
   hot.push({obj:bag,name:'my bag',label:'my bag · everyone’s charger lives in here',click:()=>{bagJig=1;ring.userData.v+=6;say(bag,'yes there’s a charger for you too','my bag');sfx('zip')}})}
 let bagJig=0;
 // a phone, face down, that buzzes
-let phone,buzz=0;{const g=new THREE.Group();const b=new THREE.Mesh(roundedBox(.075,.009,.155,.004,5),new THREE.MeshStandardMaterial({color:0x6f639c,metalness:.05,roughness:.45}));b.position.y=.0045;g.add(b);
+let phone,buzz=0;{const g=new THREE.Group();const b=new THREE.Mesh(roundedBox(.075,.009,.155,.004,5),new THREE.MeshStandardMaterial({color:0x2e3036,metalness:.35,roughness:.28}));b.position.y=.0045;g.add(b);
   const bump=new THREE.Mesh(roundedBox(.032,.003,.032,.0014,3),new THREE.MeshStandardMaterial({color:0x9c90c8,metalness:.4,roughness:.25}));bump.position.set(-.016,.01,-.05);g.add(bump);
   [[-.023,-.058],[-.009,-.058],[-.016,-.044]].forEach(([x,z])=>{const l=new THREE.Mesh(new THREE.CylinderGeometry(.0055,.0055,.003,20),new THREE.MeshStandardMaterial({color:0x111,metalness:.6,roughness:.1}));l.position.set(x,.012,z);g.add(l)});
-  g.traverse(m=>{m.castShadow=true;m.receiveShadow=true});g.position.set(.42,.012,.42);g.rotation.y=-.5;scene.add(g);phone=g;pins.push([.42,.42,.1]);
+  g.traverse(m=>{m.castShadow=true;m.receiveShadow=true});g.position.set(.6,.012,.44);g.rotation.y=-.5;scene.add(g);phone=g;pins.push([.6,.44,.1]);
   hot.push({obj:g,name:'phone',label:'a phone · 3am calls only',click:()=>{buzz=1.4;sfx('buzz');say(g,'incoming: 3am call 📞','')}})}
 
-/* ---------------- people: K and her crew, painted, sitting on the mat ---------------- */
-const people=[];
-const CREW=[
- {id:'k',name:'Krishna',imgs:['k_sit','k_read'],x:-.05,z:-.5,lines:['you made it!! sit anywhere ☀︎','I brought ORS for everyone. you’re welcome','this is my favourite kind of day','being myself. no thinking about who’s judging. just us']},
- {id:'f1',name:'the reader',imgs:['f1_sit','f1_read'],x:-.72,z:-.3,lines:['shh. one more chapter','okay okay, I’m listening','this book is SO good']},
- {id:'f2',name:'the boots',imgs:['f2_sit','f2_knees'],x:.68,z:-.52,lines:['who took the last ORS??','wake me up at golden hour','sunglasses on. vibes on']},
- {id:'f3',name:'the guitarist',imgs:['f3_sit','f3_guitar'],x:.98,z:.12,lines:['any requests?','I only know 4 chords. it’s enough','one more song, then chai']}];
-const PX=.0016;// metres per pixel of the painted cutouts
-const loader=new THREE.TextureLoader();
-function loadImg(src){return new Promise(res=>{const i=new Image();i.onload=()=>res(i);i.onerror=()=>res(null);i.src=src})}
-async function addPeople(){for(const c of CREW){const imgs=await Promise.all(c.imgs.map(n=>loadImg('img/hang/'+n+'.webp')));if(!imgs[0])continue;
-    const texs=imgs.map(im=>{const t=new THREE.Texture(im);t.encoding=THREE.sRGBEncoding;t.anisotropy=ANISO;t.needsUpdate=true;
-      const cc=canvas(im.width,im.height),x=cc.getContext('2d');x.drawImage(im,0,0);return {t,w:im.width,h:im.height,data:x.getImageData(0,0,im.width,im.height).data}});
-    const m=new THREE.MeshBasicMaterial({map:texs[0].t,transparent:true,alphaTest:.35,toneMapped:false,side:THREE.DoubleSide});
-    const geo=new THREE.PlaneGeometry(1,1);geo.translate(0,.5,0);const mesh=new THREE.Mesh(geo,m);mesh.castShadow=true;
-    mesh.customDepthMaterial=new THREE.MeshDepthMaterial({depthPacking:THREE.RGBADepthPacking,map:texs[0].t,alphaTest:.5});
-    const g=new THREE.Group();g.add(mesh);g.position.set(c.x,.012,c.z);scene.add(g);
-    // soft contact shadow on the mat
-    const sc=canvas(128,64),sx=sc.getContext('2d'),gr=sx.createRadialGradient(64,32,0,64,32,60);gr.addColorStop(0,'rgba(20,25,10,.55)');gr.addColorStop(1,'rgba(20,25,10,0)');sx.fillStyle=gr;sx.fillRect(0,0,128,64);
-    const blob=new THREE.Mesh(new THREE.PlaneGeometry(1,1),new THREE.MeshBasicMaterial({map:tex(sc),transparent:true,depthWrite:false,polygonOffset:true,polygonOffsetFactor:-2}));blob.rotation.x=-Math.PI/2;blob.position.y=.006;g.add(blob);
-    const p={c,g,mesh,mat:m,texs,pose:0,blob,bounce:0,line:0};setPose(p,0);people.push(p);pins.push([c.x,c.z,.28]);
-    hot.push({obj:mesh,name:c.name,label:c.name,alpha:p,click:()=>tapPerson(p)})}
-  setTod(tod)}
-function setPose(p,i){p.pose=i;const T=p.texs[i];p.mat.map=T.t;p.mesh.customDepthMaterial.map=T.t;p.mat.needsUpdate=true;p.mesh.customDepthMaterial.needsUpdate=true;
-  p.mesh.scale.set(T.w*PX,T.h*PX,1);p.blob.scale.set(T.w*PX*1.15,T.w*PX*.55,1)}
-function tapPerson(p){p.bounce=1;setPose(p,(p.pose+1)%p.texs.length);const L=p.c.lines;const t=L[p.line++%L.length];say(p.mesh,t,p.c.name);sfx(p.c.id==='f3'&&p.pose===1?'strum':'pop');
-  if(p.c.id==='f3'&&p.pose===1)notes(p)}
-// music notes float up from the guitar
-const floaters=[];function notes(p){if(RM)return;for(let i=0;i<5;i++){const c=canvas(64,64),x=c.getContext('2d');label(c,['♪','♫','♩'][i%3],'700 50px Georgia','32','34','#1d1a16');
-  const s=new THREE.Sprite(new THREE.SpriteMaterial({map:tex(c),transparent:true,depthWrite:false}));s.scale.set(.09,.09,1);s.position.copy(p.g.position).add(new THREE.Vector3(.05+Math.random()*.1,.45,0));s.userData={t:-i*.25,vx:(Math.random()-.3)*.15};scene.add(s);floaters.push(s)}}
+/* ---------------- more things on the mat, each does its own thing ---------------- */
+const tweens=[];const tw=(dur,fn)=>new Promise(res=>tweens.push({t:0,dur:RM?Math.min(dur,.05):dur,fn,res}));
+const lerp=(a,b,k)=>a+(b-a)*k,ez=t=>t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2;
+const lin=c=>new THREE.Color(c).convertSRGBToLinear();
+const steel=new THREE.MeshStandardMaterial({color:0xd4d8db,metalness:1,roughness:.24});
+const sh=m=>{m.traverse(o=>{if(o.isMesh){o.castShadow=true;o.receiveShadow=true}});return m};
+const noiseTex=(w,h,base,amt,rep)=>{const c=canvas(w,h),x=c.getContext('2d');x.fillStyle=base;x.fillRect(0,0,w,h);const im=x.getImageData(0,0,w,h),d=im.data;for(let j=0;j<h;j++)for(let i=0;i<w;i++){const k=(j*w+i)*4,n=(noise(i*.6,j*.6)-.5)*amt+(fbm(i/40,j/40,3)-.5)*amt;d[k]+=n;d[k+1]+=n;d[k+2]+=n}x.putImageData(im,0,0);return tex(c,rep)};
+const busy=new Set();
+async function once(key,fn){if(busy.has(key))return;busy.add(key);try{await fn()}finally{busy.delete(key)}}
+
+// steam puffs (shared)
+const steamT=(()=>{const c=canvas(64,64),x=c.getContext('2d'),g=x.createRadialGradient(32,32,0,32,32,30);g.addColorStop(0,'rgba(255,255,255,.55)');g.addColorStop(1,'rgba(255,255,255,0)');x.fillStyle=g;x.fillRect(0,0,64,64);return tex(c)})();
+const puffs=[];function puff(p,n=1,spread=.01){for(let i=0;i<n;i++){const s=new THREE.Sprite(new THREE.SpriteMaterial({map:steamT,transparent:true,depthWrite:false,opacity:.0}));s.position.copy(p).add(new THREE.Vector3((Math.random()-.5)*spread,0,(Math.random()-.5)*spread));s.scale.setScalar(.03);s.userData={t:0,life:1.6+Math.random()};scene.add(s);puffs.push(s)}}
+
+/* ---- chai: a steel flask and two kulhads ---- */
+const kulhads=[];let flask;
+{const clay=new THREE.MeshStandardMaterial({map:noiseTex(128,128,'#b4573a',30,[2,1]),roughness:.95,side:THREE.DoubleSide});
+  const prof=[[0,0],[.024,0],[.026,.004],[.033,.058],[.036,.066],[.033,.067],[.03,.012],[.0,.012]];
+  [[-.16,-.36],[-.06,-.47]].forEach(([x,z],i)=>{const g=new THREE.Group();const cup=new THREE.Mesh(new THREE.LatheGeometry(prof.map(([r,y])=>new THREE.Vector2(r,y)),36),clay);g.add(cup);
+    const tea=new THREE.Mesh(new THREE.CircleGeometry(1,32),new THREE.MeshStandardMaterial({color:lin(0xa86d3e),roughness:.18}));tea.rotation.x=-Math.PI/2;tea.visible=false;g.add(tea);
+    g.position.set(x,.012,z);scene.add(sh(g));const k={g,tea,level:0};kulhads.push(k);pins.push([x,z,.06]);
+    hot.push({obj:g,name:'chai',label:'kulhad chai · tap the flask to pour, tap the cup to sip',click:()=>sip(k)})});
+  flask=new THREE.Group();const body=new THREE.Mesh(new THREE.LatheGeometry([[0,0],[.042,0],[.045,.006],[.045,.2],[.04,.215],[.026,.225],[.026,.235]].map(([r,y])=>new THREE.Vector2(r,y)),40),steel);
+  const capM=new THREE.MeshStandardMaterial({color:lin(0x2b2d30),roughness:.5});const cap=new THREE.Mesh(roundedBox(.06,.05,.06,.012,3),capM);cap.position.y=.255;
+  const band=new THREE.Mesh(new THREE.CylinderGeometry(.0455,.0455,.05,40,1,true),new THREE.MeshStandardMaterial({color:lin(0x2b2d30),roughness:.6}));band.position.y=.08;
+  flask.add(body,cap,band);flask.userData.cap=cap;flask.position.set(-.34,.012,-.46);scene.add(sh(flask));pins.push([-.34,-.46,.07]);
+  hot.push({obj:flask,name:'chai',label:'a flask of chai · tap to pour',click:pour})}
+let pourN=0;
+function pour(){once('pour',async()=>{const k=kulhads.find(q=>q.level<.9)||kulhads[pourN++%2];const from=flask.position.clone(),cap=flask.userData.cap;
+  say(flask,['chai is love ☕','one cutting chai, coming up','kadak, just like you like it'][pourN%3],'');sfx('tap');
+  await tw(.35,t=>{cap.position.y=.255+ez(t)*.06;cap.rotation.z=ez(t)*.6});
+  const to=new THREE.Vector3(k.g.position.x+.1,.11,k.g.position.z);
+  await tw(.6,t=>{const e=ez(t);flask.position.lerpVectors(from,to,e);flask.rotation.z=e*1.75});
+  const stream=new THREE.Mesh(new THREE.CylinderGeometry(.004,.003,.09,8),new THREE.MeshStandardMaterial({color:lin(0x9a6235),roughness:.2}));stream.position.set(k.g.position.x+.01,.1,k.g.position.z);scene.add(stream);sfx('pour');
+  k.tea.visible=true;const l0=k.level;await tw(1.2,t=>{k.level=lerp(l0,1,t);if(Math.random()<.3)puff(new THREE.Vector3(k.g.position.x,.08,k.g.position.z))});
+  scene.remove(stream);
+  await tw(.6,t=>{const e=ez(t);flask.position.lerpVectors(to,from,e);flask.rotation.z=(1-e)*1.75});
+  await tw(.3,t=>{cap.position.y=.315-ez(t)*.06;cap.rotation.z=.6-ez(t)*.6});})}
+function sip(k){once('sip'+kulhads.indexOf(k),async()=>{if(k.level<.05){say(k.g,'empty! tap the flask for more','');return}
+  const y0=k.g.position.y;sfx('sip');await tw(.3,t=>{k.g.position.y=y0+ez(t)*.06;k.g.rotation.x=-ez(t)*.25});const l0=k.level;await tw(.5,t=>{k.level=Math.max(0,l0-.35*t)});
+  await tw(.3,t=>{k.g.position.y=y0+(1-ez(t))*.06;k.g.rotation.x=-(1-ez(t))*.25});say(k.g,['ahh. kadak ☕','perfect','sab theek ho jayega'][Math.floor(Math.random()*3)],'')})}
+
+/* ---- instant camera: flash, and a photo slides out and develops ---- */
+let cam2;const photos=[];
+{const g=new THREE.Group();const cream=new THREE.MeshStandardMaterial({color:lin(0xeee6d6),roughness:.5}),blk=new THREE.MeshStandardMaterial({color:lin(0x1b1b1d),roughness:.45});
+  const body=new THREE.Mesh(roundedBox(.15,.12,.1,.022,4),cream);body.position.y=.06;g.add(body);
+  const front=new THREE.Mesh(roundedBox(.152,.045,.102,.01,2),blk);front.position.y=.035;g.add(front);
+  const lens=new THREE.Mesh(new THREE.CylinderGeometry(.033,.036,.03,36),blk);lens.rotation.x=Math.PI/2;lens.position.set(0,.065,.06);g.add(lens);
+  const glass=new THREE.Mesh(new THREE.SphereGeometry(.024,24,12,0,Math.PI*2,0,Math.PI/2),new THREE.MeshStandardMaterial({color:lin(0x223344),metalness:.9,roughness:.05}));glass.rotation.x=Math.PI/2;glass.position.set(0,.065,.073);glass.scale.z=.4;g.add(glass);
+  const fl=new THREE.Mesh(roundedBox(.04,.02,.01,.003,2),new THREE.MeshStandardMaterial({color:0xffffff,emissive:0xffffff,emissiveIntensity:.2,roughness:.2}));fl.position.set(.045,.105,.05);g.add(fl);
+  const vf=new THREE.Mesh(roundedBox(.025,.02,.01,.003,2),blk);vf.position.set(-.045,.105,.05);g.add(vf);
+  const btn=new THREE.Mesh(new THREE.CylinderGeometry(.009,.009,.008,16),new THREE.MeshStandardMaterial({color:lin(0xe0362b),roughness:.4}));btn.position.set(.055,.123,.02);g.add(btn);
+  [-1,1].forEach(d=>{const s=new THREE.Mesh(new THREE.TorusGeometry(.012,.003,6,12),blk);s.position.set(d*.077,.09,0);s.rotation.y=Math.PI/2;g.add(s)});
+  g.position.set(.24,.012,-.44);g.rotation.y=-.25;scene.add(sh(g));cam2=g;g.userData={fl,btn};pins.push([.24,-.44,.1]);
+  hot.push({obj:g,name:'camera',label:'instant camera · tap to take a photo',click:snap})}
+const SNAPS=['s_sun_3','s_dance_1','s_city_2','s_wander_2','s_film_0','s_ent_1'];let snapN=0;
+const flashEl=Object.assign(document.createElement('div'),{className:'flash'});document.body.appendChild(flashEl);
+const flashL=new THREE.PointLight(0xffffff,0,3);scene.add(flashL);
+function snap(){once('snap',async()=>{const g=cam2,{btn,fl}=g.userData;sfx('shutter');btn.position.y=.118;setTimeout(()=>btn.position.y=.123,150);
+  flashEl.classList.remove('on');void flashEl.offsetWidth;flashEl.classList.add('on');flashL.position.copy(fl.getWorldPosition(new THREE.Vector3()));flashL.intensity=6;tw(.4,t=>flashL.intensity=6*(1-t));
+  // the print
+  const c=canvas(256,300),x=c.getContext('2d');x.fillStyle='#f7f5ef';x.fillRect(0,0,256,300);const sky=x.createLinearGradient(0,0,0,220);sky.addColorStop(0,'#7fb6ec');sky.addColorStop(1,'#f6dca8');x.fillStyle=sky;x.fillRect(18,18,220,220);
+  const t=tex(c);const name=SNAPS[snapN++%SNAPS.length];const im=new Image();im.onload=()=>{const s=Math.min(200/im.width,210/im.height);x.drawImage(im,128-im.width*s/2,238-im.height*s,im.width*s,im.height*s);t.needsUpdate=true};im.src='img/'+name+'.webp';
+  x.font='600 26px Caveat, cursive';x.fillStyle='#333';x.textAlign='center';x.fillText(['us ☀︎','golden hour','best day','picnic!!','K was here','core memory'][snapN%6],128,280);
+  const m=new THREE.MeshStandardMaterial({map:t,roughness:.45,color:0x222222});const ph=new THREE.Mesh(new THREE.BoxGeometry(.085,.0015,.1),[m,m,m,m,m,m].map((q,i)=>i===2?q:new THREE.MeshStandardMaterial({color:0xf2efe8,roughness:.5})));sh(ph);
+  g.add(ph);ph.position.set(0,.02,.03);sfx('whirr');
+  await tw(.9,t=>{ph.position.z=.03+ez(t)*.09});
+  const wp=ph.getWorldPosition(new THREE.Vector3());g.remove(ph);scene.add(ph);ph.position.copy(wp);ph.rotation.y=g.rotation.y;
+  const a=-.9+Math.random()*1.8,d=.22+Math.random()*.15,end=new THREE.Vector3(g.position.x+Math.sin(a)*d*.8,.016+photos.length*.0016,g.position.z+.12+Math.cos(a)*d*.5),st=ph.position.clone(),ry=ph.rotation.y,rz=(Math.random()-.5)*1.4;
+  await tw(.7,t=>{const e=ez(t);ph.position.lerpVectors(st,end,e);ph.position.y+=Math.sin(t*Math.PI)*.08;ph.rotation.y=ry+rz*e;ph.rotation.z=Math.sin(t*Math.PI)*.3});
+  photos.push(ph);if(photos.length>6){const o=photos.shift();scene.remove(o)}
+  hot.push({obj:ph,name:'photo',label:'a photo · it’s developing',click:()=>{once('ph',async()=>{const y=ph.position.y;await tw(.25,t=>{ph.position.y=y+Math.sin(t*Math.PI)*.05;ph.rotation.x=Math.sin(t*Math.PI)*.4})})}});
+  // develops from dark to full colour
+  tw(4,t=>{m.color.setScalar(.13+.87*ez(t))});say(g,'say chaiii 📸','')})}
+
+/* ---- bluetooth speaker: tap to play a little groove ---- */
+let spk,groove=null;
+{const g=new THREE.Group();const c=canvas(256,128),x=c.getContext('2d');x.fillStyle='#2b2e33';x.fillRect(0,0,256,128);x.fillStyle='#1a1c20';for(let j=0;j<16;j++)for(let i=0;i<32;i++){x.beginPath();x.arc(4+i*8+(j%2)*4,4+j*8,2.4,0,7);x.fill()}
+  const mesh=new THREE.MeshStandardMaterial({map:tex(c),roughness:.85});const rub=new THREE.MeshStandardMaterial({color:lin(0xe85d3a),roughness:.7});
+  const b=new THREE.Mesh(new THREE.CylinderGeometry(.045,.045,.15,40),mesh);b.rotation.z=Math.PI/2;b.position.y=.047;g.add(b);
+  [-1,1].forEach(d=>{const e=new THREE.Mesh(new THREE.CylinderGeometry(.047,.047,.016,40),rub);e.rotation.z=Math.PI/2;e.position.set(d*.08,.047,0);g.add(e)});
+  const led=new THREE.Mesh(new THREE.SphereGeometry(.004,8,6),new THREE.MeshStandardMaterial({color:0x335533,emissive:0x00ff66,emissiveIntensity:0}));led.position.set(.03,.093,0);g.add(led);
+  const strap=new THREE.Mesh(new THREE.TorusGeometry(.02,.004,6,16),rub);strap.position.set(-.09,.06,0);strap.rotation.y=Math.PI/2;g.add(strap);
+  g.position.set(.8,.012,-.42);g.rotation.y=.35;scene.add(sh(g));spk=g;g.userData={b,led};pins.push([.8,-.42,.1]);
+  hot.push({obj:g,name:'speaker',label:'speaker · tap for music',click:toggleGroove})}
+function toggleGroove(){if(groove){clearInterval(groove.iv);groove=null;spk.userData.led.material.emissiveIntensity=0;say(spk,'okay, quiet time','');return}
+  if(!SND){SND=true;audio().resume();$('#snd').textContent='🔊 sound on';$('#snd').setAttribute('aria-pressed',true)}
+  const a=audio();let step=0,next=a.currentTime+.05;const bpm=96,sx=60/bpm/4;const mel=[0,3,5,7,10,7,5,3],root=220;
+  groove={iv:setInterval(()=>{while(next<a.currentTime+.12){const s=step%16;
+      if(s%4===0)kick(next);if(s%2===1)hat(next);if(s===4||s===12)snare(next);if(s%2===0&&Math.random()<.8){const n=mel[(step/2+Math.floor(step/16))%mel.length|0];pluckAt(root*Math.pow(2,n/12)*(s>8?2:1),next)}
+      if(s===0)groove.beat=next;next+=sx;step++}},25),beat:0};
+  spk.userData.led.material.emissiveIntensity=2;say(spk,'🎶 picnic playlist on','')}
+function kick(t){const a=AC,o=a.createOscillator(),g=a.createGain();o.frequency.setValueAtTime(140,t);o.frequency.exponentialRampToValueAtTime(45,t+.15);g.gain.setValueAtTime(.35,t);g.gain.exponentialRampToValueAtTime(.001,t+.25);o.connect(g).connect(a.destination);o.start(t);o.stop(t+.3)}
+function hat(t){const a=AC,b=a.createBuffer(1,a.sampleRate*.05,a.sampleRate),d=b.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=(Math.random()*2-1)*(1-i/d.length);const s=a.createBufferSource(),f=a.createBiquadFilter(),g=a.createGain();s.buffer=b;f.type='highpass';f.frequency.value=7000;g.gain.value=.06;s.connect(f).connect(g).connect(a.destination);s.start(t)}
+function snare(t){const a=AC,b=a.createBuffer(1,a.sampleRate*.15,a.sampleRate),d=b.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=(Math.random()*2-1)*Math.pow(1-i/d.length,2);const s=a.createBufferSource(),f=a.createBiquadFilter(),g=a.createGain();s.buffer=b;f.type='bandpass';f.frequency.value=1800;g.gain.value=.12;s.connect(f).connect(g).connect(a.destination);s.start(t)}
+function pluckAt(f,t){const a=AC,o=a.createOscillator(),g=a.createGain();o.type='triangle';o.frequency.value=f;g.gain.setValueAtTime(.06,t);g.gain.exponentialRampToValueAtTime(.001,t+.3);o.connect(g).connect(a.destination);o.start(t);o.stop(t+.32)}
+
+/* ---- sunglasses: tap to put them on (the whole world goes shady) ---- */
+let shades,shadesOn=false;
+{const g=new THREE.Group();const fr=new THREE.MeshStandardMaterial({color:lin(0x1c1712),roughness:.3,metalness:.2});
+  const lensM=new THREE.MeshStandardMaterial({color:lin(0x2a1a10),metalness:.6,roughness:.05,transparent:true,opacity:.85});
+  const front=new THREE.Group();g.add(front);
+  [-1,1].forEach(d=>{const l=new THREE.Mesh(new THREE.CylinderGeometry(.026,.026,.004,32),lensM);l.rotation.x=Math.PI/2;l.scale.set(1.2,1,.95);l.position.set(d*.033,.028,0);front.add(l);
+    const r=new THREE.Mesh(new THREE.TorusGeometry(.027,.0035,8,32),fr);r.scale.set(1.2,.95,1);r.position.set(d*.033,.028,0);front.add(r)});
+  const br=new THREE.Mesh(new THREE.TorusGeometry(.01,.0025,6,12,Math.PI),fr);br.position.set(0,.036,0);front.add(br);
+  const arms=[-1,1].map(d=>{const h=new THREE.Group();h.position.set(d*.064,.03,0);const a=new THREE.Mesh(roundedBox(.004,.006,.13,.0015,2),fr);a.position.z=-.065;h.add(a);front.add(h);return h});
+  g.userData={arms,front};front.rotation.x=-1.3;g.position.set(.08,.016,.44);g.rotation.y=.5;arms[0].rotation.y=-1.45;arms[1].rotation.y=1.45;scene.add(sh(g));shades=g;pins.push([.08,.44,.08]);
+  hot.push({obj:g,name:'sunglasses',label:'sunglasses · tap to put them on',click:toggleShades})}
+const shadeEl=Object.assign(document.createElement('div'),{className:'shade'});document.body.appendChild(shadeEl);
+function toggleShades(){once('shades',async()=>{shadesOn=!shadesOn;const {arms,front}=shades.userData;sfx('tap');
+  const a0=arms[1].rotation.y,a1=shadesOn?0:1.45;const y0=shades.position.y,y1=shadesOn?.13:.016,f0=front.rotation.x,f1=shadesOn?0:-1.3;
+  await tw(.55,t=>{const e=ez(t);arms[0].rotation.y=-lerp(a0,a1,e);arms[1].rotation.y=lerp(a0,a1,e);shades.position.y=lerp(y0,y1,e);front.rotation.x=lerp(f0,f1,e)});
+  shadeEl.classList.toggle('on',shadesOn);say(shades,shadesOn?'sunglasses on. vibes on 😎':'okay, too dark','')})}
+
+/* ---- notebook: tap to flip through what I’m learning ---- */
+let book;const NOTES=['go for the experiences.\nit’s scary sometimes.\ngo anyway.','comfort zones are\noverrated tbh','be kind.\nto everyone.\n(me too)','Sab theek ho jayega!\njust keep trying','get uncomfortable.\nthat’s how you learn','things to do:\n☐ more picnics\n☐ more dancing\n☑ call Riya'];let noteN=0;
+function pageTex(txt){const c=canvas(256,360),x=c.getContext('2d');x.fillStyle='#fbf8f0';x.fillRect(0,0,256,360);x.strokeStyle='#a9c8e6';x.lineWidth=1.5;for(let y=60;y<360;y+=26){x.beginPath();x.moveTo(0,y);x.lineTo(256,y);x.stroke()}
+  x.strokeStyle='#e79a9a';x.beginPath();x.moveTo(34,0);x.lineTo(34,360);x.stroke();x.fillStyle='#24324f';x.font='600 25px Caveat, "Segoe Print", cursive';txt.split('\n').forEach((l,i)=>x.fillText(l,42,104+i*26*1.25,206));return tex(c)}
+{const g=new THREE.Group();const cov=new THREE.MeshStandardMaterial({color:lin(0xe2a72e),roughness:.7,normalMap:matNor,normalScale:new THREE.Vector2(.3,.3)});
+  const back=new THREE.Mesh(roundedBox(.15,.006,.21,.002,2),cov);back.position.y=.003;g.add(back);
+  const pages=new THREE.Mesh(new THREE.BoxGeometry(.143,.012,.203),[0,0,1,0,0,0].map(i=>i?new THREE.MeshStandardMaterial({map:pageTex(NOTES[0]),roughness:.85}):new THREE.MeshStandardMaterial({color:0xf5f1e6,roughness:.9})));pages.position.y=.012;g.add(pages);
+  const hinge=new THREE.Group();hinge.position.set(-.075,.02,0);g.add(hinge);const cover=new THREE.Mesh(roundedBox(.15,.005,.21,.002,2),cov);cover.position.x=.075;hinge.add(cover);
+  const lab=canvas(128,64),lx=lab.getContext('2d');lx.fillStyle='#fff';lx.fillRect(0,0,128,64);lx.fillStyle='#333';lx.font='600 26px Caveat, cursive';lx.textAlign='center';lx.fillText('K’s notes',64,40);
+  const tag=new THREE.Mesh(new THREE.PlaneGeometry(.07,.035),new THREE.MeshStandardMaterial({map:tex(lab),roughness:.8}));tag.rotation.x=-Math.PI/2;tag.position.set(.075,.0031,0);cover.add(tag);
+  for(let i=0;i<9;i++){const r=new THREE.Mesh(new THREE.TorusGeometry(.007,.0013,6,12),steel);r.position.set(-.075,.012,-.09+i*.0225);r.rotation.x=Math.PI/2;r.rotation.y=Math.PI/2;g.add(r)}
+  const pen=new THREE.Group();const pb=new THREE.Mesh(new THREE.CylinderGeometry(.0045,.0045,.13,16),new THREE.MeshStandardMaterial({color:lin(0x2438d8),roughness:.35}));pb.rotation.z=Math.PI/2;pen.add(pb);
+  const tip2=new THREE.Mesh(new THREE.ConeGeometry(.0045,.015,16),steel);tip2.rotation.z=-Math.PI/2;tip2.position.x=.072;pen.add(tip2);pen.position.set(.1,.005,.02);pen.rotation.y=.3;g.add(pen);
+  g.position.set(-.5,.012,.42);g.rotation.y=.25;scene.add(sh(g));book=g;g.userData={hinge,pages,open:false};pins.push([-.5,.42,.13]);
+  hot.push({obj:g,name:'notebook',label:'my notebook · tap to read',click:flip})}
+function flip(){once('flip',async()=>{const u=book.userData;sfx('page');
+  if(!u.open){u.open=true;await tw(.7,t=>{u.hinge.rotation.z=ez(t)*(Math.PI-.08)});say(book,'what I’m learning rn','');return}
+  noteN=(noteN+1)%NOTES.length;// a page turns over
+  const pg=new THREE.Group();pg.position.copy(u.hinge.position);book.add(pg);const leaf=new THREE.Mesh(new THREE.PlaneGeometry(.143,.203),new THREE.MeshStandardMaterial({map:u.pages.material[2].map,roughness:.85,side:THREE.DoubleSide}));leaf.rotation.x=-Math.PI/2;leaf.position.set(.0715,.001,0);pg.add(leaf);
+  u.pages.material[2].map=pageTex(NOTES[noteN]);await tw(.6,t=>{pg.rotation.z=ez(t)*(Math.PI-.1);leaf.position.y=.001+Math.sin(t*Math.PI)*.01});book.remove(pg)})}
+
+/* ---- chips packet: tap to rip it open, then munch ---- */
+let chipsBag,chipsOpen=false;const crisps=[];
+{const c=canvas(256,256),x=c.getContext('2d');const gr=x.createLinearGradient(0,0,256,256);gr.addColorStop(0,'#ffd23a');gr.addColorStop(1,'#ff9a1f');x.fillStyle=gr;x.fillRect(0,0,256,256);
+  x.fillStyle='#d6281f';x.beginPath();x.ellipse(128,120,95,55,-.15,0,7);x.fill();x.fillStyle='#fff';x.font='900 46px Arial Black, Arial';x.textAlign='center';x.fillText('CHIPS',128,124);x.font='700 20px Arial';x.fillText('masala · extra crunchy',128,152);
+  x.fillStyle='#f7c35a';for(let i=0;i<4;i++){x.beginPath();x.ellipse(60+i*45,210,22,14,i,0,7);x.fill()}
+  const foil=new THREE.MeshStandardMaterial({map:tex(c),metalness:.45,roughness:.35});
+  const geo=new THREE.BoxGeometry(.15,.04,.2,12,4,16),p=geo.attributes.position;
+  for(let i=0;i<p.count;i++){const x2=p.getX(i),y=p.getY(i),z=p.getZ(i);const crimp=Math.max(0,(Math.abs(z)-.085)/.015);const puffy=Math.cos(x2/.15*Math.PI*.9)*Math.cos(z/.2*Math.PI*.95);
+    p.setY(i,y*(.25+1.6*puffy)*(1-crimp*.9)+ (y>0?.012*puffy:0));p.setX(i,x2*(1-.05*Math.abs(y)/.02));p.setY(i,p.getY(i)+(noise(x2*90,z*90)-.5)*.003)}
+  geo.computeVertexNormals();const m=new THREE.Mesh(geo,foil);m.position.y=.03;const g=new THREE.Group();g.add(m);g.position.set(-.7,.012,-.02);g.rotation.y=.6;scene.add(sh(g));chipsBag=g;g.userData={m};pins.push([-.7,-.02,.12]);
+  hot.push({obj:g,name:'chips',label:'masala chips · tap to open',click:munch})}
+const crispM=new THREE.MeshStandardMaterial({color:lin(0xf4c766),roughness:.6,side:THREE.DoubleSide});
+function munch(){once('chips',async()=>{const g=chipsBag,m=g.userData.m;
+  if(!chipsOpen){chipsOpen=true;sfx('crinkle');await tw(.3,t=>{m.scale.set(1+Math.sin(t*Math.PI*3)*.05,1-Math.sin(t*Math.PI)*.2,1)});sfx('rip');
+    for(let i=0;i<9;i++){const c=new THREE.Mesh(new THREE.SphereGeometry(.018,10,6,0,Math.PI*2,0,.9),crispM);c.scale.set(1,.35,1.15);c.castShadow=true;scene.add(c);
+      const st=g.localToWorld(new THREE.Vector3(0,.04,.09)),a=g.rotation.y+(Math.random()-.5)*1.6,d=.1+Math.random()*.16,end=new THREE.Vector3(st.x+Math.sin(a)*d,.017,st.z+Math.cos(a)*d),r=new THREE.Euler(Math.random()*.4,Math.random()*6,Math.random()*.4);
+      crisps.push(c);tw(.55+Math.random()*.3,t=>{c.position.lerpVectors(st,end,t);c.position.y+=Math.sin(t*Math.PI)*.08;c.rotation.set(r.x+t*6,r.y,r.z+t*4)})}
+    say(g,'okay who’s sharing 👀','');return}
+  const c=crisps.pop();if(!c){say(g,'all gone 😭','');return}sfx('crunch');await tw(.35,t=>{c.position.y+=.01;c.scale.multiplyScalar(.9)});scene.remove(c);say(g,['crunch','one more…','okay last one','these are SO good'][crisps.length%4],'')})}
+
+function updateThings(dt){for(let i=tweens.length-1;i>=0;i--){const w=tweens[i];w.t+=dt;const k=Math.min(1,w.t/w.dur);w.fn(k);if(k>=1){tweens.splice(i,1);w.res()}}
+  for(const k of kulhads){k.tea.visible=k.level>.02;const r=.024+.009*k.level;k.tea.scale.setScalar(r);k.tea.position.y=.012+.05*k.level;if(k.level>.3&&Math.random()<dt*2)puff(new THREE.Vector3(k.g.position.x,.012+.06*k.level+.02,k.g.position.z))}
+  for(let i=puffs.length-1;i>=0;i--){const s=puffs[i],u=s.userData;u.t+=dt;const f=u.t/u.life;s.position.y+=dt*.05;s.position.x+=dt*.02*(1+gust*4);s.scale.setScalar(.03+f*.06);s.material.opacity=Math.sin(Math.min(1,f)*Math.PI)*.5;if(f>=1){scene.remove(s);puffs.splice(i,1)}}
+  if(groove&&AC){const ph=((AC.currentTime-groove.beat)%(60/96))/(60/96);const s=1+Math.max(0,1-ph*4)*.06;spk.userData.b.scale.set(1,s,s)}}
 
 /* ---------------- leaves and petals carried by gusts ---------------- */
 const leaves=[];{const mk=(col,shape)=>{const c=canvas(64,64),x=c.getContext('2d');x.translate(32,32);x.fillStyle=col;x.beginPath();if(shape)x.ellipse(0,0,12,28,0,0,7);else{x.ellipse(0,0,10,13,0,0,7)}x.fill();if(shape){x.strokeStyle='rgba(0,0,0,.25)';x.lineWidth=2;x.beginPath();x.moveTo(0,-26);x.lineTo(0,26);x.stroke()}return tex(c)};
@@ -304,18 +434,23 @@ function sfx(n){if(!SND)return;
   if(n==='clank'){tone(1800,.25,'triangle',.05,1500);tone(2650,.18,'sine',.04,null,.03);tone(900,.3,'sine',.03,null,.12)}
   if(n==='buzz')for(let i=0;i<3;i++)tone(150,.22,'square',.03,null,i*.32);
   if(n==='zip')for(let i=0;i<8;i++)tone(2000+i*120,.02,'square',.015,null,i*.025);
-  if(n==='strum')[196,247,294,392,494].forEach((f,i)=>pluck(f,i*.035))}
+  if(n==='strum')[196,247,294,392,494].forEach((f,i)=>pluck(f,i*.035));
+  if(n==='pour')burst(1.1,900,.05,'lowpass');if(n==='sip')burst(.35,1400,.04,'bandpass');if(n==='page')burst(.25,3000,.06,'highpass');
+  if(n==='shutter'){burst(.04,4000,.12,'highpass');burst(.05,2500,.1,'bandpass',.08)}if(n==='whirr')for(let i=0;i<10;i++)tone(330+i*8,.08,'sawtooth',.012,null,i*.08);
+  if(n==='crinkle')for(let i=0;i<6;i++)burst(.04,5000,.06,'highpass',i*.05);if(n==='rip')burst(.3,2500,.12,'bandpass');if(n==='crunch')for(let i=0;i<4;i++)burst(.05,1800,.12,'bandpass',i*.07)}
+function burst(dur,f,vol,type,delay=0){if(!SND)return;const a=audio(),b=a.createBuffer(1,Math.max(1,a.sampleRate*dur|0),a.sampleRate),d=b.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=(Math.random()*2-1)*Math.pow(1-i/d.length,1.5);
+  const s=a.createBufferSource(),fl=a.createBiquadFilter(),g=a.createGain();s.buffer=b;fl.type=type;fl.frequency.value=f;g.gain.value=vol;s.connect(fl).connect(g).connect(a.destination);s.start(a.currentTime+delay)}
 $('#snd').addEventListener('click',()=>{SND=!SND;if(SND)audio().resume();$('#snd').textContent=SND?'🔊 sound on':'🔈 sound off';$('#snd').setAttribute('aria-pressed',SND)});
 
 /* ---------------- camera: drag to look around, pinch/scroll to zoom ---------------- */
-const HOME=new THREE.Vector3(0,.42,-.2),tgt=HOME.clone(),goal=HOME.clone();let homeRad=2.9;let az=0,po=1.34,rad=2.9,tAz=0,tPo=1.34,tRad=2.9,intro=RM?1:0;
-function placeCam(){const r=rad+(1-ease(intro))*3.5,p=po-(1-ease(intro))*.35;cam.position.set(tgt.x+r*Math.sin(p)*Math.sin(az),tgt.y+r*Math.cos(p),tgt.z+r*Math.sin(p)*Math.cos(az));cam.lookAt(tgt)}
+const HOME=new THREE.Vector3(0,0,.05),tgt=HOME.clone(),goal=HOME.clone();let homeRad=2.3;let az=0,po=.3,rad=2.3,tAz=0,tPo=.3,tRad=2.3,intro=RM?1:0;
+function placeCam(){const r=rad+(1-ease(intro))*2.5,p=po+(1-ease(intro))*.5;cam.position.set(tgt.x+r*Math.sin(p)*Math.sin(az),tgt.y+r*Math.cos(p),tgt.z+r*Math.sin(p)*Math.cos(az));cam.lookAt(tgt)}
 const ease=t=>t<0?0:t>1?1:1-Math.pow(1-t,3);
 let drag=null,moved=0;const ptrs=new Map();
 cv.addEventListener('pointerdown',e=>{cv.setPointerCapture(e.pointerId);ptrs.set(e.pointerId,[e.clientX,e.clientY]);drag={x:e.clientX,y:e.clientY,az:tAz,po:tPo};moved=0;if(ptrs.size===2){const [a,b]=[...ptrs.values()];drag.pinch=Math.hypot(a[0]-b[0],a[1]-b[1]);drag.rad=tRad}});
 cv.addEventListener('pointermove',e=>{hover(e);if(!drag||!ptrs.has(e.pointerId))return;ptrs.set(e.pointerId,[e.clientX,e.clientY]);
   if(ptrs.size===2&&drag.pinch){const [a,b]=[...ptrs.values()];tRad=Math.max(.5,Math.min(4.5,drag.rad*drag.pinch/Math.hypot(a[0]-b[0],a[1]-b[1])));moved=99;return}
-  const dx=e.clientX-drag.x,dy=e.clientY-drag.y;moved=Math.max(moved,Math.hypot(dx,dy));if(moved>5){cv.classList.add('drag');tAz=Math.max(-.75,Math.min(.75,drag.az-dx*.004));tPo=Math.max(.8,Math.min(1.45,drag.po-dy*.003))}});
+  const dx=e.clientX-drag.x,dy=e.clientY-drag.y;moved=Math.max(moved,Math.hypot(dx,dy));if(moved>5){cv.classList.add('drag');tAz=drag.az-dx*.005;tPo=Math.max(.03,Math.min(1.05,drag.po-dy*.003))}});
 const up=e=>{ptrs.delete(e.pointerId);cv.classList.remove('drag');if(drag&&moved<6&&e.type==='pointerup')tap(e);if(!ptrs.size)drag=null};
 cv.addEventListener('pointerup',up);cv.addEventListener('pointercancel',up);
 cv.addEventListener('wheel',e=>{e.preventDefault();tRad=Math.max(.5,Math.min(4.5,tRad*(1+e.deltaY*.001)))},{passive:false});
@@ -348,7 +483,7 @@ $('#tod').addEventListener('click',()=>{setTod(TODK[(TODK.indexOf(tod)+1)%TODK.l
 
 /* ---------------- wind ---------------- */
 let gust=0,gustT=0,nextGust=3;
-function size(){const w=innerWidth,h=innerHeight;R.setSize(w,h,false);cam.aspect=w/h;cam.fov=w<h?60:44;tRad=homeRad=w<h?4.4:2.9;tPo=w<h?1.1:1.34;cam.updateProjectionMatrix()}
+function size(){const w=innerWidth,h=innerHeight;R.setSize(w,h,false);cam.aspect=w/h;cam.fov=w<h?58:46;tRad=homeRad=w<h?3.3:2.3;tPo=w<h?.22:.3;tAz=w<h?Math.PI/2:0;cam.updateProjectionMatrix()}
 addEventListener('resize',size);size();rad=tRad;
 
 /* ---------------- frame loop ---------------- */
@@ -361,15 +496,15 @@ function frame(){const dt=Math.min(clock.getDelta(),.05);T+=dt;U.time.value=T;
   if(windGain)windGain.gain.value=SND?.04+gust*.22:0;
   // mat: creases + corners lifted by the wind + ripples from taps
   const pa=mp.array;const lift=RM?0:gust;
-  for(let i=0;i<MV;i++){const x=mx[i],z=mz[i];let y=base[i];
-    let pin=1;for(const [px,pz,pr] of pins){const d2=(x-px)**2+(z-pz)**2;pin*=1-Math.exp(-d2/(pr*pr))}
+  if(pinN!==pins.length){pinN=pins.length;pinF=new Float32Array(MV);for(let i=0;i<MV;i++){let p=1;for(const [px,pz,pr] of pins){const d2=(mx[i]-px)**2+(mz[i]-pz)**2;p*=1-Math.exp(-d2/(pr*pr))}pinF[i]=p}}
+  for(let i=0;i<MV;i++){const x=mx[i],z=mz[i];const pin=pinF[i];let y=base[i]+fold[i]*pin;
     const dl=x+MAT.w/2;// upwind (left) edge catches the wind
     const c1=Math.hypot(dl,z+MAT.d/2),c2=Math.hypot(dl,z-MAT.d/2);
     let f=.11*lift*(Math.exp(-c1*c1/.09)+Math.exp(-c2*c2/.06))*(1+.25*Math.sin(T*9-c1*12));
     f+=.012*lift*Math.exp(-dl/.12)*Math.sin(z*9-T*10);
     f+=.002*Math.sin(T*1.3+x*2+z*3)*Math.exp(-dl/.3)*(1-lift);
     for(const r of ripples){const d=Math.hypot(x-r.x,z-r.z);f+=.012*Math.exp(-r.t*1.8)*Math.sin(d*28-r.t*14)*Math.exp(-d*3)*(d<r.t*.55+.05?1:0)}
-    pa[i*3+1]=y+f*pin}
+    pa[i*3+1]=Math.max(.005,y+f*pin)}
   mp.needsUpdate=true;matG.computeVertexNormals();
   for(let i=ripples.length-1;i>=0;i--){ripples[i].t+=dt;if(ripples[i].t>2.5)ripples.splice(i,1)}
   // cans tipping and rolling
@@ -377,12 +512,8 @@ function frame(){const dt=Math.min(clock.getDelta(),.05);T+=dt;U.time.value=T;
   // bag + keyring
   if(bag){bagJig=Math.max(0,bagJig-dt*1.6);bag.children[0].rotation.z=Math.sin(T*22)*.03*bagJig;bag.children[0].scale.y=1-Math.sin(T*22)*.02*bagJig;
     const r=ring.userData;r.v+=(-9.8/0.06*Math.sin(r.a)*.08-r.v*1.2+gust*Math.sin(T*7)*4)*dt;r.a+=r.v*dt;ring.rotation.z=r.a;ring.rotation.x=Math.sin(r.a*1.3)*.3}
-  if(phone){buzz=Math.max(0,buzz-dt);phone.position.x=.42+Math.sin(T*90)*.0025*Math.sign(buzz)*(Math.sin(T*9)>0?1:0);phone.rotation.y=-.5+Math.sin(T*70)*.03*(buzz>0?1:0)}
-  // people face the camera, bounce when tapped, breathe a little
-  for(const p of people){p.g.rotation.y=Math.atan2(cam.position.x-p.g.position.x,cam.position.z-p.g.position.z);p.bounce=Math.max(0,p.bounce-dt*2.5);
-    const s=1+Math.sin(p.bounce*Math.PI*3)*.06*p.bounce+(RM?0:Math.sin(T*1.6+p.c.x*3)*.006);p.mesh.scale.y=p.texs[p.pose].h*PX*s;p.mesh.scale.x=p.texs[p.pose].w*PX*(2-s)}
-  // floating notes
-  for(let i=floaters.length-1;i>=0;i--){const s=floaters[i];s.userData.t+=dt;const t=s.userData.t;if(t<0){s.visible=false;continue}s.visible=true;s.position.y+=dt*.25;s.position.x+=Math.sin(t*4)*.004+s.userData.vx*dt;s.material.opacity=Math.max(0,1-t/2);if(t>2){scene.remove(s);floaters.splice(i,1)}}
+  if(phone){buzz=Math.max(0,buzz-dt);phone.position.x=.6+Math.sin(T*90)*.0025*Math.sign(buzz)*(Math.sin(T*9)>0?1:0);phone.rotation.y=-.5+Math.sin(T*70)*.03*(buzz>0?1:0)}
+  updateThings(dt);
   // leaves: lifted and carried by gusts, settle back down
   for(const L of leaves){if(!RM&&gust>.35&&!L.fly&&Math.random()<dt*1.5*gust){L.fly=true;L.v.set(.4,.6+Math.random()*.8,(Math.random()-.5)*.4);L.rv.set(Math.random()*8,Math.random()*8,Math.random()*8)}
     if(L.fly){L.v.x+=(1.6*gust-L.v.x*.6)*dt;L.v.y+=(-1.1+gust*1.2*Math.sin(T*5+L.p.z*9))*dt;L.v.z+=Math.sin(T*3+L.p.x*7)*.3*dt;L.p.addScaledVector(L.v,dt);L.r.addScaledVector(L.rv,dt);
@@ -393,15 +524,18 @@ function frame(){const dt=Math.min(clock.getDelta(),.05);T+=dt;U.time.value=T;
   placeBub();R.render(scene,cam);requestAnimationFrame(frame)}
 
 /* ---------------- lay out the cables and cans, then start ---------------- */
-cable([[-.55,.42],[-.4,.3],[-.22,.44],[-.05,.33],[.08,.5],[.22,.38]],0xf2f2f0,.38,true);
-cable([[-.35,.6],[-.2,.52],[-.15,.66],[0,.58],[.12,.68]],0x1b1b1d,.5,false);
-cable([[-.6,.15],[-.45,.05],[-.3,.18],[-.18,.06],[-.06,.16]],0xff6fa8,.55,false);
-pins.push([-.2,.45,.05]);
-addCan('#ff7a1a','#c94e00','ORANGE',.08,.02,.6,false);addCan('#2aa9de','#11729e','LEMON',.2,.12,-.4,false);addCan('#6fbf3b','#3f8a1a','GREEN APPLE',.32,-.05,1.2,true);
+cable([[-.28,.2],[-.16,.1],[-.04,.22],[.08,.12],[.18,.24],[.3,.16]],0xf2f2f0,.38,true);
+cable([[-.22,.36],[-.1,.3],[0,.4],[.1,.32],[.2,.4]],0x1b1b1d,.5,false);
+cable([[-.38,-.08],[-.26,-.16],[-.14,-.06],[-.02,-.14],[.08,-.06]],0xff6fa8,.55,false);
+
+addCan('#ff7a1a','#c94e00','ORANGE',.46,.02,.6,false);addCan('#2aa9de','#11729e','LEMON',.58,.13,-.4,false);addCan('#6fbf3b','#3f8a1a','GREEN APPLE',.7,-.06,1.2,true);
 hot.push({obj:cables[0].g,name:'cables',label:'type-C, lightning, the weird old one · one for everyone',click:()=>{say(cables[0].g,'whose phone is at 2%? I got you','')}});
 cables.slice(1).forEach(c=>hot.push({obj:c.g,name:'cables',label:'one charger each. that’s love',click:()=>say(c.g,'that’s love, actually','')}));
+// soft contact shadows under everything sitting on the mat (ambient occlusion)
+{const c=canvas(128,128),x=c.getContext('2d'),g=x.createRadialGradient(64,64,0,64,64,64);g.addColorStop(0,'rgba(30,18,10,.55)');g.addColorStop(.55,'rgba(30,18,10,.22)');g.addColorStop(1,'rgba(30,18,10,0)');x.fillStyle=g;x.fillRect(0,0,128,128);
+  const t=tex(c);pins.forEach(([px,pz,pr])=>{const m=new THREE.Mesh(new THREE.PlaneGeometry(pr*1.5,pr*1.5),new THREE.MeshBasicMaterial({map:t,transparent:true,depthWrite:false,polygonOffset:true,polygonOffsetFactor:-4}));m.rotation.x=-Math.PI/2;m.position.set(px,.0205,pz);m.renderOrder=1;scene.add(m)})}
 setTod(tod);makeEnv();
-addPeople().then(()=>{chips();$('#load').classList.add('done');setTimeout(()=>{const k=people.find(p=>p.c.id==='k');k&&say(k.mesh,'you made it!! sit anywhere ☀︎','Krishna')},RM?100:2600)});
+chips();$('#load').classList.add('done');
 requestAnimationFrame(frame);
 })();
 </script>
