@@ -354,7 +354,7 @@ button{font:inherit}
 .unsaid-h{position:absolute;left:0;right:0;top:22px;text-align:center;color:#fff;font:400 clamp(34px,5vw,56px)/.95 var(--f-vt);text-shadow:2px 2px 0 #0003;z-index:2;margin:0}
 .unsaid-h b{display:block;font-size:1.5em;font-weight:400}
 .things{position:absolute;left:0;right:0;bottom:24px;text-align:center;color:#fff;font:italic 400 clamp(64px,10vw,110px)/1 var(--f-serif);z-index:2;margin:0;text-shadow:0 4px 12px #0003;transition:opacity .4s}
-.chatbox{position:absolute;inset:0;z-index:3;display:grid;grid-template-rows:1fr auto;opacity:0;pointer-events:none;transition:opacity .4s}
+.chatbox{position:absolute;inset:0;z-index:3;display:grid;grid-template-rows:minmax(0,1fr) auto auto;opacity:0;pointer-events:none;transition:opacity .4s}
 .screen.live .chatbox{opacity:1;pointer-events:auto}
 .screen.live .things,.screen.live .unsaid-h{opacity:0}
 .log{overflow-y:auto;padding:18px 14px 10px;display:flex;flex-direction:column;gap:7px;scroll-behavior:smooth}
@@ -926,6 +926,39 @@ html.night .torch{opacity:1}
 .kamp .ytbox{margin:8px 0;aspect-ratio:16/9;background:#000;border:2px solid;border-color:#808080 #fff #fff #808080}.kamp .ytbox[hidden]{display:none}.kamp .ytbox iframe{display:block;width:100%;height:100%;border:0}
 .kamp .areal{color:#3dff6e}
 .kamp .pl .plink{display:block;padding:3px 8px;font:400 17px/1.1 var(--f-vt);color:#3dff6e;text-decoration:none}.kamp .pl .plink:hover,.kamp .pl .plink:focus-visible{background:#0a246a;color:#fff}
+
+/* ---------- unsaid: playful chat ---------- */
+.msg.out{min-width:96px}.msg.in{min-width:72px}
+.msg .tk{margin-left:3px;font-weight:400;color:#0006;letter-spacing:-.15em}.msg .tk.seen{color:#1f9be0}
+.msg.in{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+.vlab{display:block;font:700 9px/1 var(--f-mono);letter-spacing:.12em;color:#e33a2a;margin-bottom:6px}
+.vn{all:unset;box-sizing:border-box;display:flex;align-items:center;gap:8px;cursor:pointer;width:min(230px,52vw)}
+.vn:focus-visible{outline:2px solid var(--blue);outline-offset:3px;border-radius:8px}
+.vplay{width:32px;height:32px;border-radius:50%;background:#e33a2a;color:#fff;display:grid;place-items:center;font-size:12px;flex:none;box-shadow:0 2px 0 #8f0f13}
+.vwave{display:flex;align-items:center;gap:2px;height:28px;flex:1;min-width:0}
+.vwave i{flex:1;max-width:3px;min-width:2px;border-radius:2px;background:#c9c4b8;height:var(--h)}
+.vwave i.on{background:#e33a2a}
+.vdur{font:500 11px/1 var(--f-mono);color:#0008}
+.vtx{display:block;font:italic 400 14px/1.35 var(--f-body);color:#333}.vtx:not(:empty){margin-top:6px;border-top:1px dashed #0002;padding-top:5px}
+.msg .rx{position:absolute;left:8px;bottom:-12px;background:#fff;border-radius:999px;padding:1px 5px;font-size:13px;line-height:1.3;box-shadow:0 2px 5px #0003}
+.msg.sticker .rx{bottom:0}
+.rbar{position:absolute;left:0;bottom:calc(100% + 6px);display:flex;gap:2px;background:#fff;border-radius:999px;padding:4px 6px;box-shadow:0 6px 16px #0005;z-index:5;animation:msgIn .2s cubic-bezier(.3,1.4,.5,1)}
+.rbar.below{bottom:auto;top:calc(100% + 6px)}
+.rbar button{all:unset;cursor:pointer;font-size:21px;line-height:1;padding:3px;border-radius:50%;transition:transform .15s}
+.rbar button:hover,.rbar button:focus-visible{transform:scale(1.35)}
+.msg.chiprow{background:none;box-shadow:none;padding:0 0 4px}.msg.chiprow time{display:none}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.chip,.opt{border:2px solid #141210;background:#ffd21f;color:#141210;border-radius:999px;padding:7px 12px;font:700 13px/1 var(--f-body);cursor:pointer;box-shadow:0 2px 0 #141210;text-decoration:none;display:inline-block}
+.chip:active,.opt:active{transform:translateY(2px);box-shadow:none}
+.opt{background:#fff}.opt.pick{background:#dcf8c6}.opt:disabled{cursor:default;opacity:.5}.opt.pick:disabled{opacity:1}
+.score{display:block;font:400 40px/1 var(--f-vt);color:#e33a2a}
+.qr button.game{font-weight:700;background:#ffd21f}
+.qr button.real{background:#ff4fa3;color:#fff;font-weight:700;animation:realp 1.1s ease-in-out 4}
+.qr button.game:disabled,.qr button.real:disabled{background:var(--win);color:#808080;animation:none}
+@keyframes realp{50%{transform:scale(1.08)}}
+.ask2{display:flex;gap:6px;padding:0 8px 8px;background:var(--win)}
+.ask2 input{flex:1;min-width:0;border:0;padding:7px 8px;font:13px Tahoma,Verdana,sans-serif;background:#fff;box-shadow:inset 1px 1px 0 #808080,inset -1px -1px 0 #fff,inset 2px 2px 0 #404040;outline:0}
+.ask2 button{background:var(--win);border:0;padding:6px 12px;font:700 12px/1 Tahoma,Verdana,sans-serif;color:#000;cursor:pointer;box-shadow:inset -1px -1px 0 #404040,inset 1px 1px 0 #fff,inset -2px -2px 0 #808080,inset 2px 2px 0 #dfdfdf}
 </style>
 </head>
 <body>
@@ -1021,7 +1054,7 @@ html.night .torch{opacity:1}
       <div class="screen" id="screen">
         <p class="unsaid-h">you have<b id="cnt">+99 unsaid</b></p>
         <p class="things">things</p>
-        <div class="chatbox"><div class="log" id="log" aria-live="polite"></div><div class="qr" id="qr" role="group" aria-label="Pick a message to send"></div></div>
+        <div class="chatbox"><div class="log" id="log" aria-live="polite"></div><div class="qr" id="qr" role="group" aria-label="Pick a message to send"></div><form class="ask2" id="ask2" autocomplete="off"><input id="ask2q" maxlength="220" placeholder="or type your own question…" aria-label="Type your own question"><button type="submit">send</button></form></div>
       </div>
       <div class="status"><span id="wstat">Ln 1, Col 1</span><span>UTF-8</span></div>
     </div>
@@ -1354,6 +1387,7 @@ If it isn't, the next one will be.
     o.el.querySelector('[data-a="x"]').addEventListener('click',()=>{stop();ampEl=null});
     const cv=o.el.querySelector('canvas'),c=cv.getContext('2d');let ph=0;
     (function viz(){if(!ampEl)return;requestAnimationFrame(viz);ph+=.08;c.clearRect(0,0,cv.width,cv.height);for(let i=0;i<16;i++){const v=playing?.25+.55*Math.abs(Math.sin(ph*(1+i*.13)+i)):.05+Math.random()*.03;const h=Math.max(2,v*cv.height);c.fillStyle=i%2?'#3dff6e':'#b7ff4a';c.fillRect(i*7.5,cv.height-h,5.5,h)}})()}
+  window.KAMP={play(i){cur=i||0;const d=document.getElementById('play');d&&d.scrollIntoView({behavior:RM?'auto':'smooth',block:'center'});if(!ampEl)amp();start();say('KALYANIII 🎶')}};
   // ---- screensaver
   const ss=$('#saver'); let idle=null, ssOn=false, ssRaf=0;
   function saver(){if(ssOn)return;ssOn=true;ss.hidden=false;const logo=ss.querySelector('.dvd');let x=40,y=40,vx=2.2,vy=1.7,hue=0;const W=()=>ss.clientWidth-logo.offsetWidth,H=()=>ss.clientHeight-logo.offsetHeight;
@@ -1741,32 +1775,129 @@ ${['zs-eb','zs-fw','zs-ef','zs-wax'].map(c=>`<div class="zs-env ${c}w" style="--
     av+=((target+idle)-ang)*.02; av*=.92; ang+=av; hs.style.transform=`rotate(${(-ang*57).toFixed(2)}deg)`; drawCord(ang)}
   const now=()=>{const d=new Date();let h=d.getHours(),mi=String(d.getMinutes()).padStart(2,'0');const ap=h>=12?'pm':'am';h=h%12||12;return `${h}:${mi} ${ap}`};
   const six=`<div class="row6">${SIX.map(R=>`<img src="img/s_${R.k}_0.webp" alt="${R.n}">`).join('')}</div>`;
+  // ---- helpers
+  const wait=ms=>new Promise(r=>setTimeout(r,RM?Math.min(ms,80):ms));
+  const esc=s=>String(s).replace(/</g,'&lt;');
+  const stat=t=>$('#wstat').textContent=t;
+  const ist=()=>{const p=new Intl.DateTimeFormat('en-GB',{timeZone:'Asia/Kolkata',hour:'numeric',minute:'2-digit',hourCycle:'h23'}).formatToParts(new Date());const g=k=>+p.find(x=>x.type===k).value;return{h:g('hour'),m:g('minute')}};
+  const istClock=()=>{const t=ist();return `${t.h%12||12}:${String(t.m).padStart(2,'0')}${t.h>=12?'pm':'am'}`};
+  // where K probably is, by the clock in India
+  const mood=()=>{const h=ist().h,c=istClock();
+    if(h<6)return `it’s ${c} here. asleep, obviously 😴`;
+    if(h<10)return `it’s ${c}. just woke up. chai first, words later ☕`;
+    if(h<13)return `it’s ${c}. deep in Figma, pretending I’m not on my phone`;
+    if(h<17)return `it’s ${c}. post-lunch slump, on my 2nd chai`;
+    if(h<20)return `it’s ${c}. golden hour. probably outside staring at the sky`;
+    return `it’s ${c}. couch, K.amp on, zero plans`};
+  // jump to other parts of the site
+  const seat=role=>{const th=$('#people');if(!th)return;th.scrollIntoView({behavior:RM?'auto':'smooth',block:'center'});
+    setTimeout(()=>{const p=[...th.querySelectorAll('.pp.vip')].find(x=>x.querySelector('.tag')?.textContent===role);if(p&&!p.classList.contains('on'))p.click()},RM?50:900)};
+  const toHi=()=>{const h=$('#hi');h&&h.scrollIntoView({behavior:RM?'auto':'smooth',block:'center'})};
+  const kalyani=()=>window.KAMP&&KAMP.play(0);
+
+  // ---- voice notes: drop real recordings in aud/ and set src, until then a transcript "plays"
+  const VN=(t,src)=>({voice:true,t,src});
   const Q=[
    ['who are you?',[['Krishna. Senior Product Designer by day'],['and the K in @hang.withk']]],
-   ['where are you rn?',[['Bengaluru, physically'],['mentally? on a mountain somewhere',null,'s_sun_3']]],
-   ['what are you listening to?',[['Kalyani on loop 🎧'],['Ojhal, Bairan, Barsaat, Parwah next. it’s all on K.amp, up on my desktop']]],
-   ['who do you call at 3am?',[['Riyaaaa 📞'],['you’ll find her in Row 3']]],
-   ['comfort zones?',[['overrated tbh'],['get uncomfortable. that’s how your mind keeps learning new things']]],
+   ['where are you rn?',[['Bengaluru, physically'],{t:mood},['mentally? on a mountain somewhere',null,'s_sun_3']]],
+   ['what are you listening to?',[['Kalyani on loop 🎧'],['Ojhal, Bairan, Barsaat, Parwah next'],{act:[['▶ play Kalyani',kalyani]]}]],
+   ['who do you call at 3am?',[['Riyaaaa 📞'],['you’ll find her in Row 3'],{act:[['👀 show me her seat',()=>seat('the 3am call')]]}]],
+   ['comfort zones?',[['overrated tbh'],VN('get uncomfortable. that’s how your mind keeps learning new things',null)]],
    ['what does hanging out mean to you?',[['being myself'],['no thinking about who’s judging. just us']]],
-   ['dance tho?',[['always',null,'s_dance_1'],['Oh! I love dancinggg']]],
+   ['dance tho?',[['always',null,'s_dance_1'],VN('Oh! I love dancinggg',null)]],
    ['what did you want to be as a kid?',[['a kind person'],['still my favourite goal ✨',null,'s_film_0']]],
-   ['what are you learning rn?',[['go for the experiences'],['I know it’s scary sometimes. trust me, go for it']]],
-   ['can we collab?',[['YES'],['email’s right below ↓']]]
+   ['what are you learning rn?',[['go for the experiences'],VN('I know it’s scary sometimes. trust me, go for it',null)]],
+   ['what’s your toxic trait?',[{t:'…',drama:true},{t:'next question 🙂'}]],
+   ['can we collab?',[['YES'],['email’s right below ↓'],{act:[['↓ take me there',toHi]]}]]
   ];
-  const add=(side,html,st)=>{const d=document.createElement('div');d.className='msg '+side+(st?' sticker':'');d.innerHTML=html+`<time>${now()}</time>`;log.appendChild(d);log.scrollTop=log.scrollHeight;return d};
+  const REAL=['okay, one real question 🤍',[{t:'okay. real answer',drama:true},['I’m kind to everyone else first'],['still learning to put myself on that list too 🤍']]];
+
+  // ---- bubbles
+  let asked=0,realOn=false;
+  const add=(side,html,st)=>{const d=document.createElement('div');d.className='msg '+side+(st?' sticker':'');
+    d.innerHTML=html+`<time>${now()}${side==='out'?'<b class="tk" aria-label="sent">✓✓</b>':''}</time>`;log.appendChild(d);log.scrollTop=log.scrollHeight;if(side==='in')reactable(d);return d};
+  const seen=()=>log.querySelectorAll('.tk:not(.seen)').forEach(t=>{t.classList.add('seen');t.setAttribute('aria-label','seen')});
+  async function typing(ms){stat('typing…');const t=document.createElement('div');t.className='msg in typing';t.innerHTML='<i></i><i></i><i></i>';log.appendChild(t);log.scrollTop=log.scrollHeight;await wait(ms);t.remove()}
+  const lock=on=>{[...qr.children].forEach(b=>b.disabled=on||b.dataset.used==='1');const i=$('#ask2q');if(i)i.disabled=on};
+  function voice(p){const bars=Array.from({length:30},(_,i)=>`<i style="--h:${(6+Math.abs(Math.sin(i*1.7+p.t.length))*18)|0}px"></i>`).join('');
+    const dur=Math.max(2,Math.round(p.t.split(' ').length*.42));
+    const d=add('in',`<span class="vlab">VOICE NOTE</span><button type="button" class="vn" aria-label="Play voice note"><span class="vplay">▶</span><span class="vwave">${bars}</span><span class="vdur">0:0${dur}</span></button><span class="vtx" aria-live="polite"></span>`);
+    const b=d.querySelector('.vn'),bs=[...d.querySelectorAll('.vwave i')],tx=d.querySelector('.vtx'),pl=d.querySelector('.vplay'),du=d.querySelector('.vdur');let on=false;
+    b.addEventListener('click',async()=>{if(on)return;on=true;pl.textContent='❚❚';sfx('pick');
+      let au=null,len=dur;if(p.src){au=new Audio(p.src);try{await au.play();len=au.duration||dur}catch(_){au=null}}
+      const t0=performance.now();
+      await new Promise(res=>{(function f(){const k=Math.min(1,(au?au.currentTime:(performance.now()-t0)/1000)/len);bs.forEach((x,i)=>x.classList.toggle('on',i/bs.length<k));
+        tx.textContent=p.t.slice(0,Math.ceil(p.t.length*k));du.textContent='0:0'+Math.max(0,Math.ceil(len*(1-k)));if(k<1&&!(au&&au.ended))requestAnimationFrame(f);else res()})()});
+      tx.textContent=p.t;pl.textContent='▶';du.textContent='0:0'+dur;on=false;bs.forEach(x=>x.classList.remove('on'))});
+    return d}
+  function chips(list){const d=add('in','<span class="chips"></span>');d.classList.add('chiprow');const c=d.querySelector('.chips');
+    list.forEach(([l,fn])=>{const b=document.createElement('button');b.type='button';b.className='chip';b.textContent=l;b.addEventListener('click',()=>{sfx('click');fn()});c.appendChild(b)})}
+  // ask K a question with option buttons inside the bubble, resolves with the pick
+  function choose(q,opts){return new Promise(res=>{const d=add('in',`${esc(q)}<span class="chips">${opts.map((o,i)=>`<button type="button" class="opt" data-i="${i}">${esc(o)}</button>`).join('')}</span>`);
+    d.querySelectorAll('.opt').forEach(b=>b.addEventListener('click',()=>{d.querySelectorAll('.opt').forEach(x=>x.disabled=true);b.classList.add('pick');sfx('click');add('out',esc(opts[+b.dataset.i]));res(+b.dataset.i)}))})}
+
   let busy=false;
-  async function reply(parts){busy=true;[...qr.children].forEach(b=>b.disabled=true);
-    for(const [txt,media,st] of parts){$('#wstat').textContent='typing…';const t=document.createElement('div');t.className='msg in typing';t.innerHTML='<i></i><i></i><i></i>';log.appendChild(t);log.scrollTop=log.scrollHeight;
-      await new Promise(r=>setTimeout(r,RM?80:600+txt.length*18)); t.remove();
-      if(st) add('in',`<img src="img/${st}.webp" alt="">`,true);
-      add('in',(media||'')+txt.replace(/</g,'&lt;'))}
-    $('#wstat').textContent='Ln '+(log.children.length+1)+', Col 1';busy=false;[...qr.children].forEach(b=>b.disabled=b.dataset.used==='1')}
-  Q.forEach(([qq,parts])=>{const b=document.createElement('button');b.type='button';b.textContent=qq;
-    b.addEventListener('click',()=>{if(busy)return;b.dataset.used='1';add('out',qq);left--;STATS.said++;cnt.textContent='+'+left+' unsaid';reply(parts)});qr.appendChild(b)});
+  let chain=Promise.resolve();const reply=parts=>chain=chain.then(()=>_reply(parts));
+  async function _reply(parts){busy=true;lock(true);await wait(350);seen();
+    for(let p of parts){p=Array.isArray(p)?{t:p[0],media:p[1],st:p[2]}:p;const t=typeof p.t==='function'?p.t():(p.t||'');
+      if(p.act){await wait(250);chips(p.act);continue}
+      if(p.drama){await typing(1500);stat('K stopped typing…');await wait(1300);await typing(1300)}
+      else await typing(p.voice?1400:600+t.length*18);
+      if(p.st) add('in',`<img src="img/${p.st}.webp" alt="">`,true);
+      if(p.voice) voice(p); else if(t) add('in',(p.media||'')+esc(t))}
+    stat('Ln '+(log.children.length+1)+', Col 1');busy=false;lock(false);
+    unlock()}
+  function unlock(){if(asked>=5&&!realOn){realOn=true;const b=mkBtn(REAL[0],REAL[1],'real');qr.prepend(b);qr.scrollLeft=0;stat('psst… a new question unlocked')}}
+  function mkBtn(qq,parts,cls){const b=document.createElement('button');b.type='button';b.textContent=qq;if(cls)b.className=cls;
+    b.addEventListener('click',()=>{if(busy)return;b.dataset.used='1';add('out',esc(qq));left--;asked++;STATS.said++;cnt.textContent='+'+left+' unsaid';
+      typeof parts==='function'?parts():reply(parts)});return b}
+
+  // ---- reactions: long-press, double-tap or right-click any of K's bubbles
+  const RX=[['❤️','s_ent_2','❤️ back at you'],['😂','s_film_3','finally someone laughs at my jokes'],['😭','s_sun_1','no crying in the secret club 🥹'],['🔥','s_dance_4','stop it, I’m blushing']];let rxN=0;
+  function reactable(d){if(d.classList.contains('typing')||d.classList.contains('chiprow'))return;let t=null;
+    const open=()=>{log.querySelectorAll('.rbar').forEach(x=>x.remove());const bar=document.createElement('span');bar.className='rbar';bar.setAttribute('role','group');bar.setAttribute('aria-label','React');
+      if(d.offsetTop-log.scrollTop<46)bar.classList.add('below');
+      bar.innerHTML=RX.map(([e],i)=>`<button type="button" data-i="${i}" aria-label="React ${e}">${e}</button>`).join('');d.appendChild(bar);bar.querySelector('button').focus({preventScroll:true});
+      bar.querySelectorAll('button').forEach(b=>b.addEventListener('click',async e=>{e.stopPropagation();const r=RX[+b.dataset.i];bar.remove();
+        let x=d.querySelector('.rx');if(!x){x=document.createElement('span');x.className='rx';d.appendChild(x)}x.textContent=r[0];sfx('pop');
+        if(busy||rxN>=4)return;rxN++;busy=true;lock(true);await wait(500);await typing(700);add('in',`<img src="img/${r[1]}.webp" alt="">`,true);add('in',esc(r[2]));busy=false;lock(false);stat('Ln '+(log.children.length+1)+', Col 1');unlock()}))};
+    d.addEventListener('pointerdown',e=>{if(e.target.closest('button'))return;t=setTimeout(open,450)});
+    ['pointerup','pointerleave','pointercancel'].forEach(k=>d.addEventListener(k,()=>clearTimeout(t)));
+    d.addEventListener('dblclick',e=>{if(!e.target.closest('button'))open()});
+    d.addEventListener('contextmenu',e=>{e.preventDefault();open()})}
+  document.addEventListener('pointerdown',e=>{if(!e.target.closest('.rbar,.msg'))log.querySelectorAll('.rbar').forEach(x=>x.remove())});
+
+  // ---- games
+  async function rapid(){busy=true;lock(true);seen();
+    const R=[['chai or coffee?',['chai','coffee'],0,'chai. obviously ☕'],['mountains or beaches?',['mountains','beaches'],0,'mountains. always mountains ⛰️'],['call or text?',['call','text'],0,'call. I’m a 3am-call person 📞'],['dance or sing?',['dance','sing'],0,'dance. you’ve seen the stickers 💃'],['plans or spontaneous?',['plans','spontaneous'],1,'spontaneous. go for the experiences ✨']];
+    await typing(700);add('in','RAPID FIRE ⚡');await typing(600);add('in','pick fast. no thinking');let s=0;
+    for(const [q,o,k,line] of R){await typing(500);const i=await choose(q,o);await typing(500);add('in',esc(line));const m=i===k;if(m)s++;await wait(200);add('in',m?'we match! 🤝':'hmm, wrong 😤')}
+    const pct=s*20;await typing(900);
+    add('in',`<span class="score">${pct}%</span>compatibility · ${s}/5 ${s===5?'are you… me?? 😳':s>=3?'basically besties':s>=1?'we can still be friends 😌':'opposites attract?'}`);
+    if(s>=4)add('in','<img src="img/s_dance_2.webp" alt="">',true);
+    busy=false;lock(false);stat('Ln '+(log.children.length+1)+', Col 1');unlock()}
+  async function guess(){busy=true;lock(true);seen();
+    const G=[['what’s my song on loop?',['Kalyani','Ojhal','Barsaat'],0],['who do I call at 3am?',['Milinn','Riya','okmegha'],1],['what did I want to be as a kid?',['an astronaut','an engineer','a kind person'],2]];
+    await typing(700);add('in','okay my turn. how well do you know me? 🤔');let s=0;
+    for(const [q,o,k] of G){await typing(600);const i=await choose(q,o);await typing(600);if(i===k){s++;add('in','YES. you know me 🥹')}else add('in',`nope! it’s ${esc(o[k])} 😤`)}
+    await typing(800);add('in',`<span class="score">${s}/3</span>${s===3?'okay you’ve been paying attention 👀':s?'not bad. scroll around, you’ll get the rest':'go read my secret files and come back 😂'}`);
+    busy=false;lock(false);stat('Ln '+(log.children.length+1)+', Col 1');unlock()}
+
+  qr.appendChild(mkBtn('⚡ rapid fire',rapid,'game'));qr.appendChild(mkBtn('🤔 guess me',guess,'game'));
+  Q.forEach(([qq,parts])=>qr.appendChild(mkBtn(qq,parts)));
+
+  // ---- ask your own: lands in K's inbox with the anonymous letters
+  const af=$('#ask2'),ai=$('#ask2q');
+  af.addEventListener('submit',async e=>{e.preventDefault();const q=ai.value.trim();if(!q||busy)return;ai.value='';add('out',esc(q));left--;asked++;STATS.said++;cnt.textContent='+'+left+' unsaid';
+    const ok=window.SAVEQ?await SAVEQ(q,'phone'):false;
+    if(ok)reply([['ooh. noted ✍️'],['K will call you back 📞'],['(watch @hang.withk 👀)']]);
+    else{await reply([['ooh. good one ✍️'],['send it straight to my inbox? 👇']]);
+      add('in',`<span class="chips"><a class="chip" target="_blank" rel="noopener" href="mailto:krishna.agrwlx@gmail.com?subject=${encodeURIComponent('A question from your phone')}&body=${encodeURIComponent(q)}">✉️ send it to K</a></span>`).classList.add('chiprow')}});
+
   function pickUp(){ if(live) return; live=true; hs.classList.add('up'); pick.hidden=true; scr.classList.add('live'); $('#cord').style.opacity=0;
-    if(!log.children.length) reply([['hello? oh hi!'],['ask me something ↓']])}
+    if(!log.children.length) reply([['hello? oh hi!'],['ask me something ↓'],['psst. long-press (or double-tap) my messages to react']])}
   function hangUp(){ live=false; hs.classList.remove('up'); pick.hidden=false; scr.classList.remove('live'); $('#cord').style.opacity=1}
-  hs.addEventListener('click',pickUp); $('#hangup').addEventListener('click',hangUp); window.UNSAID={reply};
+  hs.addEventListener('click',pickUp); $('#hangup').addEventListener('click',hangUp); window.UNSAID={reply,seat,kalyani};
 })();
 
 
@@ -1961,11 +2092,13 @@ function ticket(p){const th=$('#people');let tk=$('#ticket');if(!tk){tk=document
     new IntersectionObserver(es=>{if(es[0].isIntersecting&&!rang&&!hs.classList.contains('up')){rang=true;if(RM)return;hs.classList.add('ringing');const rb=document.createElement('span');rb.id='ringb';rb.className='ringb';rb.textContent='RING RING!';sec.appendChild(rb);sfx('ring');ringT=setInterval(()=>sfx('ring'),1600);setTimeout(stopRing,7000)}},{threshold:.45}).observe(sec);
     hs.addEventListener('click',stopRing);
     const kp=document.createElement('div');kp.className='kp';kp.setAttribute('aria-label','Keypad: dial K');
-    kp.innerHTML=`<span class="kpbrand">K-PHONE <i>☎</i></span><div class="kpd" id="kpd" aria-live="polite">dial K…</div><div class="kpg">${[['1',''],['2','abc'],['3','def'],['4','ghi'],['5','jkl'],['6','mno'],['7','pqrs'],['8','tuv'],['9','wxyz'],['*',''],['0',''],['#','']].map(([n,l])=>`<button type="button" data-n="${n}" aria-label="${n}${l?' '+l:''}">${n}<small>${l}</small></button>`).join('')}</div><div class="kpr"><button type="button" class="kpc" id="kpc" aria-label="Clear">⌫</button><button type="button" class="kpcall" id="kpcall">Call</button></div><span class="kphint">psst… try spelling my name</span>`;
+    kp.innerHTML=`<span class="kpbrand">K-PHONE <i>☎</i></span><div class="kpd" id="kpd" aria-live="polite">dial K…</div><div class="kpg">${[['1',''],['2','abc'],['3','def'],['4','ghi'],['5','jkl'],['6','mno'],['7','pqrs'],['8','tuv'],['9','wxyz'],['*',''],['0',''],['#','']].map(([n,l])=>`<button type="button" data-n="${n}" aria-label="${n}${l?' '+l:''}">${n}<small>${l}</small></button>`).join('')}</div><div class="kpr"><button type="button" class="kpc" id="kpc" aria-label="Clear">⌫</button><button type="button" class="kpcall" id="kpcall">Call</button></div><span class="kphint">psst… try spelling my name. or CHAI. or DANCE.</span>`;
     sec.appendChild(kp);let num='';const disp=$('#kpd');
     kp.querySelectorAll('[data-n]').forEach(b=>b.addEventListener('click',()=>{if(num.length<12){num+=b.dataset.n;disp.textContent=num;sfx('key')}}));
     $('#kpc').addEventListener('click',()=>{num=num.slice(0,-1);disp.textContent=num||'dial K…'});
-    $('#kpcall').addEventListener('click',()=>{if(num.length<3){disp.textContent='too short!';return}const n=num;if(n==='5747462'){disp.textContent='K-R-I-S-H-N-A ✓';stopRing();sfx('pop');egg('dial');setTimeout(()=>{const live=hs.classList.contains('up');if(!live)hs.click();setTimeout(()=>{window.UNSAID&&UNSAID.reply([['you SPELLED my name 😭'],['okay you’re officially in the secret club'],['ask me anything ↓']]);num=''},live?300:2800)},400);return}disp.textContent='calling…';stopRing();
+    $('#kpcall').addEventListener('click',()=>{if(num.length<3){disp.textContent='too short!';return}const n=num;const W={'2424':['C-H-A-I ✓',[['2-4-2-4. you spelled CHAI ☕'],['chai o’clock is a lifestyle'],['okmegha is already on her way with two cups'],{act:[['☕ see her seat',()=>UNSAID.seat('chai o’clock')]]}]],'32623':['D-A-N-C-E ✓',[['DANCE BREAK 💃',null,'s_dance_3'],['you know what to do'],{act:[['▶ put on Kalyani',()=>UNSAID.kalyani()]]}]],'7492':['R-I-Y-A ✓',[['you dialled RIYA?? 📞'],['that’s my 3am person. she always picks up'],{act:[['👀 find her in Row 3',()=>UNSAID.seat('the 3am call')]]}]]};
+      if(W[n]){disp.textContent=W[n][0];stopRing();sfx('pop');setTimeout(()=>{const live=hs.classList.contains('up');if(!live)hs.click();setTimeout(()=>{window.UNSAID&&UNSAID.reply(W[n][1]);num=''},live?300:2800)},400);return}
+      if(n==='5747462'){disp.textContent='K-R-I-S-H-N-A ✓';stopRing();sfx('pop');egg('dial');setTimeout(()=>{const live=hs.classList.contains('up');if(!live)hs.click();setTimeout(()=>{window.UNSAID&&UNSAID.reply([['you SPELLED my name 😭'],['okay you’re officially in the secret club'],['ask me anything ↓']]);num=''},live?300:2800)},400);return}disp.textContent='calling…';stopRing();
       const live=hs.classList.contains('up');if(!live)hs.click();
       setTimeout(()=>{window.UNSAID&&UNSAID.reply([[`wait. did you just dial ${n}?`],['how did you even get this number 👀'],['…okay fine, ask me something ↓']]);disp.textContent='connected ✓';num=''},live?300:2800)})}
 
@@ -2271,6 +2404,10 @@ async function agentBadge(dur){await loadFonts();
   addEventListener('pointermove',e=>mv(e.clientX,e.clientY),{passive:true});addEventListener('pointerdown',e=>mv(e.clientX,e.clientY),{passive:true});
   update();setInterval(update,30000);window.KNIGHT=update})();
 
+/* ------------ inbox saver shared by Ask K and the phone ------------ */
+window.SAVEQ=async(q,from)=>{try{const db=await window.claude?.use?.('db'),user=await window.claude?.use?.('user');const uid=user?await user.id():null;
+  if(!db||!uid)return false;const ref=db.doc('inbox/'+uid);const snap=await ref.get();const qs=((snap.exists&&snap.data().questions)||[]).slice(-19).concat({text:q,at:Date.now(),from:from||'ask'});
+  if(snap.exists)await ref.update({questions:qs});else await ref.set({questions:qs});return true}catch(_){return false}};
 /* ------------ ask K anything ------------ */
 (()=>{const f=$('#askk'),inp=$('#askq'),st=$('#askst');if(!f)return;
   f.addEventListener('submit',async e=>{e.preventDefault();const q=inp.value.trim();if(!q)return;const b=f.querySelector('button');b.disabled=true;st.textContent='sending…';
@@ -2297,6 +2434,5 @@ function titles(){ if(RM) return; const W=SIX.map(R=>[R.n,R.fc,R.k]).concat([['A
   const show=()=>{if(i>=W.length){b.remove();return}const [w,c,k]=W[i++];b.style.background=c;b.innerHTML=`<span style="font-size:${w.length>8?'16vw':'24vw'}">${w}</span><img src="img/cut_${k}.webp" alt="">`;setTimeout(show,360)};show();say('THAT’S MY NAME!')}
 })();
 </script>
-
 </body>
 </html>
