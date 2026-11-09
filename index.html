@@ -991,6 +991,38 @@ html.night .torch{opacity:1}
 .vball b{font-size:13px}
 .vball a{color:#0a246a;font-weight:700}
 .vball .vx{position:absolute;right:6px;top:4px;border:0;background:none;font:700 14px/1 Tahoma,sans-serif;cursor:pointer;color:#000}
+
+/* ---------- row 3: cinema ticket cards ---------- */
+.ticket.tix{padding:0;gap:0;display:grid;grid-template-columns:minmax(0,1fr) 96px;background:none;color:#1d1a16;-webkit-mask:none;mask:none;border:0;outline:0;border-radius:0;box-shadow:none;filter:drop-shadow(0 18px 26px #000c);z-index:46;transform-origin:50% 0}
+.tix .tmain,.tix .tstub{position:relative;background:#f4ecd8;background-image:var(--noise);padding:14px 14px 14px 16px}
+.tix .tmain{border-radius:10px 0 0 10px;display:grid;gap:3px;text-align:left;-webkit-mask:radial-gradient(circle at 100% 0,#0000 9px,#000 9.5px) top/100% 51% no-repeat,radial-gradient(circle at 100% 100%,#0000 9px,#000 9.5px) bottom/100% 51% no-repeat;mask:radial-gradient(circle at 100% 0,#0000 9px,#000 9.5px) top/100% 51% no-repeat,radial-gradient(circle at 100% 100%,#0000 9px,#000 9.5px) bottom/100% 51% no-repeat}
+.tix .tstub{border-radius:0 10px 10px 0;display:grid;justify-items:center;align-content:start;gap:4px;text-align:center;border-left:2px dashed #1d1a1640;padding:16px 8px;-webkit-mask:radial-gradient(circle at 0 0,#0000 9px,#000 9.5px) top/100% 51% no-repeat,radial-gradient(circle at 0 100%,#0000 9px,#000 9.5px) bottom/100% 51% no-repeat;mask:radial-gradient(circle at 0 0,#0000 9px,#000 9.5px) top/100% 51% no-repeat,radial-gradient(circle at 0 100%,#0000 9px,#000 9.5px) bottom/100% 51% no-repeat;overflow:hidden}
+.tix .tco{font:700 9px/1 var(--f-mono);letter-spacing:.14em;color:#c8322b;padding-bottom:8px;border-bottom:2px solid #1d1a16;margin-bottom:6px}.tix .tco i{font-style:normal;color:#1d1a1660}
+.tix .tph{position:relative;height:150px;border-radius:4px;overflow:hidden;background:radial-gradient(circle at 50% 75%,#ffcf5a 0 30%,#f08a2c 60%,#c8322b);box-shadow:inset 0 0 0 3px #1d1a16}
+.tix .tph img{position:absolute;bottom:0;left:50%;transform:translateX(-50%);height:96%;width:auto;max-width:none;filter:drop-shadow(0 6px 8px #0005)}
+.tix .tph.photo img{inset:0;left:0;transform:none;width:100%;height:100%;object-fit:cover;filter:sepia(.15) saturate(1.1)}
+.tix .tst{margin-top:8px;font:700 9px/1 var(--f-mono);letter-spacing:.3em;text-transform:uppercase;color:#1d1a1680}
+.tix b{font:400 30px/1 "Abril Fatface",serif;color:#1d1a16;letter-spacing:-.01em}
+.tix .tas{font:500 13px/1.1 var(--f-body);color:#4a453d}.tix .tas i{font:700 21px/1 var(--f-hand);color:#c8322b;font-style:normal}
+.tix .tln{margin-top:6px;font:600 20px/1.15 var(--f-hand);color:#1d1a16}
+.tix .tsig{font:700 18px/1 var(--f-hand);color:#c8322b;justify-self:end}
+.tix .tsl{font:700 9px/1 var(--f-mono);letter-spacing:.2em;color:#1d1a1690;margin-top:18px}
+.tix .tsn{font:400 44px/.9 "Bungee",var(--f-display);color:#1d1a16}
+.tix .tadm{margin-top:6px;font:400 15px/1 "Anton",var(--f-display);letter-spacing:.08em;color:#f4ecd8;background:#1d1a16;padding:5px 7px}
+.tix .tstars{font-size:12px;color:#e0a316;letter-spacing:.05em}
+.tix .tbar{width:60px;height:34px;margin-top:4px;background:repeating-linear-gradient(90deg,#1d1a16 0 2px,transparent 2px 4px,#1d1a16 4px 5px,transparent 5px 8px,#1d1a16 8px 11px,transparent 11px 12px)}
+.tix .tno{font:500 8px/1 var(--f-mono);color:#1d1a1680}
+.tix .tstamp{position:absolute;left:50%;bottom:58px;transform:translateX(-50%) rotate(-18deg);font:700 11px/1.05 var(--f-mono);letter-spacing:.08em;color:#c8322bd0;border:2px solid #c8322bd0;border-radius:6px;padding:4px 6px;mix-blend-mode:multiply;opacity:0;animation:stampIn .35s .45s cubic-bezier(.3,1.8,.5,1) forwards;pointer-events:none}
+@keyframes stampIn{from{opacity:0;transform:translateX(-50%) rotate(-18deg) scale(2.2)}to{opacity:1;transform:translateX(-50%) rotate(-18deg) scale(1)}}
+.tix>button{position:absolute;right:-10px;top:-10px;width:30px;height:30px;border-radius:50%;background:#1d1a16!important;color:#f4ecd8!important;border:2px solid #f4ecd8!important;font:700 16px/1 var(--f-mono);display:grid;place-items:center;z-index:2}
+.ticket.tix.in{animation:tixIn .5s cubic-bezier(.3,1.4,.5,1)}
+@keyframes tixIn{from{transform:translateY(-30px) rotate(-6deg) scale(.7);opacity:0}}
+.tix.tear .tstub{animation:tearOff .6s cubic-bezier(.5,0,.7,.4) forwards}
+.tix.tear .tmain{animation:tixOut .6s .15s ease-in forwards}
+@keyframes tearOff{30%{transform:rotate(8deg) translateX(6px)}100%{transform:rotate(38deg) translate(60px,260px);opacity:0}}
+@keyframes tixOut{to{transform:translateY(20px) scale(.9);opacity:0}}
+@media (max-width:700px){.ticket.tix{position:fixed;left:50%!important;top:50%!important;width:min(390px,calc(100vw - 32px))!important;translate:-50% -50%;z-index:150;box-shadow:0 0 0 100vmax #0009}}
+@media (max-width:420px){.ticket.tix{grid-template-columns:minmax(0,1fr) 78px}.tix .tph{height:120px}.tix b{font-size:25px}.tix .tsn{font-size:34px}.tix .tln{font-size:18px}}
 </style>
 </head>
 <body>
@@ -2053,14 +2085,17 @@ function glove(dx,dy){const g=$('#glove');if(!g||RM)return;g.classList.remove('g
 // Row 3 ticket profiles
 const KNOWN={'the 3am call':'picks up on the first ring. every time.','hype woman':'thinks every idea is “literally genius”.','honest critic':'says “hmm” in a way that saves projects.','dance partner':'knows every step of the kitchen routine.','travel buddy':'has the window seat. gives it up anyway.','chai o’clock':'shows up at 5pm with two cups.','spare keys':'has a key. has had it for years.','meme dealer':'sends 14 reels a day. 3 are good.','says “sleep!”':'texts “go to bed” at 1:59am.','first to reply':'replies before you hit send.','plot twist':'turned up out of nowhere. stayed.','co-conspirator':'in on every terrible idea.'};
 addEventListener('keydown',e=>{if(e.key==='Escape'){const tk=$('#ticket');if(tk&&!tk.hidden){tk.hidden=true}}});
-const MET4=new Set();function poster(V,p){if(/^p\d$/.test(V.img))MET4.add(V.img);if(MET4.size===4)setTimeout(()=>egg('people'),600);const th=$('#people');let tk=$('#ticket');if(!tk){tk=document.createElement('div');tk.id='ticket';th.appendChild(tk)}
-  tk.className='ticket poster';tk.setAttribute('role','dialog');tk.setAttribute('aria-label',V.role);
-  const n=[...th.querySelectorAll('.pp.vip')].indexOf(p)+1;
-  tk.innerHTML=`<span class="pk">NOW SHOWING · ROW 3 · SEAT 0${n}</span><div class="pimg${V.photo?' photo':''}"><img src="img/${V.img}.webp" alt="${V.who||V.role}"></div><span class="pst">starring</span><b>${V.who||'my person'}</b><span class="pas">as <i>${V.role}</i></span><span class="pmem">“${V.line}”</span><span class="pft">A KRISHNA PRODUCTION · ADMIT ONE</span><button type="button" aria-label="Close poster">×</button>`;
-  const r=p.getBoundingClientRect(),R=th.getBoundingClientRect();const w=Math.min(230,R.width-20);let x=r.left-R.left+r.width/2-w/2;x=Math.max(10,Math.min(R.width-w-10,x));
+const MET4=new Set();function poster(V,p){if(/^p\d$/.test(V.img))MET4.add(V.img);if(MET4.size===4)setTimeout(()=>egg('people'),600);const th=$('#people');let tk=$('#ticket');if(!tk){tk=document.createElement('div');tk.id='ticket'}const host=innerWidth<=700?document.body:th;if(tk.parentNode!==host)host.appendChild(tk);
+  tk.className='ticket tix';tk.setAttribute('role','dialog');tk.setAttribute('aria-label',(V.who||'my person')+', '+V.role);
+  const n=[...th.querySelectorAll('.pp.vip')].indexOf(p)+1;const no=String(3000+n*137).padStart(6,'0');
+  tk.innerHTML=`<div class="tmain"><span class="tco">K CINEMAS <i>·</i> ROW 3 <i>·</i> NOW SHOWING</span><div class="tph${V.photo?' photo':''}"><img src="img/${V.img}.webp" alt="${V.who||V.role}"></div>
+    <span class="tst">starring</span><b>${V.who||'my person'}</b><span class="tas">as <i>${V.role}</i></span><span class="tln">“${V.line}”</span><span class="tsig">— K</span></div>
+    <div class="tstub"><span class="tsl">SEAT</span><span class="tsn">0${n}</span><span class="tadm">ADMIT<br>ONE</span><span class="tstars" aria-label="five stars">★★★★★</span><span class="tbar" aria-hidden="true"></span><span class="tno">No. ${no}</span><span class="tstamp" aria-hidden="true">MY<br>PERSON</span></div>
+    <button type="button" aria-label="Close ticket">×</button>`;
+  const r=p.getBoundingClientRect(),R=th.getBoundingClientRect();const w=Math.min(400,R.width-20);let x=r.left-R.left+r.width/2-w/2;x=Math.max(10,Math.min(R.width-w-10,x));
   tk.style.cssText=`left:${x}px;top:12px;width:${w}px`;tk.classList.remove('in');void tk.offsetWidth;tk.classList.add('in');tk.hidden=false;
-  tk.querySelector('button').onclick=e=>{e.stopPropagation();tk.hidden=true};sfx('pop')}
-function ticket(p){const th=$('#people');let tk=$('#ticket');if(!tk){tk=document.createElement('div');tk.id='ticket';th.appendChild(tk)}tk.className='ticket';tk.setAttribute('role','dialog');
+  tk.querySelector('button').onclick=e=>{e.stopPropagation();if(RM||!tk.classList.contains('tix')){tk.hidden=true;return}tk.classList.add('tear');sfx('paper');setTimeout(()=>{tk.hidden=true;tk.classList.remove('tear')},650)};sfx('pop')}
+function ticket(p){const th=$('#people');let tk=$('#ticket');if(!tk){tk=document.createElement('div');tk.id='ticket'}if(tk.parentNode!==th)th.appendChild(tk);tk.className='ticket';tk.setAttribute('role','dialog');
   const tag=p.querySelector('.tag');const name=p.dataset.name||(tag?tag.textContent:'an extra');const seat=[...th.querySelectorAll('.pp')].indexOf(p)+1;
   tk.innerHTML=`<span class="tk1">ADMIT ONE · ROW 3 · SEAT ${seat}</span><b>${name}</b><span class="tk2">${p.dataset.line||(tag?KNOWN[name]||'one of the good ones.':'probably eating popcorn.')}</span><button type="button" aria-label="Close ticket">×</button>`;
   const r=p.getBoundingClientRect(),R=th.getBoundingClientRect();const w=Math.min(250,R.width-20);let x=r.left-R.left+r.width/2-w/2;x=Math.max(10,Math.min(R.width-w-10,x));let y=r.top-R.top-150;if(y<10)y=r.bottom-R.top+8;
@@ -2486,6 +2521,7 @@ window.SAVEQ=async(q,from)=>{try{const db=await window.claude?.use?.('db'),user=
 (()=>{const n=$('#sticky');if(!n)return;let d=null;n.addEventListener('pointerdown',e=>{n.setPointerCapture(e.pointerId);d={x:e.clientX,y:e.clientY,l:n.offsetLeft,t:n.offsetTop};n.classList.add('lift')});
   n.addEventListener('pointermove',e=>{if(!d)return;n.style.left=(d.l+e.clientX-d.x)+'px';n.style.top=(d.t+e.clientY-d.y)+'px';n.style.right='auto'});
   const up=()=>{d=null;n.classList.remove('lift')};n.addEventListener('pointerup',up);n.addEventListener('pointercancel',up)})();
+document.addEventListener('click',e=>{const tk=$('#ticket');if(tk&&!tk.hidden&&tk.parentNode===document.body&&!e.target.closest('#ticket,.pp')){tk.hidden=true}});
 let typed='';
 addEventListener('keydown',e=>{ if(e.key.length!==1||e.target.closest('input,textarea')) return; typed=(typed+e.key.toLowerCase()).slice(-7); if(typed==='krishna'){typed='';egg('word');titles()}});
 function titles(){ if(RM) return; const W=SIX.map(R=>[R.n,R.fc,R.k]).concat([['A Creative','#f5b301','film']]);
