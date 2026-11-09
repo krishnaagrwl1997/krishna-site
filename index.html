@@ -1046,6 +1046,76 @@ html.night .torch{opacity:1}
 
 /* keypad removed: the phone sits centred again */
 @media (min-width:960px){.unsaid{grid-template-columns:minmax(0,640px);--shift:0px}}
+
+/* ================= desktop toys ================= */
+.plant{position:absolute;left:clamp(200px,26%,360px);bottom:46px;width:90px;z-index:1;cursor:pointer;--g:0}
+.plant .ppot{position:relative;display:block;width:90px;filter:drop-shadow(2px 4px 0 #0004);z-index:2}
+.plant .plabel{position:absolute;left:50%;top:100%;transform:translateX(-50%);margin-top:2px;font:12px/1 Tahoma,Verdana,sans-serif;color:#fff;text-shadow:1px 1px 0 #000a;white-space:nowrap}
+.plant .pmeter{position:absolute;left:50%;top:calc(100% + 16px);transform:translateX(-50%);font:11px/1 Tahoma,sans-serif;letter-spacing:1px;white-space:nowrap;color:#fff;opacity:.85}
+.plant .pstem{position:absolute;left:50%;bottom:58px;width:40px;height:calc(10px + var(--g) * 170px);transform:translateX(-50%);transition:height .8s cubic-bezier(.3,1.5,.5,1);z-index:1}
+.plant[data-g="0"] .pstem{height:0}
+.plant .pstem>svg:first-child{position:absolute;inset:0;width:100%;height:100%}
+.plant .pleaf{position:absolute;width:38px;opacity:0;transform:scale(0);transition:all .5s .3s cubic-bezier(.3,1.6,.5,1)}
+.plant .l1{left:50%;bottom:22%;transform-origin:0 100%}.plant .l2{right:50%;bottom:44%;transform-origin:100% 100%;scale:-1 1}.plant .l3{left:50%;bottom:64%;transform-origin:0 100%;width:30px}
+.plant[data-g="1"] .l1,.plant[data-g="2"] .l1,.plant[data-g="3"] .l1,.plant[data-g="4"] .l1,.plant[data-g="5"] .l1,.plant[data-g="6"] .l1{opacity:1;transform:scale(1) rotate(-8deg)}
+.plant[data-g="2"] .l2,.plant[data-g="3"] .l2,.plant[data-g="4"] .l2,.plant[data-g="5"] .l2,.plant[data-g="6"] .l2{opacity:1;transform:scale(1) rotate(8deg)}
+.plant[data-g="4"] .l3,.plant[data-g="5"] .l3,.plant[data-g="6"] .l3{opacity:1;transform:scale(1) rotate(-14deg)}
+.plant .pbud{position:absolute;left:50%;top:-12px;width:20px;height:26px;margin-left:-10px;border-radius:50% 50% 45% 45%;background:radial-gradient(circle at 50% 30%,#9ed060,#4f9a2c);border:2px solid #2c6a1f;transform:scale(0);transition:transform .5s cubic-bezier(.3,1.6,.5,1)}
+.plant[data-g="5"] .pbud{transform:scale(1)}
+.plant .phead{position:absolute;left:50%;top:-44px;width:92px;height:92px;margin-left:-46px;transform:translate(calc(var(--hx,0) * 10px),calc(var(--hy,0) * 6px)) rotate(calc(var(--hx,0) * 22deg)) scale(0);transition:transform .25s ease-out;filter:drop-shadow(2px 4px 0 #0004)}
+.plant[data-g="6"] .phead{transform:translate(calc(var(--hx,0) * 10px),calc(var(--hy,0) * 6px)) rotate(calc(var(--hx,0) * 22deg)) scale(1)}
+.plant[data-g="6"] .petals{transform-origin:50% 50%;animation:petals 6s ease-in-out infinite}
+@keyframes petals{50%{transform:rotate(8deg)}}
+.plant .pface{transform:translate(calc(var(--hx,0) * 3px),calc(var(--hy,0) * 2px))}
+.plant.pop .phead{animation:bloom .8s cubic-bezier(.3,1.8,.5,1)}
+@keyframes bloom{0%{transform:scale(0) rotate(-90deg)}100%{transform:scale(1)}}
+.plant.near .ppot{filter:drop-shadow(0 0 10px #ffd21f) drop-shadow(2px 4px 0 #0004)}
+.wcan{position:absolute;left:calc(clamp(200px,26%,360px) + 104px);bottom:50px;width:74px;padding:0;border:0;background:none;cursor:grab;z-index:4;touch-action:none;transition:transform .3s}
+.wcan svg{display:block;width:100%;filter:drop-shadow(2px 4px 0 #0004)}
+.wcan.drag{cursor:grabbing;transform:rotate(-8deg) scale(1.08);transition:none;bottom:auto}
+.wcan.pour{bottom:auto;transform:rotate(-38deg);transition:left .35s,top .35s,transform .3s .25s}
+.wcan.nudge{animation:nudge .5s ease-in-out 3}
+@keyframes nudge{50%{transform:translateY(-10px) rotate(-10deg)}}
+.drop{position:absolute;z-index:3;width:6px;height:9px;border-radius:50% 50% 50% 50%/60% 60% 40% 40%;background:#7cc6ff;border:1px solid #1d6aa6;opacity:0;animation:drip .6s ease-in forwards;pointer-events:none}
+@keyframes drip{0%{opacity:1;transform:translateY(-40px)}90%{opacity:1}100%{opacity:0;transform:translateY(40px)}}
+/* chai.exe */
+.chai95{display:grid;grid-template-columns:120px 1fr;gap:12px;align-items:center;background:#fff;padding:12px;box-shadow:inset 1px 1px 0 #808080,inset -1px -1px 0 #fff,inset 2px 2px 0 #404040}
+.cbrew{position:relative;height:130px;display:grid;place-items:end center}
+.ccup{position:relative;width:80px;height:70px;border:3px solid #000;border-top:0;border-radius:0 0 26px 26px;background:#f4efe4;overflow:hidden;margin-bottom:14px}
+.ccup .cfill{position:absolute;left:0;right:0;bottom:0;height:0;transition:height 1.1s ease-in,background .3s}
+.ccup.full .cfill{height:78%}
+.ccup .chandle{position:absolute}
+.cbrew::after{content:"";position:absolute;left:calc(50% + 34px);bottom:38px;width:22px;height:28px;border:3px solid #000;border-left:0;border-radius:0 14px 14px 0}
+.csauc{position:absolute;bottom:4px;width:116px;height:14px;border:3px solid #000;border-radius:50%;background:#f4efe4}
+.csteam{position:absolute;left:50%;bottom:66px;display:flex;gap:8px;transform:translateX(-50%);opacity:0;transition:opacity .4s 1s}
+.cbrew:has(.full) .csteam,.ccup.full~.csteam{opacity:1}
+.csteam{position:absolute}
+.cbrew .csteam i{display:block;width:6px;height:24px;border-radius:6px;background:#bbb;animation:steam 1.8s ease-in-out infinite}
+.csteam i:nth-child(2){animation-delay:.4s}.csteam i:nth-child(3){animation-delay:.8s}
+@keyframes steam{0%{transform:translateY(8px) scaleY(.6);opacity:0}50%{opacity:.8}100%{transform:translateY(-14px) scaleY(1.1);opacity:0}}
+.copts{display:grid;gap:6px;font:12px/1.3 Tahoma,Verdana,sans-serif}
+.copts fieldset{margin:0;border:1px solid #808080;box-shadow:1px 1px 0 #fff;padding:4px 8px 6px;display:flex;flex-wrap:wrap;gap:4px 10px}
+.copts legend{padding:0 3px}
+.copts input[type=range]{width:100%}
+.cstrl{display:flex;justify-content:space-between;width:100%;font-size:11px;color:#444}
+.cfoot{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:8px}
+.cverd{font:600 16px/1.2 var(--f-hand);color:#c8322b}.cfoot .btn95{white-space:nowrap;flex:none}
+.ico span{word-break:normal}
+@media (max-width:520px){.chai95{grid-template-columns:1fr}.cbrew{height:110px}}
+/* paint pins on the wallpaper */
+.kpins{position:absolute;inset:0 0 34px;z-index:0;pointer-events:none}
+.kpin{position:absolute;margin:0;width:150px;background:#fff;padding:7px 7px 4px;box-shadow:2px 6px 10px #0005;pointer-events:auto}
+.kpin::before{content:"";position:absolute;left:50%;top:-7px;width:14px;height:14px;margin-left:-7px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#ff8a8a,#c8322b);box-shadow:0 2px 2px #0005}
+.kpin img{display:block;width:100%;border:1px solid #ddd}
+.kpin figcaption{font:600 15px/1.2 var(--f-hand);color:#c8322b;text-align:center;margin-top:2px}
+.kpin button{position:absolute;right:-8px;top:-8px;width:20px;height:20px;border-radius:50%;border:1px solid #000;background:#fff;font:700 11px/1 Tahoma;cursor:pointer;opacity:0;transition:opacity .2s}
+.kpin:hover button,.kpin:focus-within button{opacity:1}
+.kpin.new{animation:pinIn .6s cubic-bezier(.3,1.6,.5,1)}
+@keyframes pinIn{from{transform:translateY(-60px) scale(1.4);opacity:0}}
+.binacts{display:flex;gap:6px;justify-content:flex-end;margin-top:8px}
+.w95.cerr{animation:wopen .18s ease-out,cshake .4s .2s}
+@keyframes cshake{25%{translate:-4px 0}50%{translate:4px 0}75%{translate:-2px 0}}
+@media (max-width:700px){.plant{left:auto;right:96px;bottom:44px;transform:scale(.8);transform-origin:50% 100%}.wcan{left:auto;right:14px;bottom:48px;width:62px}.kpin{width:110px}}
 </style>
 </head>
 <body>
@@ -1076,7 +1146,7 @@ html.night .torch{opacity:1}
   <section class="monitor" id="play" aria-label="K’s OS, a desktop you can explore">
     <h1 style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Krishna, a creative in six lives</h1>
     <div class="desk" id="desk">
-      <div class="wall" aria-hidden="true"><span class="wdood" style="right:8%;top:14%;width:46px"><svg viewBox="0 0 60 60"><path d="M30 0C33 22 38 27 60 30 38 33 33 38 30 60 27 38 22 33 0 30 22 27 27 22 30 0z" fill="#ffd21f"/></svg></span><span class="wdood" style="left:30%;bottom:22%;width:40px;animation-delay:-3s"><svg viewBox="0 0 60 60"><circle cx="30" cy="30" r="27" fill="#ff4fa3" stroke="#000" stroke-width="3"/><circle cx="21" cy="25" r="4"/><circle cx="39" cy="25" r="4"/><path d="M18 36q12 12 24 0" fill="none" stroke="#000" stroke-width="4" stroke-linecap="round"/></svg></span><span class="wdood" style="right:24%;bottom:30%;width:62px;animation-delay:-6s"><svg viewBox="0 0 60 60"><ellipse cx="30" cy="11" rx="6" ry="12" fill="#ffc21a" stroke="#000" stroke-width="1.5" transform="rotate(0 30 30)"/><ellipse cx="30" cy="11" rx="6" ry="12" fill="#ffc21a" stroke="#000" stroke-width="1.5" transform="rotate(30 30 30)"/><ellipse cx="30" cy="11" rx="6" ry="12" fill="#ffc21a" stroke="#000" stroke-width="1.5" transform="rotate(60 30 30)"/><ellipse cx="30" cy="11" rx="6" ry="12" fill="#ffc21a" stroke="#000" stroke-width="1.5" transform="rotate(90 30 30)"/><ellipse cx="30" cy="11" rx="6" ry="12" fill="#ffc21a" stroke="#000" stroke-width="1.5" transform="rotate(120 30 30)"/><ellipse cx="30" cy="11" rx="6" ry="12" fill="#ffc21a" stroke="#000" stroke-width="1.5" transform="rotate(150 30 30)"/><ellipse cx="30" cy="11" rx="6" ry="12" fill="#ffc21a" stroke="#000" stroke-width="1.5" transform="rotate(180 30 30)"/><ellipse cx="30" cy="11" rx="6" ry="12" fill="#ffc21a" stroke="#000" stroke-width="1.5" transform="rotate(210 30 30)"/><ellipse cx="30" cy="11" rx="6" ry="12" fill="#ffc21a" stroke="#000" stroke-width="1.5" transform="rotate(240 30 30)"/><ellipse cx="30" cy="11" rx="6" ry="12" fill="#ffc21a" stroke="#000" stroke-width="1.5" transform="rotate(270 30 30)"/><ellipse cx="30" cy="11" rx="6" ry="12" fill="#ffc21a" stroke="#000" stroke-width="1.5" transform="rotate(300 30 30)"/><ellipse cx="30" cy="11" rx="6" ry="12" fill="#ffc21a" stroke="#000" stroke-width="1.5" transform="rotate(330 30 30)"/><circle cx="30" cy="30" r="11" fill="#6b3d17" stroke="#000" stroke-width="2"/><g fill="#3d220c"><circle cx="35.0" cy="30.0" r="1.4"/><circle cx="32.48785523945863" cy="34.337116127970084" r="1.4"/><circle cx="27.47576947700071" cy="34.31604683324437" r="1.4"/><circle cx="25.0000063413623" cy="30.007963264582433" r="1.4"/><circle cx="27.548695893296504" cy="25.642121137932058" r="1.4"/><circle cx="32.560427386209206" cy="25.705327532867038" r="1.4"/><circle cx="30" cy="30" r="1.6"/></g></svg></span><p class="ransom" id="wallR"></p><p id="wallT">a creative, running six lives</p></div>
+      <div class="wall" aria-hidden="true"><span class="wdood" style="right:8%;top:14%;width:46px"><svg viewBox="0 0 60 60"><path d="M30 0C33 22 38 27 60 30 38 33 33 38 30 60 27 38 22 33 0 30 22 27 27 22 30 0z" fill="#ffd21f"/></svg></span><span class="wdood" style="left:62%;top:52%;width:40px;animation-delay:-3s"><svg viewBox="0 0 60 60"><circle cx="30" cy="30" r="27" fill="#ff4fa3" stroke="#000" stroke-width="3"/><circle cx="21" cy="25" r="4"/><circle cx="39" cy="25" r="4"/><path d="M18 36q12 12 24 0" fill="none" stroke="#000" stroke-width="4" stroke-linecap="round"/></svg></span><span class="wdood" style="right:24%;bottom:30%;width:62px;animation-delay:-6s"><svg viewBox="0 0 60 60"><ellipse cx="30" cy="11" rx="6" ry="12" fill="#ffc21a" stroke="#000" stroke-width="1.5" transform="rotate(0 30 30)"/><ellipse cx="30" cy="11" rx="6" ry="12" fill="#ffc21a" stroke="#000" stroke-width="1.5" transform="rotate(30 30 30)"/><ellipse cx="30" cy="11" rx="6" ry="12" fill="#ffc21a" stroke="#000" stroke-width="1.5" transform="rotate(60 30 30)"/><ellipse cx="30" cy="11" rx="6" ry="12" fill="#ffc21a" stroke="#000" stroke-width="1.5" transform="rotate(90 30 30)"/><ellipse cx="30" cy="11" rx="6" ry="12" fill="#ffc21a" stroke="#000" stroke-width="1.5" transform="rotate(120 30 30)"/><ellipse cx="30" cy="11" rx="6" ry="12" fill="#ffc21a" stroke="#000" stroke-width="1.5" transform="rotate(150 30 30)"/><ellipse cx="30" cy="11" rx="6" ry="12" fill="#ffc21a" stroke="#000" stroke-width="1.5" transform="rotate(180 30 30)"/><ellipse cx="30" cy="11" rx="6" ry="12" fill="#ffc21a" stroke="#000" stroke-width="1.5" transform="rotate(210 30 30)"/><ellipse cx="30" cy="11" rx="6" ry="12" fill="#ffc21a" stroke="#000" stroke-width="1.5" transform="rotate(240 30 30)"/><ellipse cx="30" cy="11" rx="6" ry="12" fill="#ffc21a" stroke="#000" stroke-width="1.5" transform="rotate(270 30 30)"/><ellipse cx="30" cy="11" rx="6" ry="12" fill="#ffc21a" stroke="#000" stroke-width="1.5" transform="rotate(300 30 30)"/><ellipse cx="30" cy="11" rx="6" ry="12" fill="#ffc21a" stroke="#000" stroke-width="1.5" transform="rotate(330 30 30)"/><circle cx="30" cy="30" r="11" fill="#6b3d17" stroke="#000" stroke-width="2"/><g fill="#3d220c"><circle cx="35.0" cy="30.0" r="1.4"/><circle cx="32.48785523945863" cy="34.337116127970084" r="1.4"/><circle cx="27.47576947700071" cy="34.31604683324437" r="1.4"/><circle cx="25.0000063413623" cy="30.007963264582433" r="1.4"/><circle cx="27.548695893296504" cy="25.642121137932058" r="1.4"/><circle cx="32.560427386209206" cy="25.705327532867038" r="1.4"/><circle cx="30" cy="30" r="1.6"/></g></svg></span><p class="ransom" id="wallR"></p><p id="wallT">a creative, running six lives</p></div>
       <div class="sticky" id="sticky"><b>psst 👀</b>tap anything.<br>6 secrets hide in here.<br>oh, and there’s a picnic 🧺<i>— K</i></div>
       <div class="icons" id="icons" role="group" aria-label="Desktop icons"></div>
       <div class="startm" id="startm" hidden></div>
@@ -1345,15 +1415,17 @@ const STATS={pick:null,cards:new Set(),rooms:new Set(),letters:new Set(),met:new
    mic:`<svg viewBox="0 0 40 40"><rect x="14" y="3" width="12" height="20" rx="6" fill="#2b2b30" stroke="#000" stroke-width="2"/><path d="M9 17v3a11 11 0 0 0 22 0v-3M20 31v6M13 37h14" fill="none" stroke="#000" stroke-width="2.5"/><circle cx="31" cy="8" r="4" fill="#ff3b4e"/></svg>`,
    paint:`<svg viewBox="0 0 40 40"><path d="M6 30c8 2 18-2 24-10s6-14 2-15-8 4-12 10-8 8-14 9c-3 1-3 5 0 6z" fill="#fff" stroke="#000" stroke-width="2"/><circle cx="20" cy="14" r="3" fill="#e33a2a"/><circle cx="26" cy="18" r="3" fill="#2d4de6"/><circle cx="14" cy="22" r="3" fill="#ffd21f"/><path d="M30 34l8-14" stroke="#8a5a3a" stroke-width="3"/></svg>`,
    amp:`<svg viewBox="0 0 40 40"><rect x="3" y="8" width="34" height="24" rx="3" fill="#22252c" stroke="#000" stroke-width="2"/><rect x="7" y="12" width="18" height="8" fill="#000"/><path d="M9 18v-3M12 18v-5M15 18v-2M18 18v-4M21 18v-3" stroke="#3dff6e" stroke-width="2"/><circle cx="30" cy="16" r="3" fill="#ff8a3d"/><path d="M8 26h24" stroke="#3dff6e" stroke-width="2"/></svg>`,
+   sun:`<svg viewBox="0 0 40 40"><path d="M10 26h20l-3 12H13z" fill="#c8673a" stroke="#000" stroke-width="2"/><path d="M20 26V16" stroke="#3f8f2e" stroke-width="2.5"/><path d="M20 22c-4-4-8-2-8 0 3 1 6 1 8 0z" fill="#4fa83a" stroke="#000" stroke-width="1.2"/><ellipse cx="20" cy="4.5" rx="2.6" ry="5" fill="#ffc21a" stroke="#000" stroke-width="1" transform="rotate(0 20 11)"/><ellipse cx="20" cy="4.5" rx="2.6" ry="5" fill="#ffc21a" stroke="#000" stroke-width="1" transform="rotate(40 20 11)"/><ellipse cx="20" cy="4.5" rx="2.6" ry="5" fill="#ffc21a" stroke="#000" stroke-width="1" transform="rotate(80 20 11)"/><ellipse cx="20" cy="4.5" rx="2.6" ry="5" fill="#ffc21a" stroke="#000" stroke-width="1" transform="rotate(120 20 11)"/><ellipse cx="20" cy="4.5" rx="2.6" ry="5" fill="#ffc21a" stroke="#000" stroke-width="1" transform="rotate(160 20 11)"/><ellipse cx="20" cy="4.5" rx="2.6" ry="5" fill="#ffc21a" stroke="#000" stroke-width="1" transform="rotate(200 20 11)"/><ellipse cx="20" cy="4.5" rx="2.6" ry="5" fill="#ffc21a" stroke="#000" stroke-width="1" transform="rotate(240 20 11)"/><ellipse cx="20" cy="4.5" rx="2.6" ry="5" fill="#ffc21a" stroke="#000" stroke-width="1" transform="rotate(280 20 11)"/><ellipse cx="20" cy="4.5" rx="2.6" ry="5" fill="#ffc21a" stroke="#000" stroke-width="1" transform="rotate(320 20 11)"/><circle cx="20" cy="11" r="4.5" fill="#6b3d17" stroke="#000" stroke-width="1.2"/></svg>`,
+   chai:`<svg viewBox="0 0 40 40"><path d="M8 16h22v10a9 9 0 0 1-9 9h-4a9 9 0 0 1-9-9z" fill="#fff" stroke="#000" stroke-width="2"/><path d="M10 19h18v6a7 7 0 0 1-7 7h-4a7 7 0 0 1-7-7z" fill="#c98a4a"/><path d="M30 19h3a4 4 0 0 1 0 8h-3" fill="none" stroke="#000" stroke-width="2"/><path d="M14 12c0-3 3-3 3-6M21 12c0-3 3-3 3-6" stroke="#999" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M4 36h30" stroke="#000" stroke-width="2"/></svg>`,
    basket:`<svg viewBox="0 0 40 40"><path d="M10 17c0-9 20-9 20 0" fill="none" stroke="#7a4a22" stroke-width="3"/><path d="M4 17h32l-3 18H7z" fill="#d39a52" stroke="#000" stroke-width="2"/><path d="M8 23h24M9 29h22M14 17l-2 18M20 17v18M26 17l2 18" stroke="#9a6430" stroke-width="1.5"/><path d="M3 15h34v5H3z" fill="#e33a2a" stroke="#000" stroke-width="2"/><path d="M7 15v5M13 15v5M19 15v5M25 15v5M31 15v5" stroke="#fff" stroke-width="2"/></svg>`,
    err:`<svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="17" fill="#e33a2a" stroke="#000" stroke-width="2"/><path d="M13 13l14 14M27 13L13 27" stroke="#fff" stroke-width="4"/></svg>`
   };
   window.DESK_I=I;
   const go=id=>{const el=document.getElementById(id);el&&el.scrollIntoView({behavior:RM?'auto':'smooth',block:'start'})};
   const ICONS=[
-   ['pc','My Krishna',()=>props()],['basket','hangout',()=>toHangout()],['folder','six_lives',()=>explorer()],['txt','letters.txt',()=>letter()],['exe','unsaid.exe',()=>{go('unsaid');setTimeout(()=>$('#handset')?.click(),900)}],
-   ['mov','row3.mov',()=>go('people')],['mic','hang.withk',()=>go('hang')],['bat','receipt.bat',()=>cmd()],['paint','paint.exe',()=>DESK_APPS.paint()],['amp','K.amp',()=>DESK_APPS.amp()],['sleep','sleep.exe',()=>sleepErr()],['bin','Recycle Bin',()=>bin()]];
-  ICONS.forEach(([ic,label,fn])=>{const b=document.createElement('button');b.type='button';b.className='ico'+(ic==='basket'?' hot':'')+(['mic','paint','amp','sleep','bin','bat'].includes(ic)?' mhide':'');b.innerHTML=I[ic]+`<span>${label}</span>`+(ic==='basket'?'<i class="newb">NEW</i>':'');
+   ['pc','My Krishna',()=>props()],['basket','hangout',()=>toHangout()],['sun','sunflower.exe',()=>sunflower()],['chai','chai.exe',()=>chai()],['paint','paint.exe',()=>DESK_APPS.paint()],
+   ['amp','K.amp',()=>DESK_APPS.amp()],['folder','six_lives',()=>explorer()],['txt','letters.txt',()=>letter()],['bin','Recycle Bin',()=>bin()]];
+  ICONS.forEach(([ic,label,fn])=>{const b=document.createElement('button');b.type='button';b.className='ico'+(ic==='basket'?' hot':'')+(['amp','folder','txt'].includes(ic)?' mhide':'');b.innerHTML=I[ic]+`<span>${label}</span>`+(ic==='basket'?'<i class="newb">NEW</i>':'');
     b.addEventListener('click',e=>{icons.querySelectorAll('.ico').forEach(x=>x.classList.remove('sel'));b.classList.add('sel');if(e.pointerType==='touch'||e.detail===0)fn()});
     b.addEventListener('dblclick',fn);b.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();fn()}});icons.appendChild(b)});
   desk.addEventListener('pointerdown',e=>{if(!e.target.closest('.ico'))icons.querySelectorAll('.ico').forEach(x=>x.classList.remove('sel'));if(!e.target.closest('#startm,#startb'))toggleStart(false)});
@@ -1414,12 +1486,101 @@ If it isn't, the next one will be.
   function sleepErr(){const o=openWin('sleep',{title:'sleep.exe',icon:'err',w:360,body:`<div class="dlg">${I.err}<div><b>sleep.exe is not responding.</b><br>Krishna is currently running 6 lives and cannot close any of them.</div><div class="bt"><button type="button" class="btn95" data-x>End Task</button><button type="button" class="btn95" data-w>Wait</button></div></div>`});
     o.el.querySelector('[data-x]').onclick=()=>{o.el.querySelector('.dlg').innerHTML=`${I.warn}<div>Nice try. Ideas are already loading.</div><div class="bt"><button type="button" class="btn95" data-c>OK</button></div>`;o.el.querySelector('[data-c]').onclick=()=>o.el.querySelector('[data-a="x"]').click();say('no sleeping!!')};
     o.el.querySelector('[data-w]').onclick=()=>o.el.querySelector('[data-a="x"]').click()}
-  function bin(){const F=[['engineer_plan.doc','txt'],['fear_of_starting_over.tmp','txt'],['9_to_5.exe','exe'],['sleep_schedule.xls','txt'],['playing_small.bak','txt']];
-    const o=openWin('bin',{title:'Recycle Bin',icon:'bin',w:470,body:`<div class="addr">Address <span>C:\\Recycled\\</span></div><div class="files95">${F.map(([f,ic])=>`<button type="button" class="ico" data-f="${f}">${I[ic]}<span>${f}</span></button>`).join('')}</div><div class="status95"><span>${F.length} object(s)</span><span>permanently unrestorable</span></div>`});
-    o.el.querySelectorAll('.files95 .ico').forEach(b=>{const f=()=>{const d=openWin('restore',{title:'Restore',icon:'warn',w:340,body:`<div class="dlg">${I.warn}<div>Restore <b>${b.dataset.f}</b>?<br>Krishna has decided this one stays deleted.</div><div class="bt"><button type="button" class="btn95" data-c>Fair enough</button></div></div>`});d.el.querySelector('[data-c]').onclick=()=>d.el.querySelector('[data-a="x"]').click();if(b.dataset.f==='engineer_plan.doc')say('I wanna be kind to everyone!')};
-      b.addEventListener('dblclick',f);b.addEventListener('click',e=>{if(e.pointerType==='touch'||e.detail===0)f()});b.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();f()}})})}
+  /* ================= desktop toys ================= */
+  const LS={get(k,d){try{const v=localStorage.getItem(k);return v==null?d:JSON.parse(v)}catch(_){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(_){}}};
+  const okBtn=(o)=>{const b=o.el.querySelector('[data-ok]');if(b)b.onclick=()=>o.el.querySelector('[data-a="x"]').click()};
+
+  // ---- sunflower.exe: a pot on the desktop, water it until it blooms, then it follows you
+  const plant=document.createElement('div');plant.className='plant';plant.setAttribute('aria-label','A sunflower pot. Water it with the watering can.');
+  plant.innerHTML=`<div class="pstem"><svg viewBox="0 0 60 200" preserveAspectRatio="none"><path d="M30 200 C27 150 33 100 30 0" stroke="#3f8f2e" stroke-width="5" fill="none" stroke-linecap="round"/></svg>
+      <svg class="pleaf l1" viewBox="0 0 40 24"><path d="M2 20 C10 2 30 0 38 6 C28 14 16 22 2 20Z" fill="#4fa83a" stroke="#2c6a1f" stroke-width="1.5"/><path d="M4 19 C16 12 26 8 36 7" stroke="#2c6a1f" stroke-width="1" fill="none"/></svg>
+      <svg class="pleaf l2" viewBox="0 0 40 24"><path d="M2 20 C10 2 30 0 38 6 C28 14 16 22 2 20Z" fill="#5bb544" stroke="#2c6a1f" stroke-width="1.5"/><path d="M4 19 C16 12 26 8 36 7" stroke="#2c6a1f" stroke-width="1" fill="none"/></svg>
+      <svg class="pleaf l3" viewBox="0 0 40 24"><path d="M2 20 C10 2 30 0 38 6 C28 14 16 22 2 20Z" fill="#4fa83a" stroke="#2c6a1f" stroke-width="1.5"/></svg>
+      <div class="phead"><svg viewBox="0 0 100 100"><g class="petals">${Array.from({length:16},(_,i)=>`<ellipse cx="50" cy="17" rx="8" ry="19" fill="${i%2?'#ffc21a':'#ffd23f'}" stroke="#c98a00" stroke-width="1.2" transform="rotate(${i*22.5} 50 50)"/>`).join('')}</g>
+        <circle cx="50" cy="50" r="19" fill="#6b3d17" stroke="#3d220c" stroke-width="2"/><g fill="#3d220c">${Array.from({length:22},(_,i)=>{const a=i*2.4,r=3+i*.68;return `<circle cx="${(50+Math.cos(a)*r).toFixed(1)}" cy="${(50+Math.sin(a)*r).toFixed(1)}" r="1.3"/>`}).join('')}</g>
+        <g class="pface"><circle cx="43" cy="47" r="2.4" fill="#fff"/><circle cx="57" cy="47" r="2.4" fill="#fff"/><path d="M43 55 Q50 61 57 55" stroke="#fff" stroke-width="2.2" fill="none" stroke-linecap="round"/></g></svg></div>
+      <div class="pbud"></div></div>
+    <svg class="ppot" viewBox="0 0 90 70"><path d="M8 14 H82 L72 68 H18 Z" fill="#c8673a" stroke="#000" stroke-width="2.5"/><rect x="3" y="4" width="84" height="14" rx="3" fill="#d9794a" stroke="#000" stroke-width="2.5"/><ellipse cx="45" cy="6" rx="38" ry="3.5" fill="#4a2d18"/><path d="M26 40 Q45 50 64 40" stroke="#ffffff55" stroke-width="3" fill="none"/></svg>
+    <span class="plabel">sunflower.exe</span><span class="pmeter" aria-live="polite"></span>`;
+  const can=document.createElement('button');can.type='button';can.className='wcan';can.setAttribute('aria-label','Watering can. Drag it to the pot, or tap to water.');
+  can.innerHTML=`<svg viewBox="0 0 90 70"><path d="M20 22 H60 V62 Q60 66 56 66 H24 Q20 66 20 62Z" fill="#5aa9e6" stroke="#000" stroke-width="2.5"/><path d="M60 34 L84 16 L88 20 L62 46" fill="#5aa9e6" stroke="#000" stroke-width="2.5" stroke-linejoin="round"/><rect x="80" y="12" width="9" height="10" rx="2" transform="rotate(-38 84 17)" fill="#3c87c2" stroke="#000" stroke-width="2"/><path d="M26 22 Q40 2 54 22" stroke="#000" stroke-width="4" fill="none"/><path d="M24 30 H56" stroke="#ffffff88" stroke-width="3"/></svg>`;
+  desk.append(plant,can);
+  const STAGES=6;let grow=Math.min(STAGES,LS.get('kSun',0));
+  const LINES=['a tiny sprout! 🌱','it likes you','growing… slowly… like me on Mondays','almost there, one more sip','a bud! keep going','🌻 BLOOMED. now it follows you'];
+  function render(){plant.style.setProperty('--g',grow/STAGES);plant.dataset.g=grow;plant.querySelector('.pmeter').textContent=grow>=STAGES?'🌻 in full bloom':'💧'.repeat(grow)+'·'.repeat(STAGES-grow)}
+  render();
+  function water(){if(can.classList.contains('pour'))return;const pr=plant.getBoundingClientRect(),dr=desk.getBoundingClientRect();
+    can.style.left=(pr.left-dr.left+pr.width*.55)+'px';can.style.top=(pr.top-dr.top-58)+'px';can.classList.add('pour');sfx('pop');
+    for(let i=0;i<9;i++){const d=document.createElement('i');d.className='drop';d.style.left=(pr.left-dr.left+pr.width*.42+Math.random()*24)+'px';d.style.top=(pr.top-dr.top-4)+'px';d.style.animationDelay=(.25+i*.07)+'s';desk.appendChild(d);setTimeout(()=>d.remove(),1400)}
+    setTimeout(()=>{const was=grow;if(grow<STAGES){grow++;LS.set('kSun',grow)}render();say(grow>was?LINES[grow-1]:['it’s happy. look at it','okay okay, it’s hydrated','overwatering is a love language'][Math.floor(Math.random()*3)]);
+      if(grow===STAGES&&was<STAGES){plant.classList.add('pop');setTimeout(()=>plant.classList.remove('pop'),900);toast('🌻 you grew K a sunflower!')}},700);
+    setTimeout(()=>{can.classList.remove('pour');can.style.left='';can.style.top=''},1300)}
+  // drag the can (or just tap it)
+  {let d=null;can.addEventListener('pointerdown',e=>{if(can.classList.contains('pour'))return;can.setPointerCapture(e.pointerId);const r=can.getBoundingClientRect(),dr=desk.getBoundingClientRect();d={sx:e.clientX,sy:e.clientY,x:r.left-dr.left,y:r.top-dr.top,moved:false}});
+    can.addEventListener('pointermove',e=>{if(!d)return;const dx=e.clientX-d.sx,dy=e.clientY-d.sy;if(Math.hypot(dx,dy)>5)d.moved=true;if(!d.moved)return;can.classList.add('drag');can.style.left=(d.x+dx)+'px';can.style.top=(d.y+dy)+'px';
+      const pr=plant.getBoundingClientRect();plant.classList.toggle('near',e.clientX>pr.left-30&&e.clientX<pr.right+40&&e.clientY>pr.top-120&&e.clientY<pr.bottom)});
+    const up=e=>{if(!d)return;const moved=d.moved;d=null;can.classList.remove('drag');const near=plant.classList.contains('near');plant.classList.remove('near');
+      if(!moved||near)water();else{can.style.left='';can.style.top=''}};
+    can.addEventListener('pointerup',up);can.addEventListener('pointercancel',()=>{d=null;can.classList.remove('drag');can.style.left='';can.style.top=''})}
+  // the bloom turns its face to the cursor
+  addEventListener('pointermove',e=>{if(grow<STAGES)return;const h=plant.querySelector('.phead');const r=h.getBoundingClientRect();if(!r.width)return;const dx=e.clientX-(r.left+r.width/2),dy=e.clientY-(r.top+r.height/2);
+    h.style.setProperty('--hx',Math.max(-1,Math.min(1,dx/300)));h.style.setProperty('--hy',Math.max(-1,Math.min(1,dy/300)))},{passive:true});
+  plant.addEventListener('click',()=>{if(grow>=STAGES){sfx('pop');say(['hi! I follow the sun. today that’s you ☀︎','sunflowers are my favourite. obviously','I’m K’s favourite flower 🌻'][Math.floor(Math.random()*3)])}else say('water me! drag the can 💧')});
+  function sunflower(){can.classList.add('nudge');setTimeout(()=>can.classList.remove('nudge'),1600);say(grow>=STAGES?'it’s already blooming! say hi 🌻':'drag the watering can to the pot 💧')}
+
+  // ---- chai.exe: brew a cup
+  function chai(){const o=openWin('chai',{title:'chai.exe',icon:'chai',w:430,body:`<div class="chai95">
+      <div class="cbrew"><span class="csteam" aria-hidden="true"><i></i><i></i><i></i></span><div class="ccup"><span class="cfill"></span></div><div class="csauc"></div></div>
+      <div class="copts">
+        <fieldset><legend>Milk</legend>${[['dairy','regular milk'],['oat','oat milk'],['none','no milk']].map(([v,l],i)=>`<label><input type="radio" name="cmilk" value="${v}"${i===0?' checked':''}> ${l}</label>`).join('')}</fieldset>
+        <fieldset><legend>Sugar</legend>${[['0','none'],['1','1 spoon'],['2','2 spoons']].map(([v,l],i)=>`<label><input type="radio" name="csug" value="${v}"${i===1?' checked':''}> ${l}</label>`).join('')}</fieldset>
+        <fieldset><legend>Strength</legend><input type="range" name="cstr" min="0" max="2" value="1" aria-label="Strength"><span class="cstrl"><span>light</span><span>normal</span><span>kadak</span></span></fieldset>
+      </div></div>
+      <div class="cfoot"><span class="cverd" aria-live="polite">pick your chai, then brew ☕</span><button type="button" class="btn95" data-brew>Brew it</button></div>`});
+    const q=s=>o.el.querySelector(s),fill=q('.cfill'),cup=q('.ccup');
+    const tint=()=>{const m=q('[name=cmilk]:checked').value,s=+q('[name=cstr]').value;const C=m==='none'?['#c98a4a','#9a5a24','#5e3010'][s]:['#e9c79c','#d3a06a','#b27740'][s];fill.style.background=C};
+    o.el.querySelectorAll('input').forEach(i=>i.addEventListener('input',tint));tint();
+    q('[data-brew]').onclick=()=>{const m=q('[name=cmilk]:checked').value,sg=+q('[name=csug]:checked').value,s=+q('[name=cstr]').value,v=q('.cverd');
+      cup.classList.remove('full');q('.cbrew').classList.remove('on');void cup.offsetWidth;cup.classList.add('full');q('.cbrew').classList.add('on');sfx('pop');
+      let t=[];
+      if(m==='dairy'){t.push('oh wait. I’m lactose intolerant 🥲 switching mine to oat. you enjoy yours!')}
+      if(s===2&&sg===1&&m!=='none')t.push('kadak. K approves ☕');
+      else if(s===2)t.push('kadak! now we’re talking');
+      else if(s===0)t.push('light chai? this is basically hot water with dreams');
+      else t.push('a solid, honest cup. respect');
+      if(sg===2)t.push('two spoons? that’s dessert, not chai 😂');
+      if(sg===0&&m==='none')t.push('no milk, no sugar. you’re built different');
+      v.textContent='…brewing';setTimeout(()=>{v.textContent=t.join(' · ');say(m==='dairy'?'oat for me please 🥲':'chai break!!')},1200)}}
+
+  // ---- paint: pin your drawing to K's wall
+  const pins=document.createElement('div');pins.className='kpins';desk.appendChild(pins);
+  function drawPins(){pins.innerHTML='';LS.get('kPins',[]).forEach((p,i)=>{const f=document.createElement('figure');f.className='kpin';f.style.cssText=`left:${p.x}%;top:${p.y}%;rotate:${p.r}deg`;
+    f.innerHTML=`<img src="${p.src}" alt="A drawing for K"><figcaption>for K ♥</figcaption><button type="button" aria-label="Take this drawing down">×</button>`;
+    f.querySelector('button').onclick=e=>{e.stopPropagation();const a=LS.get('kPins',[]);a.splice(i,1);LS.set('kPins',a);drawPins()};pins.appendChild(f)})}
+  drawPins();
+  window.PIN_ART=(cv)=>{const t=document.createElement('canvas');t.width=220;t.height=135;t.getContext('2d').drawImage(cv,0,0,220,135);
+    const a=LS.get('kPins',[]);a.push({src:t.toDataURL('image/jpeg',.8),x:40+Math.random()*22,y:46+Math.random()*16,r:(Math.random()-.5)*14});while(a.length>3)a.shift();LS.set('kPins',a);drawPins();
+    const f=pins.lastElementChild;f&&f.classList.add('new');sfx('pop');say('ON THE WALL. I love it 📌')};
+
+  // ---- recycle bin: things K deleted on purpose
+  const BIN=[['engineer_plan.docx','txt','the original plan. it was a good plan.\nit just wasn’t mine.'],['sleep_schedule.exe','exe','corrupted at 2am. every single night.\nideas don’t check the time.'],['being_shy.zip','txt','compressed it so small\nI can’t find it anymore.\n\nhi 👋'],
+    ['fear_of_starting_over.tmp','txt','it was temporary.\nturned out to be VERY temporary.'],['9_to_5_only.exe','exe','still runs on weekdays.\nthe side quests run 24/7.'],['playing_small.bak','txt','no backup kept.\non purpose.'],['comfort_zone.lnk','txt','shortcut no longer works.\nthe original was moved somewhere uncomfortable.\n(that’s where the growing happens)']];
+  function bin(){const o=openWin('bin',{title:'Recycle Bin',icon:'bin',w:500,body:`<div class="addr">Address <span>C:\\Recycled\\K\\</span></div><div class="files95">${BIN.map(([f,ic],i)=>`<button type="button" class="ico" data-i="${i}">${I[ic]}<span>${f}</span></button>`).join('')}</div><div class="status95"><span>${BIN.length} object(s) · deleted on purpose</span><span>double-click to peek</span></div>`});
+    o.el.querySelectorAll('.files95 .ico').forEach(b=>{const f=()=>{const [name,,note]=BIN[+b.dataset.i];const d=openWin('binf',{title:name+' - Notepad',icon:'txt',w:360,body:`<div class="inset np">${note.replace(/</g,'&lt;')}</div><div class="binacts"><button type="button" class="btn95" data-r>Restore</button><button type="button" class="btn95" data-ok>Leave it deleted</button></div>`});
+        d.el.querySelector('[data-r]').onclick=()=>{d.el.querySelector('.np').textContent='Restore failed.\nKrishna says: nope. it stays deleted 😌';sfx('click')};okBtn(d);sfx('open')};
+      b.addEventListener('dblclick',f);b.addEventListener('click',e=>{o.el.querySelectorAll('.files95 .ico').forEach(x=>x.classList.remove('sel'));b.classList.add('sel');if(e.pointerType==='touch'||e.detail===0)f()});b.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();f()}})})}
+
+  // ---- compliment errors, now and then while the desktop is on screen
+  const ERR=[['Error 404','Bad vibes not found.','err'],['Warning','You have excellent taste in websites.','warn'],['System alert','Your smile is using 100% of the screen’s brightness.','warn'],['Error','Too much good energy detected. Unable to process.','err'],
+    ['Low battery','K’s social battery: 12%. Yours seems great though.','warn'],['Fatal exception','Your outfit today is a fatal exception. In a good way.','err'],['Update available','You 2.0 is ready to install. You 1.0 was already great.','warn'],['Disk full','Too many good memories. Nothing to delete.','warn']];
+  let errN=0,deskOn=false;new IntersectionObserver(es=>{deskOn=es[0].isIntersecting},{threshold:.5}).observe(desk);
+  function compliment(){if(!deskOn||document.hidden||desk.querySelector('.w95.cerr'))return;const [t,m,ic]=ERR[errN++%ERR.length];
+    const W=desk.clientWidth,H=desk.clientHeight-34;const o=openWin('cerr'+errN,{title:t,icon:ic,w:330,x:Math.max(100,Math.random()*(W-360)),y:Math.max(8,Math.random()*(H-170)),body:`<div class="dlg">${I[ic]}<div><b>${m}</b></div><div class="bt"><button type="button" class="btn95" data-ok>OK</button><button type="button" class="btn95" data-ok2>I know 💅</button></div></div>`});
+    o.el.classList.add('cerr');okBtn(o);o.el.querySelector('[data-ok2]').onclick=()=>o.el.querySelector('[data-a="x"]').click();sfx('open')}
+  if(!RM){setTimeout(function loop(){compliment();setTimeout(loop,45000+Math.random()*30000)},22000)}
+
   // start menu
-  const SM=[['folder','Six lives',()=>explorer()],['pc','My Krishna',()=>props()],['txt','Letters',()=>go('letters')],['exe','Unsaid',()=>go('unsaid')],['mov','Row 3',()=>go('people')],['mic','Hang with K',()=>go('hang')],['bat','Checkout',()=>go('hi')],['paint','Paint',()=>DESK_APPS.paint()],['amp','K.amp',()=>DESK_APPS.amp()],['mov','Screensaver',()=>DESK_APPS.saver()],null,['sleep','Shut down…',()=>shut()]];
+  const SM=[['folder','Six lives',()=>explorer()],['pc','My Krishna',()=>props()],['txt','Letters',()=>go('letters')],['exe','Unsaid',()=>go('unsaid')],['mov','Row 3',()=>go('people')],['mic','Hang with K',()=>go('hang')],['bat','Checkout',()=>go('hi')],['sun','Sunflower',()=>sunflower()],['chai','Chai',()=>chai()],['sleep','sleep.exe',()=>sleepErr()],['paint','Paint',()=>DESK_APPS.paint()],['amp','K.amp',()=>DESK_APPS.amp()],['mov','Screensaver',()=>DESK_APPS.saver()],null,['sleep','Shut down…',()=>shut()]];
   sm.innerHTML=`<div class="side"><b>K’s</b> OS</div><ul>${SM.map((m,i)=>m?`<li><button type="button" data-i="${i}">${I[m[0]]}${m[1]}</button></li>`:'<li><hr></li>').join('')}</ul>`;
   sm.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{toggleStart(false);SM[+b.dataset.i][2]()}));
   function toggleStart(v){sm.hidden=!v;sb.setAttribute('aria-expanded',v)}
@@ -1450,7 +1611,7 @@ If it isn't, the next one will be.
   // ---- Paint
   function paint(){const o=openWin('paint',{title:'untitled - Paint',icon:'paint',w:520,body:`<div class="paint"><div class="ptools"><button type="button" class="btn95 on" data-t="pen" title="Pencil">✎</button><button type="button" class="btn95" data-t="brush" title="Brush">🖌</button><button type="button" class="btn95" data-t="erase" title="Eraser">▭</button><button type="button" class="btn95" data-t="spray" title="Spray">⁂</button></div>
       <div class="pmain"><canvas width="440" height="270" aria-label="Drawing canvas"></canvas><div class="pal">${['#000','#808080','#fff','#e33a2a','#ff8a3d','#ffd21f','#2fae4e','#139c8f','#2d4de6','#7a3bd6','#ff4fa3','#8a5a3a'].map((c,i)=>`<button type="button" style="background:${c}" data-c="${c}" aria-label="Colour ${c}"${i===0?' class="on"':''}></button>`).join('')}</div>
-      <div class="pbar"><button type="button" class="btn95" data-x="clear">Clear</button><button type="button" class="btn95" data-x="rate">Ask K to rate it</button><span class="phint">draw K something ♥</span></div></div></div>`});
+      <div class="pbar"><button type="button" class="btn95" data-x="clear">Clear</button><button type="button" class="btn95" data-x="rate">Ask K to rate it</button><button type="button" class="btn95" data-x="pin">📌 Pin to K’s wall</button><span class="phint">draw K something ♥</span></div></div></div>`});
     const cv=o.el.querySelector('canvas'),cx=cv.getContext('2d');cx.fillStyle='#fff';cx.fillRect(0,0,cv.width,cv.height);
     cx.font='16px "Comic Sans MS", Caveat, cursive';cx.fillStyle='#bbb';cx.fillText('draw something for K…',14,26);
     let tool='pen',col='#000',down=false,lx=0,ly=0,strokes=0;
@@ -1462,6 +1623,7 @@ If it isn't, the next one will be.
     cv.addEventListener('pointerdown',e=>{down=true;cv.setPointerCapture(e.pointerId);[lx,ly]=pos(e);dot(lx,ly);strokes++});
     cv.addEventListener('pointermove',e=>{if(!down)return;const [x,y]=pos(e);dot(x,y);lx=x;ly=y});
     cv.addEventListener('pointerup',()=>down=false);cv.style.touchAction='none';
+    o.el.querySelector('[data-x="pin"]').onclick=()=>{if(strokes<1){say('draw something first! 🎨');return}window.PIN_ART&&PIN_ART(cv);o.el.querySelector('[data-a="x"]').click()};
     o.el.querySelector('[data-x="clear"]').onclick=()=>{cx.fillStyle='#fff';cx.fillRect(0,0,cv.width,cv.height);strokes=0};
     o.el.querySelector('[data-x="rate"]').onclick=()=>{const R=strokes<2?['…a blank canvas. very conceptual. 7/10']:['10/10, going on my fridge.','museum-worthy. or at least desk-worthy.','I see it. I don’t know what it is. I love it.','Little K says “AGAIN!!”','framing this. no notes.'];
       const d=openWin('rate',{title:'K rates your art',icon:'paint',w:320,body:`<div class="dlg">${I.paint}<div><b>${R[Math.floor(Math.random()*R.length)]}</b></div><div class="bt"><button type="button" class="btn95" data-ok>Thanks K</button></div></div>`});d.el.querySelector('[data-ok]').onclick=()=>d.el.querySelector('[data-a="x"]').click();say('I wanna draw too!!')}}
