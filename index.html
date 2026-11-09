@@ -1023,6 +1023,26 @@ html.night .torch{opacity:1}
 @keyframes tixOut{to{transform:translateY(20px) scale(.9);opacity:0}}
 @media (max-width:700px){.ticket.tix{position:fixed;left:50%!important;top:50%!important;width:min(390px,calc(100vw - 32px))!important;translate:-50% -50%;z-index:150;box-shadow:0 0 0 100vmax #0009}}
 @media (max-width:420px){.ticket.tix{grid-template-columns:minmax(0,1fr) 78px}.tix .tph{height:120px}.tix b{font-size:25px}.tix .tsn{font-size:34px}.tix .tln{font-size:18px}}
+
+/* ---------- ticket, round two ---------- */
+.ticket.tix{perspective:900px}
+.tix .tmain,.tix .tstub{transform:rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));transition:transform .15s ease-out;transform-style:preserve-3d;box-shadow:inset 0 0 22px #8a6a3a2e,inset 0 -2px 0 #0000000f}
+.tix .tmain{transform-origin:100% 50%}.tix .tstub{transform-origin:0 50%;cursor:pointer}
+.ticket.tix{rotate:-1.2deg}
+/* halftone duotone photo, like a printed cinema poster */
+.tix .tph img{filter:grayscale(1) contrast(1.25) brightness(1.05) drop-shadow(0 6px 8px #0005);mix-blend-mode:multiply}
+.tix .tph::after{content:"";position:absolute;inset:0;background:radial-gradient(circle,#1d1a1655 .9px,transparent 1.3px) 0 0/4px 4px;mix-blend-mode:multiply;pointer-events:none}
+.tix .tph::before{content:"";position:absolute;inset:0;background:linear-gradient(#ffffff26,transparent 40%);z-index:1;pointer-events:none}
+.tix .tmeta{margin:8px 0 0;display:grid;grid-template-columns:repeat(3,auto);justify-content:start;gap:4px 14px;border-top:1px dashed #1d1a1640;padding-top:8px}
+.tix .tmeta div{display:grid;gap:2px}
+.tix .tmeta dt{font:700 8px/1 var(--f-mono);letter-spacing:.16em;text-transform:uppercase;color:#1d1a1680}
+.tix .tmeta dd{margin:0;font:700 11px/1.1 var(--f-mono);color:#1d1a16}
+.tix .tstain{position:absolute;right:26px;top:34%;width:86px;height:86px;border-radius:50%;border:5px solid #8a5a2a1a;box-shadow:inset 0 0 0 2px #8a5a2a12;rotate:20deg;clip-path:polygon(0 0,100% 0,100% 70%,40% 100%,0 100%);pointer-events:none}
+.tix .tfoil{position:absolute;left:6px;right:6px;bottom:24px;height:14px;border-radius:3px;background:linear-gradient(105deg,#d7c38a 0%,#fff6c9 calc(var(--fx,50%) - 18%),#b7f0ff var(--fx,50%),#ffc6f2 calc(var(--fx,50%) + 14%),#d7c38a 100%);box-shadow:inset 0 0 0 1px #0002;opacity:.9}
+.tix .tkeep{position:absolute;left:0;right:0;bottom:6px;font:600 13px/1 var(--f-hand);color:#c8322b}
+.tix .tstamp{bottom:76px}
+.tix .tstub:hover{background-color:#f8f1df}
+@media (max-width:700px){.ticket.tix{rotate:0deg}.tix .tmeta{grid-template-columns:repeat(2,auto)}.tix .tstain{display:none}}
 </style>
 </head>
 <body>
@@ -2088,13 +2108,25 @@ addEventListener('keydown',e=>{if(e.key==='Escape'){const tk=$('#ticket');if(tk&
 const MET4=new Set();function poster(V,p){if(/^p\d$/.test(V.img))MET4.add(V.img);if(MET4.size===4)setTimeout(()=>egg('people'),600);const th=$('#people');let tk=$('#ticket');if(!tk){tk=document.createElement('div');tk.id='ticket'}const host=innerWidth<=700?document.body:th;if(tk.parentNode!==host)host.appendChild(tk);
   tk.className='ticket tix';tk.setAttribute('role','dialog');tk.setAttribute('aria-label',(V.who||'my person')+', '+V.role);
   const n=[...th.querySelectorAll('.pp.vip')].indexOf(p)+1;const no=String(3000+n*137).padStart(6,'0');
+  // showtime, genre and rating, picked from the role
+  const RL=(V.role||'').toLowerCase();const SH=[[/3am/,'3:00 AM','comfort','A+ for always'],[/hype/,'ANY TIME','motivational','U for unstoppable'],[/chai/,'4:30 PM','slice of life','U for unlimited refills'],[/plot/,'??:??','thriller','UA for unexpected'],[/caf|coffee/,'10:00 AM','food tour','U for undercaffeinated']];
+  const sh=(SH.find(([re])=>re.test(RL))||[0,'7:30 PM','feel-good','U for unconditional'])
+  const kept=(()=>{try{return JSON.parse(localStorage.getItem('kStubs')||'[]')}catch(_){return[]}})();
   tk.innerHTML=`<div class="tmain"><span class="tco">K CINEMAS <i>·</i> ROW 3 <i>·</i> NOW SHOWING</span><div class="tph${V.photo?' photo':''}"><img src="img/${V.img}.webp" alt="${V.who||V.role}"></div>
-    <span class="tst">starring</span><b>${V.who||'my person'}</b><span class="tas">as <i>${V.role}</i></span><span class="tln">“${V.line}”</span><span class="tsig">— K</span></div>
-    <div class="tstub"><span class="tsl">SEAT</span><span class="tsn">0${n}</span><span class="tadm">ADMIT<br>ONE</span><span class="tstars" aria-label="five stars">★★★★★</span><span class="tbar" aria-hidden="true"></span><span class="tno">No. ${no}</span><span class="tstamp" aria-hidden="true">MY<br>PERSON</span></div>
+    <span class="tst">starring</span><b>${V.who||'my person'}</b><span class="tas">as <i>${V.role}</i></span><span class="tln">“${V.line}”</span>
+    <dl class="tmeta"><div><dt>showtime</dt><dd>${sh[1]}</dd></div><div><dt>genre</dt><dd>${sh[2]}</dd></div><div><dt>rated</dt><dd>${sh[3]}</dd></div></dl><span class="tsig">— K</span><span class="tstain" aria-hidden="true"></span></div>
+    <div class="tstub"><span class="tsl">SEAT</span><span class="tsn">0${n}</span><span class="tadm">ADMIT<br>ONE</span><span class="tstars" aria-label="five stars">★★★★★</span><span class="tbar" aria-hidden="true"></span><span class="tno">No. ${no}</span><span class="tstamp" aria-hidden="true">MY<br>PERSON</span><span class="tfoil" aria-hidden="true"></span><span class="tkeep">${kept.includes(n)?'stub kept ✓':'tear to keep →'}</span></div>
     <button type="button" aria-label="Close ticket">×</button>`;
   const r=p.getBoundingClientRect(),R=th.getBoundingClientRect();const w=Math.min(400,R.width-20);let x=r.left-R.left+r.width/2-w/2;x=Math.max(10,Math.min(R.width-w-10,x));
   tk.style.cssText=`left:${x}px;top:12px;width:${w}px`;tk.classList.remove('in');void tk.offsetWidth;tk.classList.add('in');tk.hidden=false;
-  tk.querySelector('button').onclick=e=>{e.stopPropagation();if(RM||!tk.classList.contains('tix')){tk.hidden=true;return}tk.classList.add('tear');sfx('paper');setTimeout(()=>{tk.hidden=true;tk.classList.remove('tear')},650)};sfx('pop')}
+  const tear=e=>{e.stopPropagation();if(RM){tk.hidden=true;return}tk.classList.add('tear');sfx('paper');
+    const ks=new Set(kept);const fresh=!ks.has(n);ks.add(n);try{localStorage.setItem('kStubs',JSON.stringify([...ks]))}catch(_){}
+    if(fresh)setTimeout(()=>toast(`🎟 stub kept · ${ks.size}/${th.querySelectorAll('.pp.vip').length} collected`+(ks.size===th.querySelectorAll('.pp.vip').length?' · full house!':'')),400);
+    setTimeout(()=>{tk.hidden=true;tk.classList.remove('tear')},650)};
+  tk.querySelector('button').onclick=tear;tk.querySelector('.tstub').onclick=tear;
+  if(!RM&&matchMedia('(hover:hover)').matches){tk.onpointermove=e=>{const b=tk.getBoundingClientRect();const x=(e.clientX-b.left)/b.width-.5,y=(e.clientY-b.top)/b.height-.5;tk.style.setProperty('--rx',(-y*8)+'deg');tk.style.setProperty('--ry',(x*10)+'deg');tk.style.setProperty('--fx',((x+.5)*100)+'%')};
+    tk.onpointerleave=()=>{tk.style.setProperty('--rx','0deg');tk.style.setProperty('--ry','0deg')}}
+  sfx('pop')}
 function ticket(p){const th=$('#people');let tk=$('#ticket');if(!tk){tk=document.createElement('div');tk.id='ticket'}if(tk.parentNode!==th)th.appendChild(tk);tk.className='ticket';tk.setAttribute('role','dialog');
   const tag=p.querySelector('.tag');const name=p.dataset.name||(tag?tag.textContent:'an extra');const seat=[...th.querySelectorAll('.pp')].indexOf(p)+1;
   tk.innerHTML=`<span class="tk1">ADMIT ONE · ROW 3 · SEAT ${seat}</span><b>${name}</b><span class="tk2">${p.dataset.line||(tag?KNOWN[name]||'one of the good ones.':'probably eating popcorn.')}</span><button type="button" aria-label="Close ticket">×</button>`;
