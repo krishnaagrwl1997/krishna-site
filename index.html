@@ -1043,6 +1043,9 @@ html.night .torch{opacity:1}
 .tix .tstamp{bottom:76px}
 .tix .tstub:hover{background-color:#f8f1df}
 @media (max-width:700px){.ticket.tix{rotate:0deg}.tix .tmeta{grid-template-columns:repeat(2,auto)}.tix .tstain{display:none}}
+
+/* keypad removed: the phone sits centred again */
+@media (min-width:960px){.unsaid{grid-template-columns:minmax(0,640px);--shift:0px}}
 </style>
 </head>
 <body>
@@ -1199,7 +1202,7 @@ const EGGS={
   people:{n:'Meet everyone in my row.',t:'Row 3, fully met. They like you.'},
   cards:{n:'Pull three conversations off the line.',t:'Three cards pulled. Chatty!'},
   sealed:{n:'Seal a secret.',t:'Sealed with a K. Secret kept.'},
-  dial:{n:'Call me. Spell it out on the keypad.',t:'You dialled my name. Who told you?!'},
+  dial:{n:'Ask me five things on the phone.',t:'You unlocked the real question. Thank you for asking.'},
   coin:{n:'Pay a rupee at the counter.',t:'₹1 well spent.'}};
 const EXTRA={peel:'Engineer label peeled off. It never stuck.',paisley:'Bandana burst!',peek:'Caught peeking over the shades.',idle:'You went quiet, so she turned around.',word:'You typed her name. Roll the titles!'};
 const KEYS=Object.keys(EGGS);
@@ -1948,7 +1951,7 @@ ${['zs-eb','zs-fw','zs-ef','zs-wax'].map(c=>`<div class="zs-env ${c}w" style="--
       if(p.voice) voice(p); else if(t) add('in',(p.media||'')+esc(t))}
     stat('Ln '+(log.children.length+1)+', Col 1');busy=false;lock(false);
     unlock()}
-  function unlock(){if(asked>=5&&!realOn){realOn=true;const b=mkBtn(REAL[0],REAL[1],'real');qr.prepend(b);qr.scrollLeft=0;stat('psst… a new question unlocked')}}
+  function unlock(){if(asked>=5&&!realOn){realOn=true;typeof egg==='function'&&egg('dial');const b=mkBtn(REAL[0],REAL[1],'real');qr.prepend(b);qr.scrollLeft=0;stat('psst… a new question unlocked')}}
   function mkBtn(qq,parts,cls){const b=document.createElement('button');b.type='button';b.textContent=qq;if(cls)b.className=cls;
     b.addEventListener('click',()=>{if(busy)return;b.dataset.used='1';add('out',esc(qq));left--;asked++;STATS.said++;cnt.textContent='+'+left+' unsaid';
       typeof parts==='function'?parts():reply(parts)});return b}
@@ -2207,16 +2210,7 @@ function ticket(p){const th=$('#people');let tk=$('#ticket');if(!tk){tk=document
     const stopRing=()=>{hs.classList.remove('ringing');clearInterval(ringT);const rb=$('#ringb');rb&&rb.remove()};
     new IntersectionObserver(es=>{if(es[0].isIntersecting&&!rang&&!hs.classList.contains('up')){rang=true;if(RM)return;hs.classList.add('ringing');const rb=document.createElement('span');rb.id='ringb';rb.className='ringb';rb.textContent='RING RING!';sec.appendChild(rb);sfx('ring');ringT=setInterval(()=>sfx('ring'),1600);setTimeout(stopRing,7000)}},{threshold:.45}).observe(sec);
     hs.addEventListener('click',stopRing);
-    const kp=document.createElement('div');kp.className='kp';kp.setAttribute('aria-label','Keypad: dial K');
-    kp.innerHTML=`<span class="kpbrand">K-PHONE <i>☎</i></span><div class="kpd" id="kpd" aria-live="polite">dial K…</div><div class="kpg">${[['1',''],['2','abc'],['3','def'],['4','ghi'],['5','jkl'],['6','mno'],['7','pqrs'],['8','tuv'],['9','wxyz'],['*',''],['0',''],['#','']].map(([n,l])=>`<button type="button" data-n="${n}" aria-label="${n}${l?' '+l:''}">${n}<small>${l}</small></button>`).join('')}</div><div class="kpr"><button type="button" class="kpc" id="kpc" aria-label="Clear">⌫</button><button type="button" class="kpcall" id="kpcall">Call</button></div><span class="kphint">psst… try spelling my name. or CHAI. or DANCE.</span>`;
-    sec.appendChild(kp);let num='';const disp=$('#kpd');
-    kp.querySelectorAll('[data-n]').forEach(b=>b.addEventListener('click',()=>{if(num.length<12){num+=b.dataset.n;disp.textContent=num;sfx('key')}}));
-    $('#kpc').addEventListener('click',()=>{num=num.slice(0,-1);disp.textContent=num||'dial K…'});
-    $('#kpcall').addEventListener('click',()=>{if(num.length<3){disp.textContent='too short!';return}const n=num;const W={'2424':['C-H-A-I ✓',[['2-4-2-4. you spelled CHAI ☕'],['chai o’clock is a lifestyle'],['okmegha is already on her way with two cups'],{act:[['☕ see her seat',()=>UNSAID.seat('chai o’clock')]]}]],'32623':['D-A-N-C-E ✓',[['DANCE BREAK 💃',null,'s_dance_3'],['you know what to do'],{act:[['▶ put on Kalyani',()=>UNSAID.kalyani()]]}]],'7492':['R-I-Y-A ✓',[['you dialled RIYA?? 📞'],['that’s my 3am person. she always picks up'],{act:[['👀 find her in Row 3',()=>UNSAID.seat('the 3am call')]]}]]};
-      if(W[n]){disp.textContent=W[n][0];stopRing();sfx('pop');setTimeout(()=>{const live=hs.classList.contains('up');if(!live)hs.click();setTimeout(()=>{window.UNSAID&&UNSAID.reply(W[n][1]);num=''},live?300:2800)},400);return}
-      if(n==='5747462'){disp.textContent='K-R-I-S-H-N-A ✓';stopRing();sfx('pop');egg('dial');setTimeout(()=>{const live=hs.classList.contains('up');if(!live)hs.click();setTimeout(()=>{window.UNSAID&&UNSAID.reply([['you SPELLED my name 😭'],['okay you’re officially in the secret club'],['ask me anything ↓']]);num=''},live?300:2800)},400);return}disp.textContent='calling…';stopRing();
-      const live=hs.classList.contains('up');if(!live)hs.click();
-      setTimeout(()=>{window.UNSAID&&UNSAID.reply([[`wait. did you just dial ${n}?`],['how did you even get this number 👀'],['…okay fine, ask me something ↓']]);disp.textContent='connected ✓';num=''},live?300:2800)})}
+  }
 
   // ---- Receipt: glove + coin slot
   const till=$('#till'),mach=document.querySelector('.machine');
